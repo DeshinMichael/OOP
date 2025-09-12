@@ -72,4 +72,12 @@ public class HeapSortTest {
 
         assertArrayEquals(expected, arr);
     }
+
+    @Test
+    public void testHeapSortWithNullArr() {
+        int[] arr = null;
+        HeapSort.heapSort(arr);
+
+        assertArrayEquals(null, arr);
+    }
 }

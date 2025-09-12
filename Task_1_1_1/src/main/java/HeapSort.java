@@ -1,5 +1,10 @@
 public class HeapSort {
     public static void heapSort(int[] arr) {
+        if (arr == null) {
+            System.err.println("Ошибка: входной массив равен null");
+            return;
+        }
+
         int n = arr.length;
 
         for (int i = n / 2 - 1; i >= 0; i--) {
