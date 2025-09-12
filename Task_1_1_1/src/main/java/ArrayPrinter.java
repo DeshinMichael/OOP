@@ -1,3 +1,6 @@
+/**
+ * Utility class for printing integer arrays.
+ */
 public class ArrayPrinter {
     private ArrayPrinter() {}
 

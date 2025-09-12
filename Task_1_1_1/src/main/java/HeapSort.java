@@ -1,3 +1,6 @@
+/**
+ * Utility class for heap sorting integer arrays.
+ */
 public class HeapSort {
     private HeapSort() {}
 

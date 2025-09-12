@@ -1,3 +1,6 @@
+/**
+ * Main class for heap sorting and array printing.
+ */
 public class Main {
     public static void main(String[] args) {
         int[] arr = {9, 4, 3, 8, 10, 2, 5};

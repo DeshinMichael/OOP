@@ -1,6 +1,9 @@
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for HeapSort.
+ */
 public class HeapSortTest {
 
     @Test
@@ -22,6 +25,7 @@ public class HeapSortTest {
 
         assertArrayEquals(expected, arr);
     }
+
 
     @Test
     public void testHeapSortWithSortedArray() {
