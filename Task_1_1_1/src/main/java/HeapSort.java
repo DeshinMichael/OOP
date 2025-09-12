@@ -1,4 +1,6 @@
 public class HeapSort {
+    private HeapSort() {}
+
     public static void heapSort(int[] arr) {
         if (arr == null) {
             System.err.println("Ошибка: входной массив равен null");
