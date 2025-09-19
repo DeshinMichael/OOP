@@ -75,6 +75,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">Participant</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block">Represents a participant in the Blackjack game (player or dealer).
+ Manages the participant's hand and score.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -87,7 +89,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">Participant</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Creates a new participant with an empty hand and zero score.</div>
+</div>
 </div>
 </section>
 </li>
@@ -104,19 +108,29 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Hand.html" title="class in Unnamed Package">Hand</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getHand()" class="member-name-link">getHand</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the participant's hand.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getHandValue()" class="member-name-link">getHandValue</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the current value of the participant's hand.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getScore()" class="member-name-link">getScore</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the participant's current score.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#incScore()" class="member-name-link">incScore</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Increments the participant's score by one.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resetHand()" class="member-name-link">resetHand</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Clears the participant's hand for a new round.</div>
+</div>
 </div>
 </div>
 </div>
@@ -138,6 +152,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;()">
 <h3>Participant</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Participant</span>()</div>
+<div class="block">Creates a new participant with an empty hand and zero score.</div>
 </section>
 </li>
 </ul>
@@ -152,30 +167,47 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getHand()">
 <h3>getHand</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Hand.html" title="class in Unnamed Package">Hand</a></span>&nbsp;<span class="element-name">getHand</span>()</div>
+<div class="block">Gets the participant's hand.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The participant's hand</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getScore()">
 <h3>getScore</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getScore</span>()</div>
+<div class="block">Gets the participant's current score.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The number of rounds won</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="incScore()">
 <h3>incScore</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">incScore</span>()</div>
+<div class="block">Increments the participant's score by one.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getHandValue()">
 <h3>getHandValue</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getHandValue</span>()</div>
+<div class="block">Gets the current value of the participant's hand.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The total value of the cards in the hand</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="resetHand()">
 <h3>resetHand</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">resetHand</span>()</div>
+<div class="block">Clears the participant's hand for a new round.</div>
 </section>
 </li>
 </ul>

@@ -75,6 +75,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">ErrorHandler</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block">Handles error conditions in the Blackjack game.
+ Provides safe operations for card-related actions that might fail.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -87,7 +89,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(ConsoleIO)" class="member-name-link">ErrorHandler</a><wbr>(<a href="ConsoleIO.html" title="class in Unnamed Package">ConsoleIO</a>&nbsp;io)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Creates a new ErrorHandler with the specified ConsoleIO.</div>
+</div>
 </div>
 </section>
 </li>
@@ -105,14 +109,20 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addCardSafety(Hand,Card)" class="member-name-link">addCardSafety</a><wbr>(<a href="Hand.html" title="class in Unnamed Package">Hand</a>&nbsp;hand,
  <a href="Card.html" title="class in Unnamed Package">Card</a>&nbsp;card)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Safely adds a card to a hand, handling any errors.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Card.html" title="class in Unnamed Package">Card</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dealCardSafety(Shoe)" class="member-name-link">dealCardSafety</a><wbr>(<a href="Shoe.html" title="class in Unnamed Package">Shoe</a>&nbsp;shoe)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Safely deals a card from the shoe, handling any errors.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Card.html" title="class in Unnamed Package">Card</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCardSafety(Hand,int)" class="member-name-link">getCardSafety</a><wbr>(<a href="Hand.html" title="class in Unnamed Package">Hand</a>&nbsp;hand,
  int&nbsp;index)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Safely gets a card from a hand by index, handling any errors.</div>
+</div>
 </div>
 </div>
 </div>
@@ -134,6 +144,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;(ConsoleIO)">
 <h3>ErrorHandler</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ErrorHandler</span><wbr><span class="parameters">(<a href="ConsoleIO.html" title="class in Unnamed Package">ConsoleIO</a>&nbsp;io)</span></div>
+<div class="block">Creates a new ErrorHandler with the specified ConsoleIO.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>io</code> - The ConsoleIO instance for displaying error messages</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -149,12 +164,27 @@ loadScripts(document, 'script');</script>
 <h3>addCardSafety</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addCardSafety</span><wbr><span class="parameters">(<a href="Hand.html" title="class in Unnamed Package">Hand</a>&nbsp;hand,
  <a href="Card.html" title="class in Unnamed Package">Card</a>&nbsp;card)</span></div>
+<div class="block">Safely adds a card to a hand, handling any errors.
+ If the hand is full, displays an error and exits the program.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>hand</code> - The hand to add a card to</dd>
+<dd><code>card</code> - The card to add</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="dealCardSafety(Shoe)">
 <h3>dealCardSafety</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Card.html" title="class in Unnamed Package">Card</a></span>&nbsp;<span class="element-name">dealCardSafety</span><wbr><span class="parameters">(<a href="Shoe.html" title="class in Unnamed Package">Shoe</a>&nbsp;shoe)</span></div>
+<div class="block">Safely deals a card from the shoe, handling any errors.
+ If the shoe is empty, displays an error and exits the program.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>shoe</code> - The shoe to deal from</dd>
+<dt>Returns:</dt>
+<dd>The dealt card</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -162,6 +192,15 @@ loadScripts(document, 'script');</script>
 <h3>getCardSafety</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Card.html" title="class in Unnamed Package">Card</a></span>&nbsp;<span class="element-name">getCardSafety</span><wbr><span class="parameters">(<a href="Hand.html" title="class in Unnamed Package">Hand</a>&nbsp;hand,
  int&nbsp;index)</span></div>
+<div class="block">Safely gets a card from a hand by index, handling any errors.
+ If the index is invalid, displays an error and exits the program.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>hand</code> - The hand to get a card from</dd>
+<dd><code>index</code> - The index of the card</dd>
+<dt>Returns:</dt>
+<dd>The card at the specified index</dd>
+</dl>
 </section>
 </li>
 </ul>

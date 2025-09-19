@@ -75,6 +75,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">Game</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block">Main game class that controls the flow of the Blackjack game.
+ Manages rounds, players, and game logic.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -89,7 +91,9 @@ loadScripts(document, 'script');</script>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int,ConsoleIO,ErrorHandler)" class="member-name-link">Game</a><wbr>(int&nbsp;numDecks,
  <a href="ConsoleIO.html" title="class in Unnamed Package">ConsoleIO</a>&nbsp;io,
  <a href="ErrorHandler.html" title="class in Unnamed Package">ErrorHandler</a>&nbsp;handler)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Creates a new Blackjack game.</div>
+</div>
 </div>
 </section>
 </li>
@@ -106,7 +110,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#startGame()" class="member-name-link">startGame</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Starts the game by displaying a welcome message and playing the first round.</div>
+</div>
 </div>
 </div>
 </div>
@@ -130,6 +136,13 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Game</span><wbr><span class="parameters">(int&nbsp;numDecks,
  <a href="ConsoleIO.html" title="class in Unnamed Package">ConsoleIO</a>&nbsp;io,
  <a href="ErrorHandler.html" title="class in Unnamed Package">ErrorHandler</a>&nbsp;handler)</span></div>
+<div class="block">Creates a new Blackjack game.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>numDecks</code> - The number of card decks to use</dd>
+<dd><code>io</code> - The ConsoleIO instance for user interaction</dd>
+<dd><code>handler</code> - The ErrorHandler for safe operations</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -144,6 +157,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="startGame()">
 <h3>startGame</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">startGame</span>()</div>
+<div class="block">Starts the game by displaying a welcome message and playing the first round.</div>
 </section>
 </li>
 </ul>

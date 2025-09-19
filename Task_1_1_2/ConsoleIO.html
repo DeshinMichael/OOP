@@ -75,6 +75,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">ConsoleIO</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block">Handles all console input/output operations for the Blackjack game.
+ Responsible for displaying game information and reading user input.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -87,7 +89,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.util.Scanner)" class="member-name-link">ConsoleIO</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Scanner.html" title="class or interface in java.util" class="external-link">Scanner</a>&nbsp;in)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Creates a new ConsoleIO instance with the specified input scanner.</div>
+</div>
 </div>
 </section>
 </li>
@@ -104,79 +108,127 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printDealerBust()" class="member-name-link">printDealerBust</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Announces that the dealer has busted.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printDealerDealtCards()" class="member-name-link">printDealerDealtCards</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Indicates that the dealer has dealt cards.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printDealerDrewCard(Card)" class="member-name-link">printDealerDrewCard</a><wbr>(<a href="Card.html" title="class in Unnamed Package">Card</a>&nbsp;card)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Announces a card drawn by the dealer.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printDealerDrewClosedCard()" class="member-name-link">printDealerDrewClosedCard</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Announces that the dealer revealed their closed card.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printDealerHasBlackjack()" class="member-name-link">printDealerHasBlackjack</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Announces that the dealer has Blackjack.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printDealerTurn()" class="member-name-link">printDealerTurn</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Announces the start of the dealer's turn.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printDealerWon()" class="member-name-link">printDealerWon</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Announces that the dealer has won.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printErrorHandFull()" class="member-name-link">printErrorHandFull</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Prints an error message for a full hand.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printErrorInvalidCardIndex()" class="member-name-link">printErrorInvalidCardIndex</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Prints an error message for an invalid card index.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printErrorShoeOutOfCards()" class="member-name-link">printErrorShoeOutOfCards</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Prints an error message for an empty shoe.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printHelloMessage()" class="member-name-link">printHelloMessage</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Prints welcome message at the start of the game.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printHitOrStand()" class="member-name-link">printHitOrStand</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Prompts the player to hit or stand.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printPlayer21()" class="member-name-link">printPlayer21</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Announces that the player has reached 21.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printPlayerAndDealerCards(Participant,Participant,boolean)" class="member-name-link">printPlayerAndDealerCards</a><wbr>(<a href="Participant.html" title="class in Unnamed Package">Participant</a>&nbsp;player,
  <a href="Participant.html" title="class in Unnamed Package">Participant</a>&nbsp;dealer,
  boolean&nbsp;revealDealerHand)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Displays the player's and dealer's cards.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printPlayerBust()" class="member-name-link">printPlayerBust</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Announces that the player has busted.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printPlayerDrewCard(Card)" class="member-name-link">printPlayerDrewCard</a><wbr>(<a href="Card.html" title="class in Unnamed Package">Card</a>&nbsp;card)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Announces a card drawn by the player.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printPlayerHasBlackjack()" class="member-name-link">printPlayerHasBlackjack</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Announces that the player has Blackjack.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printPlayerTurn()" class="member-name-link">printPlayerTurn</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Announces the start of the player's turn.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printPlayerWon()" class="member-name-link">printPlayerWon</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Announces that the player has won.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printPush()" class="member-name-link">printPush</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Announces a tie game (push).</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printRoundHeader(int)" class="member-name-link">printRoundHeader</a><wbr>(int&nbsp;roundCount)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Displays the round number header.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printRoundIsOver(Participant,Participant)" class="member-name-link">printRoundIsOver</a><wbr>(<a href="Participant.html" title="class in Unnamed Package">Participant</a>&nbsp;player,
  <a href="Participant.html" title="class in Unnamed Package">Participant</a>&nbsp;dealer)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Displays the end of round message with scores.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readPlayerNexRoundChoice()" class="member-name-link">readPlayerNexRoundChoice</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Asks if the player wants to play another round.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readPlayerTurnChoice()" class="member-name-link">readPlayerTurnChoice</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Reads the player's choice to hit or stand.</div>
+</div>
 </div>
 </div>
 </div>
@@ -198,6 +250,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;(java.util.Scanner)">
 <h3>ConsoleIO</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ConsoleIO</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Scanner.html" title="class or interface in java.util" class="external-link">Scanner</a>&nbsp;in)</span></div>
+<div class="block">Creates a new ConsoleIO instance with the specified input scanner.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>in</code> - The scanner to use for reading user input</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -212,18 +269,25 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="printHelloMessage()">
 <h3>printHelloMessage</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">printHelloMessage</span>()</div>
+<div class="block">Prints welcome message at the start of the game.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="printRoundHeader(int)">
 <h3>printRoundHeader</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">printRoundHeader</span><wbr><span class="parameters">(int&nbsp;roundCount)</span></div>
+<div class="block">Displays the round number header.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>roundCount</code> - The current round number</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="printDealerDealtCards()">
 <h3>printDealerDealtCards</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">printDealerDealtCards</span>()</div>
+<div class="block">Indicates that the dealer has dealt cards.</div>
 </section>
 </li>
 <li>
@@ -232,102 +296,141 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">printPlayerAndDealerCards</span><wbr><span class="parameters">(<a href="Participant.html" title="class in Unnamed Package">Participant</a>&nbsp;player,
  <a href="Participant.html" title="class in Unnamed Package">Participant</a>&nbsp;dealer,
  boolean&nbsp;revealDealerHand)</span></div>
+<div class="block">Displays the player's and dealer's cards.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>player</code> - The player participant</dd>
+<dd><code>dealer</code> - The dealer participant</dd>
+<dd><code>revealDealerHand</code> - Whether to reveal the dealer's full hand or hide one card</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="printPlayerHasBlackjack()">
 <h3>printPlayerHasBlackjack</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">printPlayerHasBlackjack</span>()</div>
+<div class="block">Announces that the player has Blackjack.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="printDealerHasBlackjack()">
 <h3>printDealerHasBlackjack</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">printDealerHasBlackjack</span>()</div>
+<div class="block">Announces that the dealer has Blackjack.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="printPlayerTurn()">
 <h3>printPlayerTurn</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">printPlayerTurn</span>()</div>
+<div class="block">Announces the start of the player's turn.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="printDealerTurn()">
 <h3>printDealerTurn</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">printDealerTurn</span>()</div>
+<div class="block">Announces the start of the dealer's turn.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="printHitOrStand()">
 <h3>printHitOrStand</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">printHitOrStand</span>()</div>
+<div class="block">Prompts the player to hit or stand.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="readPlayerTurnChoice()">
 <h3>readPlayerTurnChoice</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">readPlayerTurnChoice</span>()</div>
+<div class="block">Reads the player's choice to hit or stand.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>true if the player chose to hit, false if the player chose to stand</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="readPlayerNexRoundChoice()">
 <h3>readPlayerNexRoundChoice</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">readPlayerNexRoundChoice</span>()</div>
+<div class="block">Asks if the player wants to play another round.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>true if the player wants to play again, false otherwise</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="printPlayerDrewCard(Card)">
 <h3>printPlayerDrewCard</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">printPlayerDrewCard</span><wbr><span class="parameters">(<a href="Card.html" title="class in Unnamed Package">Card</a>&nbsp;card)</span></div>
+<div class="block">Announces a card drawn by the player.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>card</code> - The card drawn</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="printDealerDrewCard(Card)">
 <h3>printDealerDrewCard</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">printDealerDrewCard</span><wbr><span class="parameters">(<a href="Card.html" title="class in Unnamed Package">Card</a>&nbsp;card)</span></div>
+<div class="block">Announces a card drawn by the dealer.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>card</code> - The card drawn</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="printDealerDrewClosedCard()">
 <h3>printDealerDrewClosedCard</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">printDealerDrewClosedCard</span>()</div>
+<div class="block">Announces that the dealer revealed their closed card.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="printPlayerBust()">
 <h3>printPlayerBust</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">printPlayerBust</span>()</div>
+<div class="block">Announces that the player has busted.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="printDealerBust()">
 <h3>printDealerBust</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">printDealerBust</span>()</div>
+<div class="block">Announces that the dealer has busted.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="printPlayer21()">
 <h3>printPlayer21</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">printPlayer21</span>()</div>
+<div class="block">Announces that the player has reached 21.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="printDealerWon()">
 <h3>printDealerWon</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">printDealerWon</span>()</div>
+<div class="block">Announces that the dealer has won.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="printPlayerWon()">
 <h3>printPlayerWon</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">printPlayerWon</span>()</div>
+<div class="block">Announces that the player has won.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="printPush()">
 <h3>printPush</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">printPush</span>()</div>
+<div class="block">Announces a tie game (push).</div>
 </section>
 </li>
 <li>
@@ -335,24 +438,33 @@ loadScripts(document, 'script');</script>
 <h3>printRoundIsOver</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">printRoundIsOver</span><wbr><span class="parameters">(<a href="Participant.html" title="class in Unnamed Package">Participant</a>&nbsp;player,
  <a href="Participant.html" title="class in Unnamed Package">Participant</a>&nbsp;dealer)</span></div>
+<div class="block">Displays the end of round message with scores.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>player</code> - The player participant</dd>
+<dd><code>dealer</code> - The dealer participant</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="printErrorShoeOutOfCards()">
 <h3>printErrorShoeOutOfCards</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">printErrorShoeOutOfCards</span>()</div>
+<div class="block">Prints an error message for an empty shoe.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="printErrorHandFull()">
 <h3>printErrorHandFull</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">printErrorHandFull</span>()</div>
+<div class="block">Prints an error message for a full hand.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="printErrorInvalidCardIndex()">
 <h3>printErrorInvalidCardIndex</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">printErrorInvalidCardIndex</span>()</div>
+<div class="block">Prints an error message for an invalid card index.</div>
 </section>
 </li>
 </ul>
