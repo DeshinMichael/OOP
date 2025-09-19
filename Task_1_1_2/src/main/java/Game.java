@@ -1,3 +1,4 @@
+// Class that controls the main game flow and logic for Blackjack
 public class Game {
     private final int numDecks;
     private final Participant player;
@@ -6,6 +7,7 @@ public class Game {
     private final ConsoleIO io;
     private final ErrorHandler handler;
 
+    // Constructor that initializes game with specified number of decks and dependencies
     public Game(int numDecks, ConsoleIO io, ErrorHandler handler) {
         this.numDecks = numDecks;
         player = new Participant();
@@ -15,11 +17,13 @@ public class Game {
         this.handler = handler;
     }
 
+    // Begins the game with welcome message and first round
     public void startGame() {
         io.printHelloMessage();
         playRound();
     }
 
+    // Executes a complete round of Blackjack from dealing to determining winner
     private void playRound() {
         Shoe shoe = new Shoe(numDecks);
         player.resetHand();
@@ -99,6 +103,7 @@ public class Game {
         newRound();
     }
 
+    // Sets up a new round and asks player if they want to continue playing
     private void newRound() {
         roundCount++;
         io.printRoundIsOver(player, dealer);
@@ -112,10 +117,12 @@ public class Game {
         }
     }
 
+    // Determines if participant has Blackjack (21 with exactly 2 cards)
     private boolean isBlackjack(Participant participant) {
         return participant.getHandValue() == 21 && participant.getHand().getCardCount() == 2;
     }
 
+    // Determines if participant has busted (exceeded 21 points)
     private boolean isBust(Participant participant) {
         return participant.getHandValue() > 21;
     }

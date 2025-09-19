@@ -1,12 +1,15 @@
+// Class representing a hand of cards with calculation of Blackjack values
 public class Hand {
     private final Card[] cards;
     private int cardCount;
 
+    // Constructor creating an empty hand with capacity for 12 cards
     public Hand() {
         cards = new Card[12];
         cardCount = 0;
     }
 
+    // Adds a card to the hand, throws exception if hand is full
     public void addCard(Card card) {
         if (cardCount < cards.length) {
             cards[cardCount++] = card;
@@ -15,6 +18,7 @@ public class Hand {
         }
     }
 
+    // Gets card at specified index, throws exception if index is invalid
     public Card getCard(int index) {
         if (index >= 0 && index < cardCount) {
             return cards[index];
@@ -23,10 +27,12 @@ public class Hand {
         }
     }
 
+    // Returns the current number of cards in hand
     public int getCardCount() {
         return cardCount;
     }
 
+    // Calculates the total Blackjack value of the hand, handling Aces appropriately
     public int getValue() {
         int val = 0;
         int aceCount = 0;
@@ -78,10 +84,12 @@ public class Hand {
         return val;
     }
 
+    // Clears all cards from the hand
     public void clear() {
         cardCount = 0;
     }
 
+    // Converts hand to string representation listing all cards
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

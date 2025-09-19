@@ -1,8 +1,10 @@
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
+// Test class for Hand functionality
 public class HandTest {
 
+    // Tests that a Hand object can be created properly
     @Test
     public void testCreationHand() {
         Hand hand = new Hand();
@@ -11,6 +13,7 @@ public class HandTest {
         assertEquals(0, hand.getValue());
     }
 
+    // Tests that cards can be added to a hand
     @Test
     public void testAddCard() {
         Hand hand = new Hand();
@@ -23,6 +26,7 @@ public class HandTest {
         assertEquals(card2, hand.getCard(1));
     }
 
+    // Tests that adding cards beyond capacity throws an exception
     @Test
     public void testAddCardOverflow() {
         Hand hand = new Hand();
@@ -32,6 +36,7 @@ public class HandTest {
         assertThrows(IllegalStateException.class, () -> hand.addCard(new Card("Туз", "Пики")));
     }
 
+    // Tests that cards can be retrieved from a hand
     @Test
     public void testGetCard(){
         Hand hand = new Hand();
@@ -40,6 +45,7 @@ public class HandTest {
         assertEquals(card1, hand.getCard(0));
     }
 
+    // Tests that getting cards with invalid indices throws exceptions
     @Test
     public void testGetCardInvalidIndex(){
         Hand hand = new Hand();
@@ -50,6 +56,7 @@ public class HandTest {
         assertThrows(IllegalArgumentException.class, () -> hand.getCard(1));
     }
 
+    // Tests that card count is tracked correctly
     @Test
     public void testGetCardCount() {
         Hand hand = new Hand();
@@ -60,6 +67,7 @@ public class HandTest {
         assertEquals(2, hand.getCardCount());
     }
 
+    // Tests that hand value is calculated correctly
     @Test
     public void testGetValue() {
         Hand hand = new Hand();
@@ -74,6 +82,7 @@ public class HandTest {
         assertEquals(15, hand.getValue());
     }
 
+    // Tests that hand can be cleared
     @Test
     public void testClear() {
         Hand hand = new Hand();
@@ -85,6 +94,7 @@ public class HandTest {
         assertEquals(0, hand.getValue());
     }
 
+    // Tests that string representation is correct
     @Test
     public void testToString() {
         Hand hand = new Hand();

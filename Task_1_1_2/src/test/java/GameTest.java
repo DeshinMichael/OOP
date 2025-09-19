@@ -4,8 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Scanner;
 
+// Test class for Game functionality
 public class GameTest {
 
+    // Tests that a Game object can be created properly
     @Test
     public void testCreationGame() {
         Scanner in = new Scanner(System.in);

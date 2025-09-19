@@ -10,11 +10,13 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 
+// Test class for ConsoleIO functionality
 public class ConsoleIOTest {
     private ByteArrayOutputStream outputStream;
     private PrintStream originalOut;
     private ConsoleIO consoleIO;
 
+    // Setup method that runs before each test
     @BeforeEach
     public void setUp() {
         originalOut = System.out;
@@ -24,16 +26,19 @@ public class ConsoleIOTest {
         consoleIO = new ConsoleIO(new Scanner(""));
     }
 
+    // Cleanup method that runs after each test
     @AfterEach
     public void tearDown() {
         System.setOut(originalOut);
     }
 
+    // Helper method to create ConsoleIO with predefined input
     private ConsoleIO createConsoleIOWithInput(String input) {
         InputStream inputStream = new ByteArrayInputStream(input.getBytes());
         return new ConsoleIO(new Scanner(inputStream));
     }
 
+    // Tests that welcome message is printed correctly
     @Test
     public void testPrintHelloMessage() {
         consoleIO.printHelloMessage();
@@ -41,6 +46,7 @@ public class ConsoleIOTest {
         assertTrue(output.contains("Добро пожаловать в игру Блекджек!"));
     }
 
+    // Tests that round header is printed correctly
     @Test
     public void testPrintRoundHeader() {
         consoleIO.printRoundHeader(3);
@@ -48,6 +54,7 @@ public class ConsoleIOTest {
         assertTrue(output.contains("-- Раунд 3 --"));
     }
 
+    // Tests that dealer dealt cards message is printed correctly
     @Test
     public void testPrintDealerDealtCards() {
         consoleIO.printDealerDealtCards();
@@ -55,6 +62,7 @@ public class ConsoleIOTest {
         assertTrue(output.contains("Дилер раздал карты"));
     }
 
+    // Tests that player and dealer cards are shown correctly with revealed hand
     @Test
     public void testPrintPlayerAndDealerCardsRevealHand() {
         Hand playerHand = new Hand();
@@ -84,6 +92,7 @@ public class ConsoleIOTest {
         assertTrue(output.contains("Семерка Буби"));
     }
 
+    // Tests that player and dealer cards are shown correctly with hidden dealer card
     @Test
     public void testPrintPlayerAndDealerCardsHiddenHand() {
         Participant player = new Participant();
@@ -106,6 +115,7 @@ public class ConsoleIOTest {
         assertFalse(output.contains("Семерка Буби"));
     }
 
+    // Tests that player blackjack message is printed correctly
     @Test
     public void testPrintPlayerHasBlackjack() {
         consoleIO.printPlayerHasBlackjack();
@@ -113,6 +123,7 @@ public class ConsoleIOTest {
         assertTrue(output.contains("У вас Блекджек! Вы выиграли!"));
     }
 
+    // Tests that dealer blackjack message is printed correctly
     @Test
     public void testPrintDealerHasBlackjack() {
         consoleIO.printDealerHasBlackjack();
@@ -120,6 +131,7 @@ public class ConsoleIOTest {
         assertTrue(output.contains("У дилера Блекджек! Вы проиграли."));
     }
 
+    // Tests that player turn announcement is printed correctly
     @Test
     public void testPrintPlayerTurn() {
         consoleIO.printPlayerTurn();
@@ -128,6 +140,7 @@ public class ConsoleIOTest {
         assertTrue(output.contains("-------"));
     }
 
+    // Tests that dealer turn announcement is printed correctly
     @Test
     public void testPrintDealerTurn() {
         consoleIO.printDealerTurn();
@@ -136,6 +149,7 @@ public class ConsoleIOTest {
         assertTrue(output.contains("-------"));
     }
 
+    // Tests that hit or stand prompt is printed correctly
     @Test
     public void testPrintHitOrStand() {
         consoleIO.printHitOrStand();
@@ -143,6 +157,7 @@ public class ConsoleIOTest {
         assertTrue(output.contains("Введите '1', чтобы взять карту, и '0', чтобы остановиться..."));
     }
 
+    // Tests that player's choice to hit is read correctly
     @Test
     public void testReadPlayerTurnChoiceHit() {
         ConsoleIO ioWithInput = createConsoleIOWithInput("1\n");
@@ -150,6 +165,7 @@ public class ConsoleIOTest {
         assertTrue(choice);
     }
 
+    // Tests that player's choice to stand is read correctly
     @Test
     public void testReadPlayerTurnChoiceStand() {
         ConsoleIO ioWithInput = createConsoleIOWithInput("0\n");
@@ -157,6 +173,7 @@ public class ConsoleIOTest {
         assertFalse(choice);
     }
 
+    // Tests that invalid input is handled correctly before accepting valid input
     @Test
     public void testReadPlayerTurnChoiceInvalidThenValid() {
         ConsoleIO ioWithInput = createConsoleIOWithInput("invalid\n1\n");
@@ -166,6 +183,7 @@ public class ConsoleIOTest {
         assertTrue(output.contains("Некорректный ввод"));
     }
 
+    // Tests that player's choice to play another round is read correctly
     @Test
     public void testReadPlayerNextRoundChoiceYes() {
         ConsoleIO ioWithInput = createConsoleIOWithInput("Да\n");
@@ -173,6 +191,7 @@ public class ConsoleIOTest {
         assertTrue(choice);
     }
 
+    // Tests that player's choice to end the game is read correctly
     @Test
     public void testReadPlayerNextRoundChoiceNo() {
         ConsoleIO ioWithInput = createConsoleIOWithInput("Нет\n");
@@ -182,6 +201,7 @@ public class ConsoleIOTest {
         assertTrue(output.contains("Спасибо за игру!"));
     }
 
+    // Tests that invalid input is handled correctly before accepting valid round choice
     @Test
     public void testReadPlayerNextRoundChoiceInvalidThenValid() {
         ConsoleIO ioWithInput = createConsoleIOWithInput("invalid\nДа\n");
@@ -191,6 +211,7 @@ public class ConsoleIOTest {
         assertTrue(output.contains("Некорректный ввод"));
     }
 
+    // Tests that player drawing card message is printed correctly
     @Test
     public void testPrintPlayerDrewCard() {
         Card card = new Card("Туз", "Черви");
@@ -199,6 +220,7 @@ public class ConsoleIOTest {
         assertTrue(output.contains("Вы открыли карту Туз Черви"));
     }
 
+    // Tests that dealer drawing card message is printed correctly
     @Test
     public void testPrintDealerDrewCard() {
         Card card = new Card("Король", "Буби");
@@ -207,6 +229,7 @@ public class ConsoleIOTest {
         assertTrue(output.contains("Дилер открывает карту Король Буби"));
     }
 
+    // Tests that dealer revealing closed card message is printed correctly
     @Test
     public void testPrintDealerDrewClosedCard() {
         consoleIO.printDealerDrewClosedCard();
@@ -214,6 +237,7 @@ public class ConsoleIOTest {
         assertTrue(output.contains("Дилер открывает закрытую карту"));
     }
 
+    // Tests that player bust message is printed correctly
     @Test
     public void testPrintPlayerBust() {
         consoleIO.printPlayerBust();
@@ -221,6 +245,7 @@ public class ConsoleIOTest {
         assertTrue(output.contains("Перебор! Вы проиграли."));
     }
 
+    // Tests that dealer bust message is printed correctly
     @Test
     public void testPrintDealerBust() {
         consoleIO.printDealerBust();
@@ -228,6 +253,7 @@ public class ConsoleIOTest {
         assertTrue(output.contains("Дилер перебрал! Вы выиграли!"));
     }
 
+    // Tests that player 21 message is printed correctly
     @Test
     public void testPrintPlayer21() {
         consoleIO.printPlayer21();
@@ -235,6 +261,7 @@ public class ConsoleIOTest {
         assertTrue(output.contains("У вас 21!"));
     }
 
+    // Tests that dealer win message is printed correctly
     @Test
     public void testPrintDealerWon() {
         consoleIO.printDealerWon();
@@ -242,6 +269,7 @@ public class ConsoleIOTest {
         assertTrue(output.contains("Дилер выиграл."));
     }
 
+    // Tests that player win message is printed correctly
     @Test
     public void testPrintPlayerWon() {
         consoleIO.printPlayerWon();
@@ -249,6 +277,7 @@ public class ConsoleIOTest {
         assertTrue(output.contains("Вы выиграли!"));
     }
 
+    // Tests that push (tie) message is printed correctly
     @Test
     public void testPrintPush() {
         consoleIO.printPush();
@@ -256,6 +285,7 @@ public class ConsoleIOTest {
         assertTrue(output.contains("Ничья."));
     }
 
+    // Tests that end of round message with scores is printed correctly
     @Test
     public void testPrintRoundIsOver() {
         Participant player = new Participant();
@@ -270,6 +300,7 @@ public class ConsoleIOTest {
         assertTrue(output.contains("-------"));
     }
 
+    // Tests that shoe out of cards error message is printed correctly
     @Test
     public void testPrintErrorShoeOutOfCards() {
         PrintStream originalErr = System.err;
@@ -285,6 +316,7 @@ public class ConsoleIOTest {
         }
     }
 
+    // Tests that hand full error message is printed correctly
     @Test
     public void testPrintErrorHandFull() {
         PrintStream originalErr = System.err;
@@ -300,6 +332,7 @@ public class ConsoleIOTest {
         }
     }
 
+    // Tests that invalid card index error message is printed correctly
     @Test
     public void testPrintErrorInvalidCardIndex() {
         PrintStream originalErr = System.err;

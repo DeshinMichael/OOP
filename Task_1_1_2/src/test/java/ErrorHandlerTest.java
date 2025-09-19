@@ -5,9 +5,11 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Scanner;
 
+// Test class for ErrorHandler functionality
 public class ErrorHandlerTest {
     private ErrorHandler errorHandler;
 
+    // Setup method that runs before each test
     @BeforeEach
     public void setUp() {
         Scanner in = new Scanner(System.in);
@@ -15,6 +17,7 @@ public class ErrorHandlerTest {
         errorHandler = new ErrorHandler(consoleIO);
     }
 
+    // Tests that cards can be added safely to a hand under normal conditions
     @Test
     public void testAddCardSafetyNormal() {
         Hand hand = new Hand();
@@ -23,6 +26,7 @@ public class ErrorHandlerTest {
         assertEquals(card, hand.getCard(0));
     }
 
+    // Tests that cards can be dealt safely from a shoe under normal conditions
     @Test
     public void testDealCardSafetyNormal() {
         Shoe shoe = new Shoe(1);
@@ -30,6 +34,7 @@ public class ErrorHandlerTest {
         assertNotNull(card);
     }
 
+    // Tests that cards can be retrieved safely from a hand under normal conditions
     @Test
     public void testGetCardSafetyNormal() {
         Hand hand = new Hand();
