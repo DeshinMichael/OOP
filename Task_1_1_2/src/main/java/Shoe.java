@@ -1,9 +1,17 @@
-// Class representing a shoe containing multiple decks of cards
+/**
+ * Represents a shoe of multiple decks of cards used in Blackjack.
+ * Manages card dealing and shuffling.
+ */
 public class Shoe {
     private final Card[] cards;
     private int currCardIndex;
 
-    // Constructor initializing shoe with specified number of decks and shuffling them
+    /**
+     * Creates a new shoe with the specified number of decks.
+     * Initializes all cards and shuffles the shoe.
+     *
+     * @param numDecks The number of decks to include in the shoe
+     */
     public Shoe(int numDecks) {
         cards = new Card[numDecks * 52];
         currCardIndex = 0;
@@ -23,12 +31,18 @@ public class Shoe {
         shuffle();
     }
 
-    // Returns the array of all cards in the shoe
+    /**
+     * Gets the array of cards in the shoe.
+     *
+     * @return The array of cards
+     */
     public Card[] getCards() {
         return cards;
     }
 
-    // Shuffles the cards in the shoe using Fisher-Yates algorithm
+    /**
+     * Shuffles the cards in the shoe using the Fisher-Yates algorithm.
+     */
     public void shuffle() {
         for (int i = cards.length - 1; i > 0; i--) {
             int j = (int) (Math.random() * (i + 1));
@@ -38,7 +52,12 @@ public class Shoe {
         }
     }
 
-    // Deals the next card from the shoe, throws exception if no cards left
+    /**
+     * Deals a card from the shoe.
+     *
+     * @return The next card in the shoe
+     * @throws IllegalStateException if there are no more cards in the shoe
+     */
     public Card dealCard() {
         if (currCardIndex < cards.length) {
             return cards[currCardIndex++];

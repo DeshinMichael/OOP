@@ -5,11 +5,17 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Scanner;
 
-// Test class for ErrorHandler functionality
+/**
+ * Test class for ErrorHandler functionality.
+ * Validates error handling methods function properly under normal conditions.
+ */
 public class ErrorHandlerTest {
     private ErrorHandler errorHandler;
 
-    // Setup method that runs before each test
+    /**
+     * Setup method that runs before each test.
+     * Creates an ErrorHandler instance with a ConsoleIO for testing.
+     */
     @BeforeEach
     public void setUp() {
         Scanner in = new Scanner(System.in);
@@ -17,7 +23,10 @@ public class ErrorHandlerTest {
         errorHandler = new ErrorHandler(consoleIO);
     }
 
-    // Tests that cards can be added safely to a hand under normal conditions
+    /**
+     * Tests that cards can be added safely to a hand under normal conditions.
+     * Verifies the card is added correctly to the hand.
+     */
     @Test
     public void testAddCardSafetyNormal() {
         Hand hand = new Hand();
@@ -26,7 +35,10 @@ public class ErrorHandlerTest {
         assertEquals(card, hand.getCard(0));
     }
 
-    // Tests that cards can be dealt safely from a shoe under normal conditions
+    /**
+     * Tests that cards can be dealt safely from a shoe under normal conditions.
+     * Verifies a card is successfully dealt from the shoe.
+     */
     @Test
     public void testDealCardSafetyNormal() {
         Shoe shoe = new Shoe(1);
@@ -34,7 +46,10 @@ public class ErrorHandlerTest {
         assertNotNull(card);
     }
 
-    // Tests that cards can be retrieved safely from a hand under normal conditions
+    /**
+     * Tests that cards can be retrieved safely from a hand under normal conditions.
+     * Verifies the correct card is retrieved from the hand.
+     */
     @Test
     public void testGetCardSafetyNormal() {
         Hand hand = new Hand();

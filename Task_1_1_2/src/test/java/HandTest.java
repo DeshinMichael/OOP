@@ -1,10 +1,16 @@
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
-// Test class for Hand functionality
+/**
+ * Test class for Hand functionality.
+ * Tests card management and value calculation in a hand.
+ */
 public class HandTest {
 
-    // Tests that a Hand object can be created properly
+    /**
+     * Tests that a Hand object can be created properly.
+     * Verifies the hand is empty after creation.
+     */
     @Test
     public void testCreationHand() {
         Hand hand = new Hand();
@@ -13,7 +19,10 @@ public class HandTest {
         assertEquals(0, hand.getValue());
     }
 
-    // Tests that cards can be added to a hand
+    /**
+     * Tests that cards can be added to a hand.
+     * Verifies cards are added in the correct order and can be retrieved.
+     */
     @Test
     public void testAddCard() {
         Hand hand = new Hand();
@@ -26,7 +35,10 @@ public class HandTest {
         assertEquals(card2, hand.getCard(1));
     }
 
-    // Tests that adding cards beyond capacity throws an exception
+    /**
+     * Tests that adding cards beyond capacity throws an exception.
+     * Verifies IllegalStateException is thrown when adding a 13th card.
+     */
     @Test
     public void testAddCardOverflow() {
         Hand hand = new Hand();
@@ -36,7 +48,10 @@ public class HandTest {
         assertThrows(IllegalStateException.class, () -> hand.addCard(new Card("Туз", "Пики")));
     }
 
-    // Tests that cards can be retrieved from a hand
+    /**
+     * Tests that cards can be retrieved from a hand.
+     * Verifies the correct card is returned when using getCard.
+     */
     @Test
     public void testGetCard(){
         Hand hand = new Hand();
@@ -45,7 +60,10 @@ public class HandTest {
         assertEquals(card1, hand.getCard(0));
     }
 
-    // Tests that getting cards with invalid indices throws exceptions
+    /**
+     * Tests that getting cards with invalid indices throws exceptions.
+     * Verifies IllegalArgumentException is thrown for out-of-bounds indices.
+     */
     @Test
     public void testGetCardInvalidIndex(){
         Hand hand = new Hand();
@@ -56,7 +74,10 @@ public class HandTest {
         assertThrows(IllegalArgumentException.class, () -> hand.getCard(1));
     }
 
-    // Tests that card count is tracked correctly
+    /**
+     * Tests that card count is tracked correctly.
+     * Verifies the card count increases as cards are added.
+     */
     @Test
     public void testGetCardCount() {
         Hand hand = new Hand();
@@ -67,7 +88,10 @@ public class HandTest {
         assertEquals(2, hand.getCardCount());
     }
 
-    // Tests that hand value is calculated correctly
+    /**
+     * Tests that hand value is calculated correctly.
+     * Verifies correct Blackjack hand values with various card combinations.
+     */
     @Test
     public void testGetValue() {
         Hand hand = new Hand();
@@ -82,7 +106,10 @@ public class HandTest {
         assertEquals(15, hand.getValue());
     }
 
-    // Tests that hand can be cleared
+    /**
+     * Tests that hand can be cleared.
+     * Verifies the hand is empty after clearing.
+     */
     @Test
     public void testClear() {
         Hand hand = new Hand();
@@ -94,7 +121,10 @@ public class HandTest {
         assertEquals(0, hand.getValue());
     }
 
-    // Tests that string representation is correct
+    /**
+     * Tests that string representation is correct.
+     * Verifies the hand is properly formatted as a comma-separated list of cards.
+     */
     @Test
     public void testToString() {
         Hand hand = new Hand();

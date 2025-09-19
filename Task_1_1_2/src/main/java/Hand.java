@@ -1,15 +1,25 @@
-// Class representing a hand of cards with calculation of Blackjack values
+/**
+ * Represents a hand of cards in the Blackjack game.
+ * Manages card storage and calculates the hand value.
+ */
 public class Hand {
     private final Card[] cards;
     private int cardCount;
 
-    // Constructor creating an empty hand with capacity for 12 cards
+    /**
+     * Creates a new empty hand with capacity for 12 cards.
+     */
     public Hand() {
         cards = new Card[12];
         cardCount = 0;
     }
 
-    // Adds a card to the hand, throws exception if hand is full
+    /**
+     * Adds a card to the hand.
+     *
+     * @param card The card to add
+     * @throws IllegalStateException if the hand is already full
+     */
     public void addCard(Card card) {
         if (cardCount < cards.length) {
             cards[cardCount++] = card;
@@ -18,7 +28,13 @@ public class Hand {
         }
     }
 
-    // Gets card at specified index, throws exception if index is invalid
+    /**
+     * Gets a card from the hand at the specified index.
+     *
+     * @param index The index of the card to retrieve
+     * @return The card at the specified index
+     * @throws IllegalArgumentException if the index is invalid
+     */
     public Card getCard(int index) {
         if (index >= 0 && index < cardCount) {
             return cards[index];
@@ -27,12 +43,21 @@ public class Hand {
         }
     }
 
-    // Returns the current number of cards in hand
+    /**
+     * Gets the number of cards in the hand.
+     *
+     * @return The number of cards
+     */
     public int getCardCount() {
         return cardCount;
     }
 
-    // Calculates the total Blackjack value of the hand, handling Aces appropriately
+    /**
+     * Calculates the Blackjack value of the hand.
+     * Accounts for Aces being worth 1 or 11 points.
+     *
+     * @return The total value of the hand
+     */
     public int getValue() {
         int val = 0;
         int aceCount = 0;
@@ -84,12 +109,18 @@ public class Hand {
         return val;
     }
 
-    // Clears all cards from the hand
+    /**
+     * Removes all cards from the hand.
+     */
     public void clear() {
         cardCount = 0;
     }
 
-    // Converts hand to string representation listing all cards
+    /**
+     * Returns a string representation of the hand.
+     *
+     * @return A string listing all the cards in the hand
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

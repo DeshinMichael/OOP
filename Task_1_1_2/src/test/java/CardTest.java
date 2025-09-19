@@ -1,10 +1,16 @@
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
-// Test class for Card functionality
+/**
+ * Test class for Card functionality.
+ * Validates the creation, property access, and string representation of cards.
+ */
 public class CardTest {
 
-    // Tests that a card can be created properly
+    /**
+     * Tests that a card can be created properly.
+     * Verifies the card is not null and has the expected rank.
+     */
     @Test
     public void testCardCreation() {
         Card card = new Card("Дама", "Буби");
@@ -12,14 +18,20 @@ public class CardTest {
         assertEquals("Дама", card.getRank());
     }
 
-    // Tests the getRank method works correctly
+    /**
+     * Tests the getRank method works correctly.
+     * Ensures the rank returned matches the one used during creation.
+     */
     @Test
     public void testGetRank() {
         Card card = new Card("Туз", "Черви");
         assertEquals("Туз", card.getRank());
     }
 
-    // Tests the toString method returns proper string representation
+    /**
+     * Tests the toString method returns proper string representation.
+     * Verifies the string format matches "rank suit".
+     */
     @Test
     public void testToString() {
         Card card = new Card("Король", "Пики");

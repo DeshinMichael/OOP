@@ -1,4 +1,7 @@
-// Class that controls the main game flow and logic for Blackjack
+/**
+ * Main game class that controls the flow of the Blackjack game.
+ * Manages rounds, players, and game logic.
+ */
 public class Game {
     private final int numDecks;
     private final Participant player;
@@ -7,7 +10,13 @@ public class Game {
     private final ConsoleIO io;
     private final ErrorHandler handler;
 
-    // Constructor that initializes game with specified number of decks and dependencies
+    /**
+     * Creates a new Blackjack game.
+     *
+     * @param numDecks The number of card decks to use
+     * @param io The ConsoleIO instance for user interaction
+     * @param handler The ErrorHandler for safe operations
+     */
     public Game(int numDecks, ConsoleIO io, ErrorHandler handler) {
         this.numDecks = numDecks;
         player = new Participant();
@@ -17,13 +26,18 @@ public class Game {
         this.handler = handler;
     }
 
-    // Begins the game with welcome message and first round
+    /**
+     * Starts the game by displaying a welcome message and playing the first round.
+     */
     public void startGame() {
         io.printHelloMessage();
         playRound();
     }
 
-    // Executes a complete round of Blackjack from dealing to determining winner
+    /**
+     * Plays a single round of Blackjack.
+     * Handles dealing cards, player and dealer turns, and determining the winner.
+     */
     private void playRound() {
         Shoe shoe = new Shoe(numDecks);
         player.resetHand();
@@ -103,7 +117,10 @@ public class Game {
         newRound();
     }
 
-    // Sets up a new round and asks player if they want to continue playing
+    /**
+     * Sets up and starts a new round of the game.
+     * Increments round counter and asks if the player wants to continue.
+     */
     private void newRound() {
         roundCount++;
         io.printRoundIsOver(player, dealer);
@@ -117,12 +134,22 @@ public class Game {
         }
     }
 
-    // Determines if participant has Blackjack (21 with exactly 2 cards)
+    /**
+     * Checks if a participant has Blackjack (21 points with exactly 2 cards).
+     *
+     * @param participant The participant to check
+     * @return true if the participant has Blackjack, false otherwise
+     */
     private boolean isBlackjack(Participant participant) {
         return participant.getHandValue() == 21 && participant.getHand().getCardCount() == 2;
     }
 
-    // Determines if participant has busted (exceeded 21 points)
+    /**
+     * Checks if a participant has busted (over 21 points).
+     *
+     * @param participant The participant to check
+     * @return true if the participant has busted, false otherwise
+     */
     private boolean isBust(Participant participant) {
         return participant.getHandValue() > 21;
     }

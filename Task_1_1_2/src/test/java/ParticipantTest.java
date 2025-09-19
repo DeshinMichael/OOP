@@ -1,10 +1,16 @@
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
-// Test class for Participant functionality
+/**
+ * Test class for Participant functionality.
+ * Tests the player/dealer representation and score tracking.
+ */
 public class ParticipantTest {
 
-    // Tests that a Participant object can be created properly
+    /**
+     * Tests that a Participant object can be created properly.
+     * Verifies the participant and its hand are not null after creation.
+     */
     @Test
     public void testCreationParticipant() {
         Participant participant = new Participant();
@@ -12,21 +18,30 @@ public class ParticipantTest {
         assertNotNull(participant.getHand());
     }
 
-    // Tests that hand can be accessed
+    /**
+     * Tests that hand can be accessed.
+     * Verifies the hand is not null when retrieved.
+     */
     @Test
     public void testGetHand() {
         Participant participant = new Participant();
         assertNotNull(participant.getHand());
     }
 
-    // Tests that initial score is zero
+    /**
+     * Tests that initial score is zero.
+     * Verifies the score starts at zero for a new participant.
+     */
     @Test
     public void testInitialScoreIsZero() {
         Participant participant = new Participant();
         assertEquals(0, participant.getScore());
     }
 
-    // Tests that score can be incremented
+    /**
+     * Tests that score can be incremented.
+     * Verifies the score increases correctly when incremented.
+     */
     @Test
     public void testIncrementScore() {
         Participant participant = new Participant();
@@ -36,7 +51,10 @@ public class ParticipantTest {
         assertEquals(2, participant.getScore());
     }
 
-    // Tests that hand value is calculated correctly
+    /**
+     * Tests that hand value is calculated correctly.
+     * Verifies the hand value matches the sum of the card values.
+     */
     @Test
     public void testGetHandValue() {
         Participant participant = new Participant();
@@ -47,7 +65,10 @@ public class ParticipantTest {
         assertEquals(15, participant.getHandValue());
     }
 
-    // Tests that hand can be reset
+    /**
+     * Tests that hand can be reset.
+     * Verifies the hand is empty after resetting.
+     */
     @Test
     public void testResetHand() {
         Participant participant = new Participant();
