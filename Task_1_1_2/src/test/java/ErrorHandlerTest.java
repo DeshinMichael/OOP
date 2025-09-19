@@ -1,9 +1,10 @@
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.util.Scanner;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.Scanner;
 
 /**
  * Test class for ErrorHandler functionality.
@@ -19,8 +20,8 @@ public class ErrorHandlerTest {
     @BeforeEach
     public void setUp() {
         Scanner in = new Scanner(System.in);
-        ConsoleIO consoleIO = new ConsoleIO(in);
-        errorHandler = new ErrorHandler(consoleIO);
+        ConsoleIO consoleIo = new ConsoleIO(in);
+        errorHandler = new ErrorHandler(consoleIo);
     }
 
     /**

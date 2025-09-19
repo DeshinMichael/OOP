@@ -1,8 +1,8 @@
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.Scanner;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Test class for Game functionality.

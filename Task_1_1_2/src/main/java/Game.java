@@ -68,7 +68,8 @@ public class Game {
             boolean playerChoice = io.readPlayerTurnChoice();
             if (playerChoice) {
                 handler.addCardSafety(playerHand, handler.dealCardSafety(shoe));
-                io.printPlayerDrewCard(handler.getCardSafety(playerHand, playerHand.getCardCount() - 1));
+                Card drawnCard = handler.getCardSafety(playerHand, playerHand.getCardCount() - 1);
+                io.printPlayerDrewCard(drawnCard);
                 io.printPlayerAndDealerCards(player, dealer, false);
                 if (isBust(player)) {
                     io.printPlayerBust();
@@ -97,7 +98,8 @@ public class Game {
 
         while (dealer.getHandValue() < 17) {
             handler.addCardSafety(dealerHand, handler.dealCardSafety(shoe));
-            io.printDealerDrewCard(handler.getCardSafety(dealerHand, dealerHand.getCardCount() - 1));
+            Card drawnCard = handler.getCardSafety(dealerHand, dealerHand.getCardCount() - 1);
+            io.printDealerDrewCard(drawnCard);
             io.printPlayerAndDealerCards(player, dealer, true);
         }
 

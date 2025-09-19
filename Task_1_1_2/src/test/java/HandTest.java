@@ -1,4 +1,7 @@
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
 /**
@@ -53,7 +56,7 @@ public class HandTest {
      * Verifies the correct card is returned when using getCard.
      */
     @Test
-    public void testGetCard(){
+    public void testGetCard() {
         Hand hand = new Hand();
         Card card1 = new Card("Десятка", "Черви");
         hand.addCard(card1);
@@ -65,7 +68,7 @@ public class HandTest {
      * Verifies IllegalArgumentException is thrown for out-of-bounds indices.
      */
     @Test
-    public void testGetCardInvalidIndex(){
+    public void testGetCardInvalidIndex() {
         Hand hand = new Hand();
         assertThrows(IllegalArgumentException.class, () -> hand.getCard(0));
         Card card1 = new Card("Десятка", "Черви");

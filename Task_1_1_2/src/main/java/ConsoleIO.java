@@ -119,7 +119,8 @@ public class ConsoleIO {
      * @return true if the player wants to play again, false otherwise
      */
     public boolean readPlayerNexRoundChoice() {
-        System.out.println("Хотите сыграть еще раз? Введите 'Да' для следующего раунда или 'Нет' для выхода.");
+        System.out.println("Хотите сыграть еще раз? Введите 'Да' для следующего раунда "
+                + "или 'Нет' для выхода.");
         while (true) {
             String input = in.nextLine();
             if (input.equals("Да")) {
@@ -207,7 +208,8 @@ public class ConsoleIO {
      * @param dealer The dealer participant
      */
     public void printRoundIsOver(Participant player, Participant dealer) {
-        System.out.println("Раунд окончен. " + "Счёт " + player.getScore() + ":" + dealer.getScore());
+        System.out.println("Раунд окончен. " + "Счёт " + player.getScore() + ":"
+                + dealer.getScore());
         System.out.println("-------");
     }
 

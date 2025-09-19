@@ -1,14 +1,17 @@
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test class for ConsoleIO functionality.
@@ -17,7 +20,7 @@ import java.util.Scanner;
 public class ConsoleIOTest {
     private ByteArrayOutputStream outputStream;
     private PrintStream originalOut;
-    private ConsoleIO consoleIO;
+    private ConsoleIO consoleIo;
 
     /**
      * Setup method that runs before each test.
@@ -29,7 +32,7 @@ public class ConsoleIOTest {
         outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
 
-        consoleIO = new ConsoleIO(new Scanner(""));
+        consoleIo = new ConsoleIO(new Scanner(""));
     }
 
     /**
@@ -47,7 +50,7 @@ public class ConsoleIOTest {
      * @param input The input string to simulate user input
      * @return A ConsoleIO instance configured with the provided input
      */
-    private ConsoleIO createConsoleIOWithInput(String input) {
+    private ConsoleIO createConsoleIoWithInput(String input) {
         InputStream inputStream = new ByteArrayInputStream(input.getBytes());
         return new ConsoleIO(new Scanner(inputStream));
     }
@@ -58,7 +61,7 @@ public class ConsoleIOTest {
      */
     @Test
     public void testPrintHelloMessage() {
-        consoleIO.printHelloMessage();
+        consoleIo.printHelloMessage();
         String output = outputStream.toString();
         assertTrue(output.contains("Добро пожаловать в игру Блекджек!"));
     }
@@ -69,7 +72,7 @@ public class ConsoleIOTest {
      */
     @Test
     public void testPrintRoundHeader() {
-        consoleIO.printRoundHeader(3);
+        consoleIo.printRoundHeader(3);
         String output = outputStream.toString();
         assertTrue(output.contains("-- Раунд 3 --"));
     }
@@ -80,7 +83,7 @@ public class ConsoleIOTest {
      */
     @Test
     public void testPrintDealerDealtCards() {
-        consoleIO.printDealerDealtCards();
+        consoleIo.printDealerDealtCards();
         String output = outputStream.toString();
         assertTrue(output.contains("Дилер раздал карты"));
     }
@@ -107,7 +110,7 @@ public class ConsoleIOTest {
         dealer.getHand().addCard(new Card("Дама", "Крести"));
         dealer.getHand().addCard(new Card("Семерка", "Буби"));
 
-        consoleIO.printPlayerAndDealerCards(player, dealer, true);
+        consoleIo.printPlayerAndDealerCards(player, dealer, true);
         String output = outputStream.toString();
 
         assertTrue(output.contains("Ваши карты:"));
@@ -132,7 +135,7 @@ public class ConsoleIOTest {
         dealer.getHand().addCard(new Card("Дама", "Крести"));
         dealer.getHand().addCard(new Card("Семерка", "Буби"));
 
-        consoleIO.printPlayerAndDealerCards(player, dealer, false);
+        consoleIo.printPlayerAndDealerCards(player, dealer, false);
         String output = outputStream.toString();
 
         assertTrue(output.contains("Ваши карты:"));
@@ -150,7 +153,7 @@ public class ConsoleIOTest {
      */
     @Test
     public void testPrintPlayerHasBlackjack() {
-        consoleIO.printPlayerHasBlackjack();
+        consoleIo.printPlayerHasBlackjack();
         String output = outputStream.toString();
         assertTrue(output.contains("У вас Блекджек! Вы выиграли!"));
     }
@@ -161,7 +164,7 @@ public class ConsoleIOTest {
      */
     @Test
     public void testPrintDealerHasBlackjack() {
-        consoleIO.printDealerHasBlackjack();
+        consoleIo.printDealerHasBlackjack();
         String output = outputStream.toString();
         assertTrue(output.contains("У дилера Блекджек! Вы проиграли."));
     }
@@ -172,7 +175,7 @@ public class ConsoleIOTest {
      */
     @Test
     public void testPrintPlayerTurn() {
-        consoleIO.printPlayerTurn();
+        consoleIo.printPlayerTurn();
         String output = outputStream.toString();
         assertTrue(output.contains("Ваш ход"));
         assertTrue(output.contains("-------"));
@@ -184,7 +187,7 @@ public class ConsoleIOTest {
      */
     @Test
     public void testPrintDealerTurn() {
-        consoleIO.printDealerTurn();
+        consoleIo.printDealerTurn();
         String output = outputStream.toString();
         assertTrue(output.contains("Ход дилера"));
         assertTrue(output.contains("-------"));
@@ -196,7 +199,7 @@ public class ConsoleIOTest {
      */
     @Test
     public void testPrintHitOrStand() {
-        consoleIO.printHitOrStand();
+        consoleIo.printHitOrStand();
         String output = outputStream.toString();
         assertTrue(output.contains("Введите '1', чтобы взять карту, и '0', чтобы остановиться..."));
     }
@@ -207,7 +210,7 @@ public class ConsoleIOTest {
      */
     @Test
     public void testReadPlayerTurnChoiceHit() {
-        ConsoleIO ioWithInput = createConsoleIOWithInput("1\n");
+        ConsoleIO ioWithInput = createConsoleIoWithInput("1\n");
         boolean choice = ioWithInput.readPlayerTurnChoice();
         assertTrue(choice);
     }
@@ -218,7 +221,7 @@ public class ConsoleIOTest {
      */
     @Test
     public void testReadPlayerTurnChoiceStand() {
-        ConsoleIO ioWithInput = createConsoleIOWithInput("0\n");
+        ConsoleIO ioWithInput = createConsoleIoWithInput("0\n");
         boolean choice = ioWithInput.readPlayerTurnChoice();
         assertFalse(choice);
     }
@@ -229,7 +232,7 @@ public class ConsoleIOTest {
      */
     @Test
     public void testReadPlayerTurnChoiceInvalidThenValid() {
-        ConsoleIO ioWithInput = createConsoleIOWithInput("invalid\n1\n");
+        ConsoleIO ioWithInput = createConsoleIoWithInput("invalid\n1\n");
         boolean choice = ioWithInput.readPlayerTurnChoice();
         assertTrue(choice);
         String output = outputStream.toString();
@@ -242,7 +245,7 @@ public class ConsoleIOTest {
      */
     @Test
     public void testReadPlayerNextRoundChoiceYes() {
-        ConsoleIO ioWithInput = createConsoleIOWithInput("Да\n");
+        ConsoleIO ioWithInput = createConsoleIoWithInput("Да\n");
         boolean choice = ioWithInput.readPlayerNexRoundChoice();
         assertTrue(choice);
     }
@@ -253,7 +256,7 @@ public class ConsoleIOTest {
      */
     @Test
     public void testReadPlayerNextRoundChoiceNo() {
-        ConsoleIO ioWithInput = createConsoleIOWithInput("Нет\n");
+        ConsoleIO ioWithInput = createConsoleIoWithInput("Нет\n");
         boolean choice = ioWithInput.readPlayerNexRoundChoice();
         assertFalse(choice);
         String output = outputStream.toString();
@@ -266,7 +269,7 @@ public class ConsoleIOTest {
      */
     @Test
     public void testReadPlayerNextRoundChoiceInvalidThenValid() {
-        ConsoleIO ioWithInput = createConsoleIOWithInput("invalid\nДа\n");
+        ConsoleIO ioWithInput = createConsoleIoWithInput("invalid\nДа\n");
         boolean choice = ioWithInput.readPlayerNexRoundChoice();
         assertTrue(choice);
         String output = outputStream.toString();
@@ -280,7 +283,7 @@ public class ConsoleIOTest {
     @Test
     public void testPrintPlayerDrewCard() {
         Card card = new Card("Туз", "Черви");
-        consoleIO.printPlayerDrewCard(card);
+        consoleIo.printPlayerDrewCard(card);
         String output = outputStream.toString();
         assertTrue(output.contains("Вы открыли карту Туз Черви"));
     }
@@ -292,7 +295,7 @@ public class ConsoleIOTest {
     @Test
     public void testPrintDealerDrewCard() {
         Card card = new Card("Король", "Буби");
-        consoleIO.printDealerDrewCard(card);
+        consoleIo.printDealerDrewCard(card);
         String output = outputStream.toString();
         assertTrue(output.contains("Дилер открывает карту Король Буби"));
     }
@@ -303,7 +306,7 @@ public class ConsoleIOTest {
      */
     @Test
     public void testPrintDealerDrewClosedCard() {
-        consoleIO.printDealerDrewClosedCard();
+        consoleIo.printDealerDrewClosedCard();
         String output = outputStream.toString();
         assertTrue(output.contains("Дилер открывает закрытую карту"));
     }
@@ -314,7 +317,7 @@ public class ConsoleIOTest {
      */
     @Test
     public void testPrintPlayerBust() {
-        consoleIO.printPlayerBust();
+        consoleIo.printPlayerBust();
         String output = outputStream.toString();
         assertTrue(output.contains("Перебор! Вы проиграли."));
     }
@@ -325,7 +328,7 @@ public class ConsoleIOTest {
      */
     @Test
     public void testPrintDealerBust() {
-        consoleIO.printDealerBust();
+        consoleIo.printDealerBust();
         String output = outputStream.toString();
         assertTrue(output.contains("Дилер перебрал! Вы выиграли!"));
     }
@@ -336,7 +339,7 @@ public class ConsoleIOTest {
      */
     @Test
     public void testPrintPlayer21() {
-        consoleIO.printPlayer21();
+        consoleIo.printPlayer21();
         String output = outputStream.toString();
         assertTrue(output.contains("У вас 21!"));
     }
@@ -347,7 +350,7 @@ public class ConsoleIOTest {
      */
     @Test
     public void testPrintDealerWon() {
-        consoleIO.printDealerWon();
+        consoleIo.printDealerWon();
         String output = outputStream.toString();
         assertTrue(output.contains("Дилер выиграл."));
     }
@@ -358,7 +361,7 @@ public class ConsoleIOTest {
      */
     @Test
     public void testPrintPlayerWon() {
-        consoleIO.printPlayerWon();
+        consoleIo.printPlayerWon();
         String output = outputStream.toString();
         assertTrue(output.contains("Вы выиграли!"));
     }
@@ -369,7 +372,7 @@ public class ConsoleIOTest {
      */
     @Test
     public void testPrintPush() {
-        consoleIO.printPush();
+        consoleIo.printPush();
         String output = outputStream.toString();
         assertTrue(output.contains("Ничья."));
     }
@@ -386,7 +389,7 @@ public class ConsoleIOTest {
         player.incScore();
         dealer.incScore();
 
-        consoleIO.printRoundIsOver(player, dealer);
+        consoleIo.printRoundIsOver(player, dealer);
         String output = outputStream.toString();
         assertTrue(output.contains("Раунд окончен. Счёт 2:1"));
         assertTrue(output.contains("-------"));
@@ -403,7 +406,7 @@ public class ConsoleIOTest {
         System.setErr(new PrintStream(errorStream));
 
         try {
-            consoleIO.printErrorShoeOutOfCards();
+            consoleIo.printErrorShoeOutOfCards();
             String errorOutput = errorStream.toString();
             assertTrue(errorOutput.contains("Ошибка: В колоде больше нет карт"));
         } finally {
@@ -422,7 +425,7 @@ public class ConsoleIOTest {
         System.setErr(new PrintStream(errorStream));
 
         try {
-            consoleIO.printErrorHandFull();
+            consoleIo.printErrorHandFull();
             String errorOutput = errorStream.toString();
             assertTrue(errorOutput.contains("Ошибка: Рука переполнена"));
         } finally {
@@ -441,7 +444,7 @@ public class ConsoleIOTest {
         System.setErr(new PrintStream(errorStream));
 
         try {
-            consoleIO.printErrorInvalidCardIndex();
+            consoleIo.printErrorInvalidCardIndex();
             String errorOutput = errorStream.toString();
             assertTrue(errorOutput.contains("Ошибка: Неверный индекс карты"));
         } finally {

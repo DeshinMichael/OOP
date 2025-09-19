@@ -99,6 +99,8 @@ public class Hand {
                 case "Девятка":
                     val += 9;
                     break;
+                default:
+                    break;
             }
         }
 
