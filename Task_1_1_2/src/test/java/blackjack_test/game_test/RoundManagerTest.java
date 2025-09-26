@@ -1,7 +1,6 @@
 package blackjack_test.game_test;
 
 import blackjack.deck.Shoe;
-import blackjack.game.RoundManager;
 import blackjack.game.RoundResult;
 import blackjack.model.Card;
 import blackjack.model.Rank;

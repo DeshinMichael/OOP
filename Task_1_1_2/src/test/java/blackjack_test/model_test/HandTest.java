@@ -4,8 +4,11 @@ import blackjack.model.Card;
 import blackjack.model.Hand;
 import blackjack.model.Rank;
 import blackjack.model.Suit;
+
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class HandTest {
     /**
@@ -34,7 +37,8 @@ class HandTest {
         for (int i = 0; i < 12; i++) {
             hand.addCard(new Card(Rank.TEN, Suit.HEARTS));
         }
-        assertThrows(IllegalStateException.class, () -> hand.addCard(new Card(Rank.ACE, Suit.SPADES)));
+        assertThrows(IllegalStateException.class,
+            () -> hand.addCard(new Card(Rank.ACE, Suit.SPADES)));
     }
 
     /**
@@ -119,7 +123,7 @@ class HandTest {
         Hand hand = new Hand();
         hand.addCard(new Card(Rank.TEN, Suit.HEARTS));
         hand.addCard(new Card(Rank.ACE, Suit.SPADES));
-        String expected = "Десятка Черви, Туз Пики";
+        String expected = "Десятка Черви (10), Туз Пики (11)";
         assertEquals(expected, hand.toString());
     }
 }

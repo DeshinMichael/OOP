@@ -5,9 +5,14 @@ import blackjack.model.Rank;
 import blackjack.model.Suit;
 import blackjack.participants.Dealer;
 import blackjack.participants.Participant;
-import org.junit.jupiter.api.Test;
+
 import org.junit.jupiter.api.BeforeEach;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Test class for blackjack.participants.Dealer functionality.
@@ -163,12 +168,12 @@ class DealerTest {
         dealer.getHand().addCard(new Card(Rank.ACE, Suit.HEARTS));
         dealer.getHand().addCard(new Card(Rank.ACE, Suit.SPADES));
 
-        assertEquals(2, dealer.getHand().getValue());
+        assertEquals(12, dealer.getHand().getValue());
         assertTrue(dealer.shouldHit());
 
         dealer.getHand().addCard(new Card(Rank.FIVE, Suit.CLUBS));
 
-        assertEquals(7, dealer.getHand().getValue());
-        assertTrue(dealer.shouldHit());
+        assertEquals(17, dealer.getHand().getValue());
+        assertFalse(dealer.shouldHit());
     }
 }

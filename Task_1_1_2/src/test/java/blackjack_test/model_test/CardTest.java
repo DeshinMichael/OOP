@@ -1,11 +1,15 @@
 package blackjack_test.model_test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 import blackjack.model.Card;
 import blackjack.model.Rank;
 import blackjack.model.Suit;
+
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Test class for blackjack.model.Card functionality.
@@ -35,7 +39,8 @@ public class CardTest {
                 assertEquals(rank, card.rank());
                 assertEquals(suit, card.suit());
                 assertEquals(rank.getValue(), card.getValue());
-                assertEquals(rank.getDisplayName() + " " + suit.getDisplayName(), card.toString());
+                assertEquals(rank.getDisplayName() + " " + suit.getDisplayName(),
+                    card.toString());
             }
         }
     }

@@ -5,7 +5,8 @@ import java.util.List;
 
 /**
  * Represents a hand of cards in blackjack.
- * Manages a collection of cards and calculates the total value of the hand according to blackjack rules.
+ * Manages a collection of cards and calculates the total value
+ * of the hand according to blackjack rules.
  */
 public class Hand {
     private static final int MAX_CARDS = 12;
@@ -58,7 +59,7 @@ public class Hand {
         if (cards.isEmpty()) {
             throw new IllegalArgumentException("Hand is empty");
         }
-        return cards.getLast();
+        return cards.get(cards.size() - 1);
     }
 
     /**

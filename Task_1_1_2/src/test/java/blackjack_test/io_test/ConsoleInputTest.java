@@ -1,16 +1,19 @@
 package blackjack_test.io_test;
 
-import blackjack.io.ConsoleInput;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import blackjack.io.ConsoleInput;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ConsoleInputTest {
 
@@ -94,7 +97,8 @@ class ConsoleInputTest {
         provideInput("yes\nno\n0\n");
         assertFalse(ConsoleInput.readPlayerNextRoundChoice());
         String output = testOut.toString();
-        long errorCount = output.lines().filter(line -> line.contains("Пожалуйста, введите '1' или '0'")).count();
+        long errorCount = output.lines()
+            .filter(line -> line.contains("Пожалуйста, введите '1' или '0'")).count();
         assertEquals(2, errorCount);
     }
 }

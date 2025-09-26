@@ -1,20 +1,24 @@
 package blackjack_test.util_test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
+import blackjack.deck.Shoe;
+import blackjack.model.Card;
+import blackjack.model.Hand;
 import blackjack.model.Rank;
 import blackjack.model.Suit;
 import blackjack.util.ErrorHandler;
-import blackjack.model.Hand;
-import blackjack.model.Card;
-import blackjack.deck.Shoe;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Test class for blackjack.util.ErrorHandler functionality.

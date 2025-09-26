@@ -5,9 +5,13 @@ import blackjack.model.Hand;
 import blackjack.model.Rank;
 import blackjack.model.Suit;
 import blackjack.participants.Participant;
-import org.junit.jupiter.api.Test;
+
 import org.junit.jupiter.api.BeforeEach;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Test class for blackjack.participants.Participant functionality.

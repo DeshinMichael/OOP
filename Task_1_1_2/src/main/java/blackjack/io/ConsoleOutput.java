@@ -38,7 +38,8 @@ public class ConsoleOutput {
      * @param hand the player's hand
      */
     public static void printPlayerCards(Hand hand) {
-        System.out.println("Ваши карты: [" + hand.toString() + "] (сумма: " + hand.getValue() + ")");
+        System.out.println("Ваши карты: [" + hand.toString()
+            + "] (сумма: " + hand.getValue() + ")");
     }
 
     /**
@@ -47,7 +48,8 @@ public class ConsoleOutput {
      * @param hand the dealer's hand
      */
     public static void printDealerCards(Hand hand) {
-        System.out.println("Карты дилера: [" + hand.toString() + "] (сумма: " + hand.getValue() + ")");
+        System.out.println("Карты дилера: [" + hand.toString()
+            + "] (сумма: " + hand.getValue() + ")");
     }
 
     /**
@@ -56,7 +58,8 @@ public class ConsoleOutput {
      * @param hand the dealer's hand
      */
     public static void printDealerClosedCards(Hand hand) {
-        System.out.println("Карты дилера: [" + hand.getCard(0).toString() + " (" + hand.getCard(0).getValue() + ")" + ", <закрытая карта>]");
+        System.out.println("Карты дилера: [" + hand.getCard(0).toString()
+            + " (" + hand.getCard(0).getValue() + ")" + ", <закрытая карта>]");
     }
 
     /**
@@ -70,7 +73,7 @@ public class ConsoleOutput {
      * Prints a message about dealer's blackjack.
      */
     public static void printDealerHasBlackjack() {
-        System.out.println("У дилера Блекджек! Вы проиграли.");
+        System.out.println("У дилера Блекджек! Вы проигр��ли.");
     }
 
     /**
@@ -226,4 +229,3 @@ public class ConsoleOutput {
         System.out.println("Ничья! (" + value + " против " + value + ")");
     }
 }
-

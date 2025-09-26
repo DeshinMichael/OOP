@@ -1,11 +1,11 @@
 package blackjack.participants;
 
+import blackjack.deck.Shoe;
+import blackjack.game.RoundResult;
 import blackjack.io.ConsoleInput;
 import blackjack.io.ConsoleOutput;
-import blackjack.util.ErrorHandler;
-import blackjack.game.RoundResult;
-import blackjack.deck.Shoe;
 import blackjack.model.Card;
+import blackjack.util.ErrorHandler;
 
 /**
  * Represents a player in the Blackjack game.
