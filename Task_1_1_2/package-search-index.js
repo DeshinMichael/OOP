@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"blackjack"},{"l":"blackjack.deck"},{"l":"blackjack.game"},{"l":"blackjack.io"},{"l":"blackjack.model"},{"l":"blackjack.participants"},{"l":"blackjack.util"}];updateSearchResults();
