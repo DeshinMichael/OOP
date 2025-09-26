@@ -1,18 +1,15 @@
+package blackjack.util;
+
+import blackjack.deck.Shoe;
+import blackjack.io.ConsoleOutput;
+import blackjack.model.Card;
+import blackjack.model.Hand;
+
 /**
  * Handles error conditions in the Blackjack game.
  * Provides safe operations for card-related actions that might fail.
  */
 public class ErrorHandler {
-    private final ConsoleIO io;
-
-    /**
-     * Creates a new ErrorHandler with the specified ConsoleIO.
-     *
-     * @param io The ConsoleIO instance for displaying error messages
-     */
-    public ErrorHandler(ConsoleIO io) {
-        this.io = io;
-    }
 
     /**
      * Safely adds a card to a hand, handling any errors.
@@ -21,11 +18,11 @@ public class ErrorHandler {
      * @param hand The hand to add a card to
      * @param card The card to add
      */
-    public void addCardSafety(Hand hand, Card card) {
+    public static void addCardSafety(Hand hand, Card card) {
         try {
             hand.addCard(card);
         } catch (IllegalStateException e) {
-            io.printErrorHandFull();
+            ConsoleOutput.printErrorHandFull();
             System.exit(1);
         }
     }
@@ -37,11 +34,11 @@ public class ErrorHandler {
      * @param shoe The shoe to deal from
      * @return The dealt card
      */
-    public Card dealCardSafety(Shoe shoe) {
+    public static Card dealCardSafety(Shoe shoe) {
         try {
             return shoe.dealCard();
         } catch (IllegalStateException e) {
-            io.printErrorShoeOutOfCards();
+            ConsoleOutput.printErrorShoeOutOfCards();
             System.exit(1);
             return null;
         }
@@ -55,11 +52,28 @@ public class ErrorHandler {
      * @param index The index of the card
      * @return The card at the specified index
      */
-    public Card getCardSafety(Hand hand, int index) {
+    public static Card getCardSafety(Hand hand, int index) {
         try {
             return hand.getCard(index);
         } catch (IllegalArgumentException e) {
-            io.printErrorInvalidCardIndex();
+            ConsoleOutput.printErrorInvalidCardIndex();
+            System.exit(1);
+            return null;
+        }
+    }
+
+    /**
+     * Safely gets the last card from a hand, handling any errors.
+     * If the hand is empty, displays an error and exits the program.
+     *
+     * @param hand The hand to get the last card from
+     * @return The last card in the hand
+     */
+    public static Card getLastCardSafety(Hand hand) {
+        try {
+            return hand.getLastCard();
+        } catch (IllegalStateException e) {
+            ConsoleOutput.printErrorShoeOutOfCards();
             System.exit(1);
             return null;
         }
