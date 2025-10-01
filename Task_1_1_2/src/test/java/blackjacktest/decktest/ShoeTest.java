@@ -37,7 +37,7 @@ public class ShoeTest {
         List<Card> cards = singleDeckShoe.getCards();
 
         assertEquals(52, cards.size());
-        assertNotNull(cards.getFirst());
+        assertNotNull(cards.get(0));
         assertNotNull(cards.get(51));
     }
 
@@ -98,7 +98,7 @@ public class ShoeTest {
             dealtCards.add(card);
         }
 
-        assertEquals(52, dealtCards.size(), "Все карты должны быть уникальными");
+        assertEquals(52, dealtCards.size(), "All cards should be unique");
         assertThrows(IllegalStateException.class, smallShoe::dealCard);
     }
 
@@ -164,8 +164,8 @@ public class ShoeTest {
             }
         }
 
-        assertEquals(2, aceOfHeartsCount, "Должно быть ровно 2 туза червей в двух колодах");
-        assertEquals(2, kingOfSpadesCount, "Должно быть ровно 2 короля пик в двух колодах");
+        assertEquals(2, aceOfHeartsCount, "There should be exactly 2 Aces of Hearts in a two-deck shoe");
+        assertEquals(2, kingOfSpadesCount, "There should be exactly 2 Kings of Spades in a two-deck shoe");
     }
 
     /**
@@ -181,6 +181,6 @@ public class ShoeTest {
             dealtCards.add(card);
         }
 
-        assertEquals(10, dealtCards.size(), "Все 10 карт должны быть уникальными");
+        assertEquals(10, dealtCards.size(), "All 10 dealt cards should be unique");
     }
 }
