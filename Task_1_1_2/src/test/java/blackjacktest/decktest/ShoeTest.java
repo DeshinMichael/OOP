@@ -1,11 +1,18 @@
-package blackjack_test.deck_test;
+package blackjacktest.decktest;
 
 import blackjack.deck.Shoe;
 import blackjack.model.Card;
 import blackjack.model.Rank;
 import blackjack.model.Suit;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,28 +30,27 @@ public class ShoeTest {
 
     /**
      * Tests that a blackjack.deck.Shoe object can be created properly with correct number of cards.
-     * Verifies the shoe contains the expected number of cards based on deck count.
      */
     @Test
     public void testShoeCreation() {
         Shoe singleDeckShoe = new Shoe(1);
-        Card[] cards = singleDeckShoe.getCards();
+        List<Card> cards = singleDeckShoe.getCards();
 
-        assertEquals(52, cards.length);
-        assertNotNull(cards[0]);
-        assertNotNull(cards[51]);
+        assertEquals(52, cards.size());
+        assertNotNull(cards.getFirst());
+        assertNotNull(cards.get(51));
     }
 
     /**
      * Tests that a blackjack.deck.Shoe object can be created properly with multiple decks.
-     * Verifies the shoe contains the expected number of cards based on deck count.
      */
-    @Test
-    void testConstructorMultipleDecks() {
-        Shoe multiDeckShoe = new Shoe(4);
-        Card[] cards = multiDeckShoe.getCards();
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 4, 6, 8})
+    void testConstructorMultipleDecks(int numDecks) {
+        Shoe multiDeckShoe = new Shoe(numDecks);
+        List<Card> cards = multiDeckShoe.getCards();
 
-        assertEquals(208, cards.length);
+        assertEquals(52 * numDecks, cards.size());
 
         for (Card card : cards) {
             assertNotNull(card);
@@ -53,47 +59,19 @@ public class ShoeTest {
 
     /**
      * Tests that cards can be accessed.
-     * Verifies the card array is properly sized.
      */
     @Test
     public void testGetCards() {
-        Card[] cards = shoe.getCards();
+        List<Card> cards = shoe.getCards();
         assertNotNull(cards);
-        assertEquals(52, cards.length);
+        assertEquals(52, cards.size());
 
-        Card[] sameCards = shoe.getCards();
+        List<Card> sameCards = shoe.getCards();
         assertSame(cards, sameCards);
     }
 
     /**
-     * Tests that cards are shuffled.
-     * Verifies that cards are in a different order after shuffling.
-     */
-    @Test
-    public void testShuffle() {
-        Shoe shoe1 = new Shoe(2);
-        Shoe shoe2 = new Shoe(2);
-
-        Card[] cards1 = shoe1.getCards();
-        Card[] cards2 = shoe2.getCards();
-
-        shoe1.shuffle();
-        shoe1.shuffle();
-
-        boolean orderChanged = false;
-        for (int i = 0; i < cards1.length; i++) {
-            if (!cards1[i].toString().equals(cards2[i].toString())) {
-                orderChanged = true;
-                break;
-            }
-        }
-
-        assertTrue(orderChanged || cards1.length <= 2);
-    }
-
-    /**
      * Tests that cards can be dealt from the shoe.
-     * Verifies a card is successfully dealt and is not null.
      */
     @Test
     public void testDealCard() {
@@ -108,23 +86,24 @@ public class ShoeTest {
 
     /**
      * Tests that all cards can be dealt from the shoe.
-     * Verifies that dealing the last card succeeds and dealing again throws an exception.
      */
     @Test
     public void testDealAllCards() {
         Shoe smallShoe = new Shoe(1);
 
+        Set<Card> dealtCards = new HashSet<>();
         for (int i = 0; i < 52; i++) {
             Card card = smallShoe.dealCard();
             assertNotNull(card);
+            dealtCards.add(card);
         }
 
+        assertEquals(52, dealtCards.size(), "Все карты должны быть уникальными");
         assertThrows(IllegalStateException.class, smallShoe::dealCard);
     }
 
     /**
      * Tests that dealing from an empty shoe throws an exception.
-     * Verifies IllegalStateException is thrown when attempting to deal from an empty shoe.
      */
     @Test
     public void testDealCardFromEmptyShoe() {
@@ -132,18 +111,15 @@ public class ShoeTest {
             shoe.dealCard();
         }
 
-        assertThrows(IllegalStateException.class, () -> {
-            shoe.dealCard();
-        });
+        assertThrows(IllegalStateException.class, shoe::dealCard);
     }
 
     /**
      * Tests that all ranks and suits are present in the shoe.
-     * Verifies that every rank and suit combination exists in the shoe's cards.
      */
     @Test
     void testAllRanksAndSuitsPresent() {
-        Card[] cards = shoe.getCards();
+        List<Card> cards = shoe.getCards();
 
         boolean[] rankPresent = new boolean[Rank.values().length];
         boolean[] suitPresent = new boolean[Suit.values().length];
@@ -171,20 +147,40 @@ public class ShoeTest {
 
     /**
      * Tests that each card appears the correct number of times in the shoe.
-     * Verifies that in multiple decks, each card appears exactly twice.
      */
     @Test
     void testCorrectNumberOfEachCard() {
         Shoe multiDeckShoe = new Shoe(2);
-        Card[] cards = multiDeckShoe.getCards();
+        List<Card> cards = multiDeckShoe.getCards();
 
         int aceOfHeartsCount = 0;
+        int kingOfSpadesCount = 0;
         for (Card card : cards) {
             if (card.rank() == Rank.ACE && card.suit() == Suit.HEARTS) {
                 aceOfHeartsCount++;
             }
+            if (card.rank() == Rank.KING && card.suit() == Suit.SPADES) {
+                kingOfSpadesCount++;
+            }
         }
 
-        assertEquals(2, aceOfHeartsCount);
+        assertEquals(2, aceOfHeartsCount, "Должно быть ровно 2 туза червей в двух колодах");
+        assertEquals(2, kingOfSpadesCount, "Должно быть ровно 2 короля пик в двух колодах");
+    }
+
+    /**
+     * Tests dealing multiple cards and checking uniqueness
+     */
+    @Test
+    void testDealingMultipleCards() {
+        Set<Card> dealtCards = new HashSet<>();
+
+        for (int i = 0; i < 10; i++) {
+            Card card = shoe.dealCard();
+            assertNotNull(card);
+            dealtCards.add(card);
+        }
+
+        assertEquals(10, dealtCards.size(), "Все 10 карт должны быть уникальными");
     }
 }

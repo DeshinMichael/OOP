@@ -68,22 +68,16 @@ public class Player extends Participant {
                     return RoundResult.BUST;
                 } else if (has21()) {
                     ConsoleOutput.printPlayer21();
-                    return RoundResult.GOT_21;
+                    return RoundResult.CONTINUE;
                 } else {
                     ConsoleOutput.printHitOrStand();
                 }
             } else {
-                return RoundResult.STAND;
+                return RoundResult.CONTINUE;
             }
         }
     }
 
-    /**
-     * Checks the initial hand for blackjack.
-     * Determines if the player has natural blackjack (21 points with two cards).
-     *
-     * @return BLACKJACK if the player has blackjack, CONTINUE if the game continues
-     */
     public RoundResult checkInitialHand() {
         if (hasBlackjack()) {
             ConsoleOutput.printPlayerHasBlackjack();

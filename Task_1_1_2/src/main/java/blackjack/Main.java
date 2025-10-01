@@ -1,6 +1,7 @@
 package blackjack;
 
 import blackjack.game.Game;
+import blackjack.io.ConsoleInput;
 
 /**
  * Main class for the Blackjack application.
@@ -15,7 +16,11 @@ public class Main {
      * @param args command line arguments (not used)
      */
     public static void main(String[] args) {
-        Game game = new Game(DEFAULT_DECKS);
-        game.start();
+        try {
+            Game game = new Game(DEFAULT_DECKS);
+            game.start();
+        } finally {
+            ConsoleInput.closeScanner();
+        }
     }
 }

@@ -1,12 +1,14 @@
 package blackjack.participants;
 
+import blackjack.deck.Shoe;
+import blackjack.game.RoundResult;
 import blackjack.model.Hand;
 
 /**
  * Base class for participants in the Blackjack game.
  * Represents common functionality for player and dealer.
  */
-public class Participant {
+public abstract class Participant {
     private final Hand hand;
     private int score;
 
@@ -44,6 +46,25 @@ public class Participant {
     }
 
     /**
+     * Checks if the participant has busted (exceeded 21 points).
+     *
+     * @return true if the hand value is greater than 21, false otherwise
+     */
+    public boolean isBusted() {
+        return hand.getValue() > 21;
+    }
+
+    /**
+     * Checks the initial hand for blackjack.
+     * Determines if the player has natural blackjack (21 points with two cards).
+     *
+     * @return BLACKJACK if the player has blackjack, CONTINUE if the game continues
+     */
+    public abstract RoundResult checkInitialHand();
+
+    public abstract RoundResult makeMove(Shoe shoe, Dealer dealer);
+
+    /**
      * Checks if the participant has blackjack.
      * Blackjack is 21 points with exactly two cards.
      *
@@ -51,14 +72,5 @@ public class Participant {
      */
     public boolean hasBlackjack() {
         return hand.getCardCount() == 2 && hand.getValue() == 21;
-    }
-
-    /**
-     * Checks if the participant has busted (exceeded 21 points).
-     *
-     * @return true if the hand value is greater than 21, false otherwise
-     */
-    public boolean isBusted() {
-        return hand.getValue() > 21;
     }
 }

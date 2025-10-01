@@ -1,5 +1,8 @@
 package blackjack.model;
 
+import blackjack.i18n.I18nManager;
+import blackjack.util.ErrorHandler;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,14 +14,14 @@ import java.util.List;
 public class Hand {
     private static final int MAX_CARDS = 12;
     private final List<Card> cards;
-    private Integer cachedValue;
+    private int cachedValue;
 
     /**
      * Creates a new empty hand.
      */
     public Hand() {
         this.cards = new ArrayList<>();
-        this.cachedValue = null;
+        this.cachedValue = 0;
     }
 
     /**
@@ -29,7 +32,7 @@ public class Hand {
      */
     public void addCard(Card card) {
         if (cards.size() >= MAX_CARDS) {
-            throw new IllegalStateException("Hand is full");
+            throw new IllegalStateException();
         }
         cards.add(card);
         invalidateCache();
@@ -44,7 +47,7 @@ public class Hand {
      */
     public Card getCard(int index) {
         if (index < 0 || index >= cards.size()) {
-            throw new IllegalArgumentException("Invalid card index");
+            throw new IllegalArgumentException();
         }
         return cards.get(index);
     }
@@ -57,9 +60,9 @@ public class Hand {
      */
     public Card getLastCard() {
         if (cards.isEmpty()) {
-            throw new IllegalArgumentException("Hand is empty");
+            throw new IllegalArgumentException();
         }
-        return cards.get(cards.size() - 1);
+        return cards.getLast();
     }
 
     /**
@@ -71,10 +74,6 @@ public class Hand {
         return cards.size();
     }
 
-    private void invalidateCache() {
-        cachedValue = null;
-    }
-
     /**
      * Calculates the total value of the hand according to blackjack rules.
      * Aces are counted as 11, but can be reduced to 1 to avoid busting.
@@ -82,7 +81,7 @@ public class Hand {
      * @return the total value of the hand
      */
     public int getValue() {
-        if (cachedValue != null) {
+        if (cachedValue != 0) {
             return cachedValue;
         }
 
@@ -113,7 +112,7 @@ public class Hand {
      * @return the actual value of the card in this hand's context
      */
     public int getActualCardValue(int index) {
-        Card card = getCard(index);
+        Card card = ErrorHandler.getCardSafety(this, index);
 
         if (card.rank() != Rank.ACE) {
             return card.getValue();
@@ -161,10 +160,6 @@ public class Hand {
      */
     @Override
     public String toString() {
-        if (cards.isEmpty()) {
-            return "Empty hand";
-        }
-
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < cards.size(); i++) {
             if (i > 0) {
@@ -174,5 +169,9 @@ public class Hand {
             sb.append(" (").append(getActualCardValue(i)).append(")");
         }
         return sb.toString();
+    }
+
+    private void invalidateCache() {
+        cachedValue = 0;
     }
 }

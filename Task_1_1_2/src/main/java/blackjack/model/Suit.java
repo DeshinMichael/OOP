@@ -1,42 +1,44 @@
 package blackjack.model;
 
+import blackjack.i18n.I18nManager;
+
 /**
  * Enumeration of playing card suits.
  * Contains four suits: hearts, diamonds, clubs, spades.
  */
 public enum Suit {
-    HEARTS("Черви"),
-    DIAMONDS("Буби"),
-    CLUBS("Крести"),
-    SPADES("Пики");
+    HEARTS("suit.hearts"),
+    DIAMONDS("suit.diamonds"),
+    CLUBS("suit.clubs"),
+    SPADES("suit.spades");
 
-    private final String displayName;
+    private final String i18nKey;
 
     /**
-     * Creates a suit with the specified display name.
+     * Creates a suit with the specified i18n key.
      *
-     * @param displayName the Russian name of the suit
+     * @param i18nKey the internationalization key for the suit name
      */
-    Suit(String displayName) {
-        this.displayName = displayName;
+    Suit(String i18nKey) {
+        this.i18nKey = i18nKey;
     }
 
     /**
-     * Returns the display name of the suit in Russian.
+     * Returns the localized display name of the suit.
      *
-     * @return the Russian name of the suit
+     * @return the localized name of the suit
      */
     public String getDisplayName() {
-        return displayName;
+        return I18nManager.getInstance().getString(i18nKey);
     }
 
     /**
      * Returns the string representation of the suit.
      *
-     * @return the display name of the suit
+     * @return the localized display name of the suit
      */
     @Override
     public String toString() {
-        return displayName;
+        return getDisplayName();
     }
 }

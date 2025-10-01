@@ -1,8 +1,9 @@
-package blackjack_test.io_test;
+package blackjacktest.iotest;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
+import blackjack.i18n.I18nManager;
 import blackjack.io.ConsoleOutput;
 import blackjack.model.Card;
 import blackjack.model.Hand;
@@ -12,13 +13,15 @@ import blackjack.model.Suit;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ConsoleOutputTest {
-
     private final PrintStream standardOut = System.out;
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+    private final I18nManager i18n = I18nManager.getInstance();
 
     @BeforeEach
     public void setUp() {
@@ -28,25 +31,29 @@ class ConsoleOutputTest {
     @AfterEach
     public void tearDown() {
         System.setOut(standardOut);
+        outputStreamCaptor.reset();
     }
 
     @Test
     void testPrintHelloMessage() {
         ConsoleOutput.printHelloMessage();
         assertTrue(outputStreamCaptor.toString()
-            .contains("Добро пожаловать в игру Блекджек!"));
+            .contains(i18n.getString("game.welcome")));
     }
 
     @Test
     void testPrintRoundHeader() {
-        ConsoleOutput.printRoundHeader(3);
-        assertTrue(outputStreamCaptor.toString().contains("Раунд 3"));
+        int roundNumber = 3;
+        ConsoleOutput.printRoundHeader(roundNumber);
+        assertTrue(outputStreamCaptor.toString()
+            .contains(i18n.getString("game.round.header", roundNumber)));
     }
 
     @Test
     void testPrintDealerDealtCards() {
         ConsoleOutput.printDealerDealtCards();
-        assertTrue(outputStreamCaptor.toString().contains("Дилер раздал карты"));
+        assertTrue(outputStreamCaptor.toString()
+            .contains(i18n.getString("game.dealer.dealt")));
     }
 
     @Test
@@ -56,9 +63,8 @@ class ConsoleOutputTest {
         hand.addCard(new Card(Rank.TEN, Suit.DIAMONDS));
 
         ConsoleOutput.printPlayerCards(hand);
-        String output = outputStreamCaptor.toString();
-        assertTrue(output.contains("Ваши карты:"));
-        assertTrue(output.contains("(сумма: 21)"));
+        assertTrue(outputStreamCaptor.toString()
+            .contains(i18n.getString("hand.player", hand.toString(), hand.getValue())));
     }
 
     @Test
@@ -68,9 +74,8 @@ class ConsoleOutputTest {
         hand.addCard(new Card(Rank.SEVEN, Suit.SPADES));
 
         ConsoleOutput.printDealerCards(hand);
-        String output = outputStreamCaptor.toString();
-        assertTrue(output.contains("Карты дилера:"));
-        assertTrue(output.contains("(сумма: 17)"));
+        assertTrue(outputStreamCaptor.toString()
+            .contains(i18n.getString("hand.dealer", hand.toString(), hand.getValue())));
     }
 
     @Test
@@ -80,171 +85,167 @@ class ConsoleOutputTest {
         hand.addCard(new Card(Rank.FIVE, Suit.CLUBS));
 
         ConsoleOutput.printDealerClosedCards(hand);
-        String output = outputStreamCaptor.toString();
-        assertTrue(output.contains("Карты дилера:"));
-        assertTrue(output.contains("(10)"));
-        assertTrue(output.contains("<закрытая карта>"));
+        Card firstCard = hand.getCard(0);
+        assertTrue(outputStreamCaptor.toString().contains(
+            i18n.getString("hand.dealer.closed", firstCard.toString(), firstCard.getValue())));
     }
 
     @Test
     void testPrintPlayerHasBlackjack() {
         ConsoleOutput.printPlayerHasBlackjack();
         assertTrue(outputStreamCaptor.toString()
-            .contains("У вас Блекджек! Вы выиграли!"));
+            .contains(i18n.getString("blackjack.player")));
     }
 
     @Test
     void testPrintDealerHasBlackjack() {
         ConsoleOutput.printDealerHasBlackjack();
         assertTrue(outputStreamCaptor.toString()
-            .contains("У дилера Блекджек! Вы проигр��ли."));
+            .contains(i18n.getString("blackjack.dealer")));
     }
 
     @Test
     void testPrintPlayerTurn() {
         ConsoleOutput.printPlayerTurn();
-        String output = outputStreamCaptor.toString();
-        assertTrue(output.contains("Ваш ход"));
-        assertTrue(output.contains("-------"));
+        assertTrue(outputStreamCaptor.toString()
+            .contains(i18n.getString("turn.player")));
     }
 
     @Test
     void testPrintDealerTurn() {
         ConsoleOutput.printDealerTurn();
-        String output = outputStreamCaptor.toString();
-        assertTrue(output.contains("Ход дилера"));
-        assertTrue(output.contains("-------"));
+        assertTrue(outputStreamCaptor.toString()
+            .contains(i18n.getString("turn.dealer")));
     }
 
     @Test
     void testPrintHitOrStand() {
         ConsoleOutput.printHitOrStand();
         assertTrue(outputStreamCaptor.toString()
-            .contains("Введите '1', чтобы взять карту, и '0', чтобы остановиться..."));
+            .contains(i18n.getString("game.hit.or.stand")));
     }
 
     @Test
     void testPrintPlayerDrewCard() {
         Card card = new Card(Rank.EIGHT, Suit.DIAMONDS);
-
         ConsoleOutput.printPlayerDrewCard(card);
-        assertTrue(outputStreamCaptor.toString().contains("Вы открыли карту"));
+        assertTrue(outputStreamCaptor.toString()
+            .contains(i18n.getString("player.drew.card", card.toString())));
     }
 
     @Test
     void testPrintDealerDrewCard() {
         Card card = new Card(Rank.THREE, Suit.CLUBS);
-
         ConsoleOutput.printDealerDrewCard(card);
-        assertTrue(outputStreamCaptor.toString().contains("Дилер открывает карту"));
+        assertTrue(outputStreamCaptor.toString()
+            .contains(i18n.getString("dealer.drew.card", card.toString())));
     }
 
     @Test
     void testPrintDealerDrewClosedCard() {
         ConsoleOutput.printDealerDrewClosedCard();
         assertTrue(outputStreamCaptor.toString()
-            .contains("Дилер открывает закрытую карту"));
+            .contains(i18n.getString("dealer.drew.closed")));
     }
 
     @Test
     void testPrintPlayerBust() {
         ConsoleOutput.printPlayerBust();
-        assertTrue(outputStreamCaptor.toString().contains("Перебор! Вы проиграли."));
+        assertTrue(outputStreamCaptor.toString()
+            .contains(i18n.getString("result.player.busted")));
     }
 
     @Test
     void testPrintPlayer21() {
         ConsoleOutput.printPlayer21();
         assertTrue(outputStreamCaptor.toString()
-            .contains("У вас 21! Отличный результат!"));
+            .contains(i18n.getString("player.21")));
     }
 
     @Test
     void testPrintErrorHandFull() {
         ConsoleOutput.printErrorHandFull();
-        assertTrue(outputStreamCaptor.toString().contains("Ошибка: рука переполнена!"));
+        assertTrue(outputStreamCaptor.toString()
+            .contains(i18n.getString("error.hand.full")));
     }
 
     @Test
     void testPrintErrorShoeOutOfCards() {
         ConsoleOutput.printErrorShoeOutOfCards();
         assertTrue(outputStreamCaptor.toString()
-            .contains("Ошибка: в колоде закончились карты!"));
+            .contains(i18n.getString("error.shoe.empty")));
     }
 
     @Test
     void testPrintErrorInvalidCardIndex() {
         ConsoleOutput.printErrorInvalidCardIndex();
         assertTrue(outputStreamCaptor.toString()
-            .contains("Ошибка: неверный индекс карты!"));
+            .contains(i18n.getString("error.invalid.card.index")));
     }
 
-    @Test
-    void testPrintScore() {
-        ConsoleOutput.printScore(3, 2);
-        String output = outputStreamCaptor.toString();
-        assertTrue(output.contains("Текущий счет:"));
-        assertTrue(output.contains("Игрок: 3"));
-        assertTrue(output.contains("Дилер: 2"));
+    @ParameterizedTest
+    @CsvSource({"3,2", "0,0", "10,5"})
+    void testPrintScore(int playerScore, int dealerScore) {
+        ConsoleOutput.printScore(playerScore, dealerScore);
+        assertTrue(outputStreamCaptor.toString()
+            .contains(i18n.getString("score.current", playerScore, dealerScore)));
     }
 
     @Test
     void testPrintFinalResults_PlayerWins() {
         ConsoleOutput.printFinalResults(5, 3);
         String output = outputStreamCaptor.toString();
-        assertTrue(output.contains("=== ФИНАЛЬНЫЕ РЕЗУЛЬТАТЫ ==="));
-        assertTrue(output.contains("Игрок: 5"));
-        assertTrue(output.contains("Дилер: 3"));
-        assertTrue(output.contains("Поздравляем! Вы выиграли общий зачет!"));
-        assertTrue(output.contains("Спасибо за игру!"));
+        assertTrue(output.contains(i18n.getString("score.final", 5, 3)));
+        assertTrue(output.contains(i18n.getString("final.player.wins")));
+        assertTrue(output.contains(i18n.getString("final.thanks")));
     }
 
     @Test
     void testPrintFinalResults_DealerWins() {
         ConsoleOutput.printFinalResults(2, 4);
         String output = outputStreamCaptor.toString();
-        assertTrue(output.contains("=== ФИНАЛЬНЫЕ РЕЗУЛЬТАТЫ ==="));
-        assertTrue(output.contains("Игрок: 2"));
-        assertTrue(output.contains("Дилер: 4"));
-        assertTrue(output.contains("Дилер выиграл общий зачет"));
-        assertTrue(output.contains("Спасибо за игру!"));
+        assertTrue(output.contains(i18n.getString("score.final", 2, 4)));
+        assertTrue(output.contains(i18n.getString("final.dealer.wins")));
+        assertTrue(output.contains(i18n.getString("final.thanks")));
     }
 
     @Test
     void testPrintFinalResults_Draw() {
         ConsoleOutput.printFinalResults(3, 3);
         String output = outputStreamCaptor.toString();
-        assertTrue(output.contains("=== ФИНАЛЬНЫЕ РЕЗУЛЬТАТЫ ==="));
-        assertTrue(output.contains("Игрок: 3"));
-        assertTrue(output.contains("Дилер: 3"));
-        assertTrue(output.contains("Общий зачет закончился вничью!"));
-        assertTrue(output.contains("Спасибо за игру!"));
+        assertTrue(output.contains(i18n.getString("score.final", 3, 3)));
+        assertTrue(output.contains(i18n.getString("final.tie")));
+        assertTrue(output.contains(i18n.getString("final.thanks")));
     }
 
     @Test
     void testPrintDealerBust() {
         ConsoleOutput.printDealerBust();
         assertTrue(outputStreamCaptor.toString()
-            .contains("У дилера перебор! Вы выиграли!"));
+            .contains(i18n.getString("result.dealer.busted")));
     }
 
-    @Test
-    void testPrintPlayerWins() {
-        ConsoleOutput.printPlayerWins(20, 18);
+    @ParameterizedTest
+    @CsvSource({"20,18", "21,17", "19,16"})
+    void testPrintPlayerWins(int playerValue, int dealerValue) {
+        ConsoleOutput.printPlayerWins(playerValue, dealerValue);
         assertTrue(outputStreamCaptor.toString()
-            .contains("Вы выиграли! (20 против 18)"));
+            .contains(i18n.getString("result.player.wins", playerValue, dealerValue)));
     }
 
-    @Test
-    void testPrintDealerWins() {
-        ConsoleOutput.printDealerWins(19, 17);
+    @ParameterizedTest
+    @CsvSource({"19,17", "21,19", "20,15"})
+    void testPrintDealerWins(int dealerValue, int playerValue) {
+        ConsoleOutput.printDealerWins(dealerValue, playerValue);
         assertTrue(outputStreamCaptor.toString()
-            .contains("Дилер выиграл! (19 против 17)"));
+            .contains(i18n.getString("result.dealer.wins", dealerValue, playerValue)));
     }
 
-    @Test
-    void testPrintDraw() {
-        ConsoleOutput.printDraw(18);
-        assertTrue(outputStreamCaptor.toString().contains("Ничья! (18 против 18)"));
+    @ParameterizedTest
+    @CsvSource({"17", "18", "19", "20", "21"})
+    void testPrintDraw(int value) {
+        ConsoleOutput.printDraw(value);
+        assertTrue(outputStreamCaptor.toString()
+            .contains(i18n.getString("result.tie", value, value)));
     }
 }

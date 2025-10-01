@@ -1,19 +1,22 @@
 package blackjack.io;
 
+import blackjack.i18n.I18nManager;
 import blackjack.model.Card;
 import blackjack.model.Hand;
+import blackjack.util.ErrorHandler;
 
 /**
  * Class for output through console.
  * Provides output functionality for the blackjack game.
  */
 public class ConsoleOutput {
+    private static final I18nManager i18n = I18nManager.getInstance();
 
     /**
      * Prints the game welcome message.
      */
     public static void printHelloMessage() {
-        System.out.println("Добро пожаловать в игру Блекджек!");
+        System.out.println(i18n.getString("game.welcome"));
     }
 
     /**
@@ -22,14 +25,14 @@ public class ConsoleOutput {
      * @param roundNumber the current round number
      */
     public static void printRoundHeader(int roundNumber) {
-        System.out.println("\n-- Раунд " + roundNumber + " --");
+        System.out.println(i18n.getString("game.round.header", roundNumber));
     }
 
     /**
      * Prints a message that the dealer dealt cards.
      */
     public static void printDealerDealtCards() {
-        System.out.println("Дилер раздал карты");
+        System.out.println(i18n.getString("game.dealer.dealt"));
     }
 
     /**
@@ -38,8 +41,7 @@ public class ConsoleOutput {
      * @param hand the player's hand
      */
     public static void printPlayerCards(Hand hand) {
-        System.out.println("Ваши карты: [" + hand.toString()
-            + "] (сумма: " + hand.getValue() + ")");
+        System.out.println(i18n.getString("hand.player", hand.toString(), hand.getValue()));
     }
 
     /**
@@ -48,8 +50,7 @@ public class ConsoleOutput {
      * @param hand the dealer's hand
      */
     public static void printDealerCards(Hand hand) {
-        System.out.println("Карты дилера: [" + hand.toString()
-            + "] (сумма: " + hand.getValue() + ")");
+        System.out.println(i18n.getString("hand.dealer", hand.toString(), hand.getValue()));
     }
 
     /**
@@ -58,45 +59,44 @@ public class ConsoleOutput {
      * @param hand the dealer's hand
      */
     public static void printDealerClosedCards(Hand hand) {
-        System.out.println("Карты дилера: [" + hand.getCard(0).toString()
-            + " (" + hand.getCard(0).getValue() + ")" + ", <закрытая карта>]");
+        System.out.println(i18n.getString("hand.dealer.closed",
+            ErrorHandler.getCardSafety(hand, 0).toString(),
+                ErrorHandler.getCardSafety(hand, 0).getValue()));
     }
 
     /**
      * Prints a message about player's blackjack.
      */
     public static void printPlayerHasBlackjack() {
-        System.out.println("У вас Блекджек! Вы выиграли!");
+        System.out.println(i18n.getString("blackjack.player"));
     }
 
     /**
      * Prints a message about dealer's blackjack.
      */
     public static void printDealerHasBlackjack() {
-        System.out.println("У дилера Блекджек! Вы проигр��ли.");
+        System.out.println(i18n.getString("blackjack.dealer"));
     }
 
     /**
      * Prints the player's turn header.
      */
     public static void printPlayerTurn() {
-        System.out.println("\nВаш ход");
-        System.out.println("-------");
+        System.out.println(i18n.getString("turn.player"));
     }
 
     /**
      * Prints the dealer's turn header.
      */
     public static void printDealerTurn() {
-        System.out.println("\nХод дилера");
-        System.out.println("-------");
+        System.out.println(i18n.getString("turn.dealer"));
     }
 
     /**
      * Prints a prompt for the player's decision to hit or stand.
      */
     public static void printHitOrStand() {
-        System.out.println("Введите '1', чтобы взять карту, и '0', чтобы остановиться...");
+        System.out.println(i18n.getString("game.hit.or.stand"));
     }
 
     /**
@@ -105,7 +105,7 @@ public class ConsoleOutput {
      * @param card the drawn card
      */
     public static void printPlayerDrewCard(Card card) {
-        System.out.println("Вы открыли карту " + card.toString());
+        System.out.println(i18n.getString("player.drew.card", card.toString()));
     }
 
     /**
@@ -114,49 +114,49 @@ public class ConsoleOutput {
      * @param card the drawn card
      */
     public static void printDealerDrewCard(Card card) {
-        System.out.println("Дилер открывает карту " + card.toString());
+        System.out.println(i18n.getString("dealer.drew.card", card.toString()));
     }
 
     /**
      * Prints a message that the dealer reveals the hidden card.
      */
     public static void printDealerDrewClosedCard() {
-        System.out.println("Дилер открывает закрытую карту");
+        System.out.println(i18n.getString("dealer.drew.closed"));
     }
 
     /**
      * Prints a message about player's bust.
      */
     public static void printPlayerBust() {
-        System.out.println("Перебор! Вы проиграли.");
+        System.out.println(i18n.getString("result.player.busted"));
     }
 
     /**
      * Prints a message that the player got 21.
      */
     public static void printPlayer21() {
-        System.out.println("У вас 21! Отличный результат!");
+        System.out.println(i18n.getString("player.21"));
     }
 
     /**
      * Prints an error message about hand overflow.
      */
     public static void printErrorHandFull() {
-        System.out.println("Ошибка: рука переполнена!");
+        System.out.println(i18n.getString("error.hand.full"));
     }
 
     /**
      * Prints an error message about running out of cards in the shoe.
      */
     public static void printErrorShoeOutOfCards() {
-        System.out.println("Ошибка: в колоде закончились карты!");
+        System.out.println(i18n.getString("error.shoe.empty"));
     }
 
     /**
      * Prints an error message about invalid card index.
      */
     public static void printErrorInvalidCardIndex() {
-        System.out.println("Ошибка: неверный индекс карты!");
+        System.out.println(i18n.getString("error.invalid.card.index"));
     }
 
     /**
@@ -166,9 +166,7 @@ public class ConsoleOutput {
      * @param dealerScore the dealer's score
      */
     public static void printScore(int playerScore, int dealerScore) {
-        System.out.println("\nТекущий счет:");
-        System.out.println("Игрок: " + playerScore);
-        System.out.println("Дилер: " + dealerScore);
+        System.out.println(i18n.getString("score.current", playerScore, dealerScore));
     }
 
     /**
@@ -178,26 +176,24 @@ public class ConsoleOutput {
      * @param dealerScore the dealer's final score
      */
     public static void printFinalResults(int playerScore, int dealerScore) {
-        System.out.println("\n=== ФИНАЛЬНЫЕ РЕЗУЛЬТАТЫ ===");
-        System.out.println("Игрок: " + playerScore);
-        System.out.println("Дилер: " + dealerScore);
+        System.out.println(i18n.getString("score.final", playerScore, dealerScore));
 
         if (playerScore > dealerScore) {
-            System.out.println("Поздравляем! Вы выиграли общий зачет!");
+            System.out.println(i18n.getString("final.player.wins"));
         } else if (dealerScore > playerScore) {
-            System.out.println("Дилер выиграл общий зачет. Удачи в следующий раз!");
+            System.out.println(i18n.getString("final.dealer.wins"));
         } else {
-            System.out.println("Общий зачет закончился вничью!");
+            System.out.println(i18n.getString("final.tie"));
         }
 
-        System.out.println("Спасибо за игру!");
+        System.out.println(i18n.getString("final.thanks"));
     }
 
     /**
      * Prints a message that dealer is busted.
      */
     public static void printDealerBust() {
-        System.out.println("У дилера перебор! Вы выиграли!");
+        System.out.println(i18n.getString("result.dealer.busted"));
     }
 
     /**
@@ -207,7 +203,7 @@ public class ConsoleOutput {
      * @param dealerValue dealer's hand value
      */
     public static void printPlayerWins(int playerValue, int dealerValue) {
-        System.out.println("Вы выиграли! (" + playerValue + " против " + dealerValue + ")");
+        System.out.println(i18n.getString("result.player.wins", playerValue, dealerValue));
     }
 
     /**
@@ -217,7 +213,7 @@ public class ConsoleOutput {
      * @param playerValue player's hand value
      */
     public static void printDealerWins(int dealerValue, int playerValue) {
-        System.out.println("Дилер выиграл! (" + dealerValue + " против " + playerValue + ")");
+        System.out.println(i18n.getString("result.dealer.wins", dealerValue, playerValue));
     }
 
     /**
@@ -226,6 +222,6 @@ public class ConsoleOutput {
      * @param value the value of both hands
      */
     public static void printDraw(int value) {
-        System.out.println("Ничья! (" + value + " против " + value + ")");
+        System.out.println(i18n.getString("result.tie", value, value));
     }
 }

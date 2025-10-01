@@ -2,8 +2,8 @@ package blackjack.game;
 
 import blackjack.deck.Shoe;
 import blackjack.io.ConsoleOutput;
-import blackjack.participants.Player;
 import blackjack.participants.Dealer;
+import blackjack.participants.Player;
 
 /**
  * Main class for the blackjack game.
@@ -13,7 +13,6 @@ public class Game {
     private final Player player;
     private final Dealer dealer;
     private final Shoe shoe;
-    private final RoundManager roundManager;
     private int roundNumber;
 
     /**
@@ -25,7 +24,6 @@ public class Game {
         this.player = new Player();
         this.dealer = new Dealer();
         this.shoe = new Shoe(numDecks);
-        this.roundManager = new RoundManager();
         this.roundNumber = 1;
     }
 
@@ -37,10 +35,9 @@ public class Game {
         ConsoleOutput.printHelloMessage();
 
         do {
-            roundManager.playRound(player, dealer, shoe, roundNumber);
+            RoundManager.playRound(player, dealer, shoe, roundNumber);
             printScore();
             roundNumber++;
-
         } while (player.decidesToPlayAgain());
 
         printFinalResults();

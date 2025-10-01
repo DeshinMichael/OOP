@@ -16,16 +16,6 @@ public enum RoundResult {
     BUST,
 
     /**
-     * Player decided to stand.
-     */
-    STAND,
-
-    /**
-     * Player reached 21 points, but not with two cards.
-     */
-    GOT_21,
-
-    /**
      * Game continues - intermediate state.
      */
     CONTINUE

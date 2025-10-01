@@ -1,9 +1,12 @@
-package blackjack_test.participants_test;
+package blackjacktest.participantstest;
 
+import blackjack.deck.Shoe;
+import blackjack.game.RoundResult;
 import blackjack.model.Card;
 import blackjack.model.Hand;
 import blackjack.model.Rank;
 import blackjack.model.Suit;
+import blackjack.participants.Dealer;
 import blackjack.participants.Participant;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +29,17 @@ class ParticipantTest {
      */
     @BeforeEach
     void setUp() {
-        participant = new Participant();
+        participant = new Participant() {
+            @Override
+            public RoundResult checkInitialHand() {
+                return null;
+            }
+
+            @Override
+            public RoundResult makeMove(Shoe shoe, Dealer dealer) {
+                return null;
+            }
+        };
     }
 
     /**

@@ -12,7 +12,7 @@ import java.util.List;
  * Can contain multiple standard decks of 52 cards, supports shuffling and dealing cards.
  */
 public class Shoe {
-    private final Card[] cards;
+    private final List<Card> cards;
     private int currentIndex;
 
     /**
@@ -21,38 +21,19 @@ public class Shoe {
      * @param numDecks the number of standard decks (52 cards each)
      */
     public Shoe(int numDecks) {
-        List<Card> cardList = new ArrayList<>();
+        this.cards = new ArrayList<>();
 
-        // Create the specified number of decks
         for (int deck = 0; deck < numDecks; deck++) {
             for (Suit suit : Suit.values()) {
                 for (Rank rank : Rank.values()) {
-                    cardList.add(new Card(rank, suit));
+                    cards.add(new Card(rank, suit));
                 }
             }
         }
 
-        // Shuffle the cards
-        Collections.shuffle(cardList);
+        Collections.shuffle(cards);
 
-        this.cards = cardList.toArray(new Card[0]);
         this.currentIndex = 0;
-    }
-
-    /**
-     * Shuffles the cards in the shoe.
-     */
-    public void shuffle() {
-        List<Card> cardList = new ArrayList<>();
-        for (Card card : cards) {
-            cardList.add(card);
-        }
-        Collections.shuffle(cardList);
-
-        for (int i = 0; i < cards.length; i++) {
-            cards[i] = cardList.get(i);
-        }
-        currentIndex = 0;
     }
 
     /**
@@ -62,18 +43,22 @@ public class Shoe {
      * @throws IllegalStateException if the shoe is out of cards
      */
     public Card dealCard() {
-        if (currentIndex >= cards.length) {
-            throw new IllegalStateException("Shoe is out of cards");
+        if (currentIndex >= cards.size()) {
+            throw new IllegalStateException();
         }
-        return cards[currentIndex++];
+        return cards.get(currentIndex++);
     }
 
     /**
-     * Returns the array of all cards in the shoe.
+     * Returns the list of all cards in the shoe.
      *
-     * @return the card array
+     * @return the card list
      */
-    public Card[] getCards() {
+    public List<Card> getCards() {
         return cards;
+    }
+
+    public int getRemainingCards() {
+        return cards.size() - currentIndex;
     }
 }

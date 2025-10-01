@@ -1,16 +1,23 @@
-package blackjack_test.model_test;
+package blackjacktest.modeltest;
 
+import blackjack.i18n.I18nManager;
 import blackjack.model.Card;
 import blackjack.model.Hand;
 import blackjack.model.Rank;
 import blackjack.model.Suit;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class HandTest {
+    private static final I18nManager i18n = I18nManager.getInstance();
+
     /**
      * Tests that cards can be added to a hand.
      * Verifies cards are added in the correct order and can be retrieved.
@@ -80,7 +87,6 @@ class HandTest {
         assertThrows(IllegalArgumentException.class, hand::getLastCard);
     }
 
-
     /**
      * Tests that hand value is calculated correctly.
      * Verifies correct Blackjack hand values with various card combinations.
@@ -97,6 +103,48 @@ class HandTest {
         assertEquals(14, hand.getValue());
         hand.addCard(new Card(Rank.ACE, Suit.CLUBS));
         assertEquals(15, hand.getValue());
+    }
+
+    /**
+     * Tests different scenarios for hand values calculation.
+     */
+    @ParameterizedTest
+    @MethodSource("provideHandScenarios")
+    public void testHandValues(Card[] cards, int expectedValue) {
+        Hand hand = new Hand();
+        for (Card card : cards) {
+            hand.addCard(card);
+        }
+        assertEquals(expectedValue, hand.getValue());
+    }
+
+    private static Stream<Arguments> provideHandScenarios() {
+        return Stream.of(
+            Arguments.of(new Card[] {
+                new Card(Rank.ACE, Suit.HEARTS),
+                new Card(Rank.KING, Suit.CLUBS)
+            }, 21),
+
+            Arguments.of(new Card[] {
+                new Card(Rank.ACE, Suit.HEARTS),
+                new Card(Rank.ACE, Suit.CLUBS),
+                new Card(Rank.ACE, Suit.DIAMONDS)
+            }, 13),
+
+            Arguments.of(new Card[] {
+                new Card(Rank.TEN, Suit.HEARTS),
+                new Card(Rank.EIGHT, Suit.CLUBS),
+                new Card(Rank.FIVE, Suit.DIAMONDS),
+                new Card(Rank.ACE, Suit.HEARTS)
+            }, 24),
+
+            Arguments.of(new Card[] {
+                new Card(Rank.ACE, Suit.HEARTS),
+                new Card(Rank.THREE, Suit.CLUBS),
+                new Card(Rank.ACE, Suit.DIAMONDS),
+                new Card(Rank.FIVE, Suit.HEARTS)
+            }, 20)
+        );
     }
 
     /**
@@ -121,9 +169,35 @@ class HandTest {
     @Test
     public void testToString() {
         Hand hand = new Hand();
-        hand.addCard(new Card(Rank.TEN, Suit.HEARTS));
-        hand.addCard(new Card(Rank.ACE, Suit.SPADES));
-        String expected = "Десятка Черви (10), Туз Пики (11)";
+        Card card1 = new Card(Rank.TEN, Suit.HEARTS);
+        Card card2 = new Card(Rank.ACE, Suit.SPADES);
+        hand.addCard(card1);
+        hand.addCard(card2);
+
+        String expectedTen = i18n.getString("rank.ten");
+        String expectedHearts = i18n.getString("suit.hearts");
+        String expectedAce = i18n.getString("rank.ace");
+        String expectedSpades = i18n.getString("suit.spades");
+
+        String expected = expectedTen + " " + expectedHearts + " (10), " +
+                          expectedAce + " " + expectedSpades + " (11)";
         assertEquals(expected, hand.toString());
+    }
+
+    /**
+     * Tests that getActualCardValue calculates correctly for different card positions.
+     */
+    @Test
+    public void testGetActualCardValue() {
+        Hand hand = new Hand();
+        hand.addCard(new Card(Rank.ACE, Suit.HEARTS));
+        hand.addCard(new Card(Rank.FIVE, Suit.CLUBS));
+        hand.addCard(new Card(Rank.ACE, Suit.DIAMONDS));
+
+        assertEquals(11, hand.getActualCardValue(0));
+        assertEquals(5, hand.getActualCardValue(1));
+        assertEquals(1, hand.getActualCardValue(2));
+
+        assertEquals(17, hand.getValue());
     }
 }

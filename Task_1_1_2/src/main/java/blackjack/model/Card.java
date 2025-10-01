@@ -4,26 +4,21 @@ package blackjack.model;
  * Represents a playing card in blackjack.
  * A card has a rank and suit, and can calculate its value.
  */
-public class Card {
-    private final Rank rank;
-    private final Suit suit;
-
+public record Card(Rank rank, Suit suit) {
     /**
      * Creates a new card with the specified rank and suit.
      *
      * @param rank the rank of the card
      * @param suit the suit of the card
      */
-    public Card(Rank rank, Suit suit) {
-        this.rank = rank;
-        this.suit = suit;
-    }
+    public Card {}
 
     /**
      * Returns the rank of the card.
      *
      * @return the card's rank
      */
+    @Override
     public Rank rank() {
         return rank;
     }
@@ -33,6 +28,7 @@ public class Card {
      *
      * @return the card's suit
      */
+    @Override
     public Suit suit() {
         return suit;
     }
@@ -54,6 +50,6 @@ public class Card {
      */
     @Override
     public String toString() {
-        return rank.getDisplayName() + " " + suit.getDisplayName();
+        return rank.toString() + " " + suit.toString();
     }
 }

@@ -1,18 +1,23 @@
-package blackjack_test.participants_test;
+package blackjacktest.participantstest;
 
+import blackjack.deck.Shoe;
+import blackjack.game.RoundResult;
+import blackjack.io.ConsoleInput;
 import blackjack.model.Card;
 import blackjack.model.Rank;
 import blackjack.model.Suit;
 import blackjack.participants.Dealer;
 import blackjack.participants.Participant;
+import blackjack.participants.Player;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.AfterEach;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test class for blackjack.participants.Dealer functionality.
@@ -20,6 +25,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class DealerTest {
     private Dealer dealer;
+    private Player player;
+    private Shoe shoe;
+    private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+    private final PrintStream originalOut = System.out;
 
     /**
      * Setup method that runs before each test.
@@ -28,6 +37,18 @@ class DealerTest {
     @BeforeEach
     void setUp() {
         dealer = new Dealer();
+        player = new Player();
+        shoe = new Shoe(1);
+        System.setOut(new PrintStream(outputStreamCaptor));
+        ConsoleInput.closeScanner();
+    }
+
+    /**
+     * Cleanup method that runs after each test.
+     */
+    @AfterEach
+    void tearDown() {
+        System.setOut(originalOut);
     }
 
     /**
@@ -175,5 +196,103 @@ class DealerTest {
 
         assertEquals(17, dealer.getHand().getValue());
         assertFalse(dealer.shouldHit());
+    }
+
+    /**
+     * Tests dealInitialCards method distributes cards correctly
+     */
+    @Test
+    void testDealInitialCards() {
+        dealer.dealInitialCards(player, dealer, shoe);
+
+        assertEquals(2, player.getHand().getCardCount(), "Player should have 2 cards");
+        assertEquals(2, dealer.getHand().getCardCount(), "Dealer should have 2 cards");
+
+        assertEquals(48, shoe.getRemainingCards(), "Shoe should have dealt 4 cards");
+    }
+
+    /**
+     * Tests checkInitialHand returns BLACKJACK when dealer has blackjack
+     */
+    @Test
+    void testCheckInitialHandWithBlackjack() {
+        dealer.getHand().addCard(new Card(Rank.ACE, Suit.HEARTS));
+        dealer.getHand().addCard(new Card(Rank.KING, Suit.SPADES));
+
+        assertEquals(RoundResult.BLACKJACK, dealer.checkInitialHand());
+        assertTrue(outputStreamCaptor.toString().contains("Blackjack"));
+    }
+
+    /**
+     * Tests checkInitialHand returns CONTINUE when dealer doesn't have blackjack
+     */
+    @Test
+    void testCheckInitialHandWithoutBlackjack() {
+        dealer.getHand().addCard(new Card(Rank.KING, Suit.HEARTS));
+        dealer.getHand().addCard(new Card(Rank.NINE, Suit.SPADES));
+
+        assertEquals(RoundResult.CONTINUE, dealer.checkInitialHand());
+    }
+
+    /**
+     * Tests dealer's makeMove method with a hand that busts
+     */
+    @Test
+    void testMakeMoveWithBust() {
+        dealer.getHand().addCard(new Card(Rank.TEN, Suit.HEARTS));
+        dealer.getHand().addCard(new Card(Rank.SIX, Suit.SPADES));
+
+        Shoe testShoe = new Shoe(1);
+        for (int i = 0; i < 20; i++) {
+            testShoe.dealCard();
+        }
+
+        RoundResult result = dealer.makeMove(testShoe, dealer);
+
+        if (dealer.isBusted()) {
+            assertEquals(RoundResult.BUST, result, "Should return BUST when dealer busts");
+            assertTrue(outputStreamCaptor.toString().contains("bust"), "Should print bust message");
+        }
+    }
+
+    /**
+     * Tests dealer's makeMove method with a hand of 17 or more
+     */
+    @Test
+    void testMakeMoveWithHandOver17() {
+        dealer.getHand().addCard(new Card(Rank.TEN, Suit.HEARTS));
+        dealer.getHand().addCard(new Card(Rank.SEVEN, Suit.SPADES));
+
+        RoundResult result = dealer.makeMove(shoe, dealer);
+
+        assertEquals(2, dealer.getHand().getCardCount(), "Dealer shouldn't draw more cards with 17");
+        assertEquals(RoundResult.CONTINUE, result);
+    }
+
+    /**
+     * Tests dealer's makeMove method with a blackjack hand
+     */
+    @Test
+    void testMakeMoveWithBlackjack() {
+        dealer.getHand().addCard(new Card(Rank.ACE, Suit.HEARTS));
+        dealer.getHand().addCard(new Card(Rank.KING, Suit.SPADES));
+
+        RoundResult result = dealer.makeMove(shoe, dealer);
+
+        assertEquals(2, dealer.getHand().getCardCount(), "Dealer shouldn't draw more cards with blackjack");
+        assertEquals(RoundResult.CONTINUE, result);
+    }
+
+    /**
+     * Tests dealer's makeMove method with multiple hits
+     */
+    @Test
+    void testMakeMoveWithMultipleHits() {
+        dealer.getHand().addCard(new Card(Rank.TWO, Suit.HEARTS));
+        dealer.getHand().addCard(new Card(Rank.THREE, Suit.SPADES));
+
+        RoundResult result = dealer.makeMove(shoe, dealer);
+
+        assertTrue(dealer.getHand().getCardCount() > 2, "Dealer should draw multiple cards with low total");
     }
 }
