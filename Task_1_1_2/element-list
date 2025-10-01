@@ -1,6 +1,7 @@
 blackjack
 blackjack.deck
 blackjack.game
+blackjack.i18n
 blackjack.io
 blackjack.model
 blackjack.participants

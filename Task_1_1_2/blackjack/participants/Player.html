@@ -212,6 +212,8 @@ loadScripts(document, 'script');</script>
  Manages the player's decision-making process about taking cards,
  handles the results of each action.</div>
 <dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="Participant.html#makeMove(blackjack.deck.Shoe,blackjack.participants.Dealer)">makeMove</a></code>&nbsp;in class&nbsp;<code><a href="Participant.html" title="class in blackjack.participants">Participant</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>shoe</code> - the shoe to deal cards from</dd>
 <dd><code>dealer</code> - the dealer for displaying their cards</dd>
@@ -224,9 +226,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="checkInitialHand()">
 <h3>checkInitialHand</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../game/RoundResult.html" title="enum class in blackjack.game">RoundResult</a></span>&nbsp;<span class="element-name">checkInitialHand</span>()</div>
+<div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="Participant.html#checkInitialHand()">Participant</a></code></span></div>
 <div class="block">Checks the initial hand for blackjack.
  Determines if the player has natural blackjack (21 points with two cards).</div>
 <dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="Participant.html#checkInitialHand()">checkInitialHand</a></code>&nbsp;in class&nbsp;<code><a href="Participant.html" title="class in blackjack.participants">Participant</a></code></dd>
 <dt>Returns:</dt>
 <dd>BLACKJACK if the player has blackjack, CONTINUE if the game continues</dd>
 </dl>

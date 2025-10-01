@@ -113,16 +113,14 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Deals one card from the shoe.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../model/Card.html" title="class in blackjack.model">Card</a>[]</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../model/Card.html" title="class in blackjack.model">Card</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCards()" class="member-name-link">getCards</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the array of all cards in the shoe.</div>
+<div class="block">Returns the list of all cards in the shoe.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#shuffle()" class="member-name-link">shuffle</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Shuffles the cards in the shoe.</div>
-</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRemainingCards()" class="member-name-link">getRemainingCards</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -160,13 +158,6 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="shuffle()">
-<h3>shuffle</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">shuffle</span>()</div>
-<div class="block">Shuffles the cards in the shoe.</div>
-</section>
-</li>
-<li>
 <section class="detail" id="dealCard()">
 <h3>dealCard</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../model/Card.html" title="class in blackjack.model">Card</a></span>&nbsp;<span class="element-name">dealCard</span>()</div>
@@ -182,12 +173,18 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCards()">
 <h3>getCards</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../model/Card.html" title="class in blackjack.model">Card</a>[]</span>&nbsp;<span class="element-name">getCards</span>()</div>
-<div class="block">Returns the array of all cards in the shoe.</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../model/Card.html" title="class in blackjack.model">Card</a>&gt;</span>&nbsp;<span class="element-name">getCards</span>()</div>
+<div class="block">Returns the list of all cards in the shoe.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>the card array</dd>
+<dd>the card list</dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getRemainingCards()">
+<h3>getRemainingCards</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getRemainingCards</span>()</div>
 </section>
 </li>
 </ul>

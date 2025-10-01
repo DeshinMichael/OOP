@@ -108,9 +108,27 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#shouldHit()" class="member-name-link">shouldHit</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../game/RoundResult.html" title="enum class in blackjack.game">RoundResult</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#checkInitialHand()" class="member-name-link">checkInitialHand</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Checks the initial hand for blackjack.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dealInitialCards(blackjack.participants.Player,blackjack.participants.Dealer,blackjack.deck.Shoe)" class="member-name-link">dealInitialCards</a><wbr>(<a href="Player.html" title="class in blackjack.participants">Player</a>&nbsp;player,
+ <a href="Dealer.html" title="class in blackjack.participants">Dealer</a>&nbsp;dealer,
+ <a href="../deck/Shoe.html" title="class in blackjack.deck">Shoe</a>&nbsp;shoe)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Deals initial cards to player and dealer.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../game/RoundResult.html" title="enum class in blackjack.game">RoundResult</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#makeMove(blackjack.deck.Shoe,blackjack.participants.Dealer)" class="member-name-link">makeMove</a><wbr>(<a href="../deck/Shoe.html" title="class in blackjack.deck">Shoe</a>&nbsp;shoe,
+ <a href="Dealer.html" title="class in blackjack.participants">Dealer</a>&nbsp;dealer)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Plays the dealer's turn according to blackjack rules.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#shouldHit()" class="member-name-link">shouldHit</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Determines whether the dealer should take another card.</div>
 </div>
 </div>
@@ -156,6 +174,53 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>true if the dealer should hit, false if the dealer should stand</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="makeMove(blackjack.deck.Shoe,blackjack.participants.Dealer)">
+<h3>makeMove</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../game/RoundResult.html" title="enum class in blackjack.game">RoundResult</a></span>&nbsp;<span class="element-name">makeMove</span><wbr><span class="parameters">(<a href="../deck/Shoe.html" title="class in blackjack.deck">Shoe</a>&nbsp;shoe,
+ <a href="Dealer.html" title="class in blackjack.participants">Dealer</a>&nbsp;dealer)</span></div>
+<div class="block">Plays the dealer's turn according to blackjack rules.
+ The dealer hits until the sum reaches 17 or more.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="Participant.html#makeMove(blackjack.deck.Shoe,blackjack.participants.Dealer)">makeMove</a></code>&nbsp;in class&nbsp;<code><a href="Participant.html" title="class in blackjack.participants">Participant</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>dealer</code> - the dealer</dd>
+<dd><code>shoe</code> - the card shoe</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="dealInitialCards(blackjack.participants.Player,blackjack.participants.Dealer,blackjack.deck.Shoe)">
+<h3>dealInitialCards</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">dealInitialCards</span><wbr><span class="parameters">(<a href="Player.html" title="class in blackjack.participants">Player</a>&nbsp;player,
+ <a href="Dealer.html" title="class in blackjack.participants">Dealer</a>&nbsp;dealer,
+ <a href="../deck/Shoe.html" title="class in blackjack.deck">Shoe</a>&nbsp;shoe)</span></div>
+<div class="block">Deals initial cards to player and dealer.
+ Each participant receives two cards.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>player</code> - the player</dd>
+<dd><code>dealer</code> - the dealer</dd>
+<dd><code>shoe</code> - the card shoe</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="checkInitialHand()">
+<h3>checkInitialHand</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../game/RoundResult.html" title="enum class in blackjack.game">RoundResult</a></span>&nbsp;<span class="element-name">checkInitialHand</span>()</div>
+<div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="Participant.html#checkInitialHand()">Participant</a></code></span></div>
+<div class="block">Checks the initial hand for blackjack.
+ Determines if the player has natural blackjack (21 points with two cards).</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="Participant.html#checkInitialHand()">checkInitialHand</a></code>&nbsp;in class&nbsp;<code><a href="Participant.html" title="class in blackjack.participants">Participant</a></code></dd>
+<dt>Returns:</dt>
+<dd>BLACKJACK if the player has blackjack, CONTINUE if the game continues</dd>
 </dl>
 </section>
 </li>
