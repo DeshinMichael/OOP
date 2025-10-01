@@ -62,7 +62,7 @@ public class Hand {
         if (cards.isEmpty()) {
             throw new IllegalArgumentException();
         }
-        return cards.getLast();
+        return cards.get(cards.size() - 1);
     }
 
     /**
