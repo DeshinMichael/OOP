@@ -52,7 +52,7 @@ public class TopologicalSorter<V> implements SortingStrategy<V> {
 
         temp.remove(vertex);
         visited.add(vertex);
-        result.addFirst(vertex);
+        result.add(0, vertex);
         return true;
     }
 }
