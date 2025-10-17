@@ -81,5 +81,42 @@ class DivTest {
         Expression div = new Div(x, num);
         assertEquals("(x/5)", div.toString());
     }
-}
 
+    @Test
+    void testSimplify() {
+        Expression a = new Number(10);
+        Expression b = new Number(2);
+        Div div = new Div(a, b);
+        Expression simplified = div.simplify();
+        assertTrue(simplified instanceof Number);
+        assertEquals(5, simplified.eval(new HashMap<>()));
+
+        Expression x = new Variable("x");
+        Expression num = new Number(5);
+        Div divWithVar = new Div(x, num);
+        Expression simplifiedWithVar = divWithVar.simplify();
+        assertTrue(simplifiedWithVar instanceof Div);
+        assertEquals("(x/5)", simplifiedWithVar.toString());
+
+        Expression one = new Number(1);
+        Div divByOne = new Div(x, one);
+        Expression simplifiedByOne = divByOne.simplify();
+        assertEquals(x, simplifiedByOne);
+
+        Expression zero = new Number(0);
+        Div zeroDiv = new Div(zero, x);
+        Expression simplifiedZeroDiv = zeroDiv.simplify();
+        assertTrue(simplifiedZeroDiv instanceof Number);
+        assertEquals(0, simplifiedZeroDiv.eval(new HashMap<>()));
+
+        Div divByZero = new Div(x, zero);
+        Expression simplifiedDivByZero = divByZero.simplify();
+        assertTrue(simplifiedDivByZero instanceof Div);
+
+        Expression innerDiv = new Div(new Number(20), new Number(4));
+        Div outerDiv = new Div(innerDiv, new Number(2));
+        Expression simplifiedComplex = outerDiv.simplify();
+        assertTrue(simplifiedComplex instanceof Number);
+        assertEquals(2, simplifiedComplex.eval(new HashMap<>())); // (20/4)/2 = 5/2 = 2
+    }
+}

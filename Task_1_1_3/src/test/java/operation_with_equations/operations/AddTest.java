@@ -62,5 +62,23 @@ class AddTest {
         Add add = new Add(five, x);
         assertEquals("(5 + x)", add.toString());
     }
-}
 
+    @Test
+    void testSimplify() {
+        Add add = new Add(five, two);
+        Expression simplified = add.simplify();
+        assertTrue(simplified instanceof Number);
+        assertEquals(7, simplified.eval(Collections.emptyMap()));
+
+        Add addWithVar = new Add(x, five);
+        Expression simplifiedWithVar = addWithVar.simplify();
+        assertTrue(simplifiedWithVar instanceof Add);
+        assertEquals("(x + 5)", simplifiedWithVar.toString());
+
+        Expression innerAdd = new Add(two, five);
+        Add outerAdd = new Add(innerAdd, two);
+        Expression simplifiedComplex = outerAdd.simplify();
+        assertTrue(simplifiedComplex instanceof Number);
+        assertEquals(9, simplifiedComplex.eval(Collections.emptyMap()));
+    }
+}

@@ -108,5 +108,38 @@ class MulTest {
         // Одинаковые выражения должны иметь одинаковые хэш-коды
         assertEquals(mul1.hashCode(), mul2.hashCode());
     }
-}
 
+    @Test
+    void testSimplify() {
+        Expression a = new Number(4);
+        Expression b = new Number(5);
+        Mul mul = new Mul(a, b);
+        Expression simplified = mul.simplify();
+        assertTrue(simplified instanceof Number);
+        assertEquals(20, simplified.eval(new HashMap<>()));
+
+        Expression x = new Variable("x");
+        Expression num = new Number(5);
+        Mul mulWithVar = new Mul(x, num);
+        Expression simplifiedWithVar = mulWithVar.simplify();
+        assertTrue(simplifiedWithVar instanceof Mul);
+        assertEquals("(x * 5)", simplifiedWithVar.toString());
+
+        Expression zero = new Number(0);
+        Mul mulByZero = new Mul(x, zero);
+        Expression simplifiedByZero = mulByZero.simplify();
+        assertTrue(simplifiedByZero instanceof Number);
+        assertEquals(0, simplifiedByZero.eval(new HashMap<>()));
+
+        Expression one = new Number(1);
+        Mul mulByOne = new Mul(x, one);
+        Expression simplifiedByOne = mulByOne.simplify();
+        assertEquals(x, simplifiedByOne);
+
+        Expression innerMul = new Mul(new Number(3), new Number(4));
+        Mul outerMul = new Mul(innerMul, new Number(2));
+        Expression simplifiedComplex = outerMul.simplify();
+        assertTrue(simplifiedComplex instanceof Number);
+        assertEquals(24, simplifiedComplex.eval(new HashMap<>())); // (3*4)*2 = 12*2 = 24
+    }
+}

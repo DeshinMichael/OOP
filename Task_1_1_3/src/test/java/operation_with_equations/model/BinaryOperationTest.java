@@ -8,7 +8,6 @@ import java.util.Map;
 
 class BinaryOperationTest {
 
-    // Тестовая реализация абстрактного класса BinaryOperation
     private static class TestBinaryOperation extends BinaryOperation {
 
         public TestBinaryOperation(Expression left, Expression right) {
@@ -22,8 +21,12 @@ class BinaryOperationTest {
 
         @Override
         public int eval(Map<String, Integer> values) {
-            // Простое сложение для тестирования
             return getLeftOperand().eval(values) + getRightOperand().eval(values);
+        }
+
+        @Override
+        public Expression simplify() {
+            return null;
         }
 
         @Override

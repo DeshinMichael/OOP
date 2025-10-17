@@ -123,5 +123,32 @@ class SubTest {
         // Одинаковые выражения должны иметь одинаковые хэш-коды
         assertEquals(sub1.hashCode(), sub2.hashCode());
     }
-}
 
+    @Test
+    void testSimplify() {
+        Expression a = new Number(10);
+        Expression b = new Number(3);
+        Sub sub = new Sub(a, b);
+        Expression simplified = sub.simplify();
+        assertTrue(simplified instanceof Number);
+        assertEquals(7, simplified.eval(new HashMap<>()));
+
+        Expression x = new Variable("x");
+        Expression num = new Number(5);
+        Sub subWithVar = new Sub(x, num);
+        Expression simplifiedWithVar = subWithVar.simplify();
+        assertTrue(simplifiedWithVar instanceof Sub);
+        assertEquals("(x - 5)", simplifiedWithVar.toString());
+
+        Sub subSame = new Sub(x, x);
+        Expression simplifiedSame = subSame.simplify();
+        assertTrue(simplifiedSame instanceof Number);
+        assertEquals(0, simplifiedSame.eval(new HashMap<>()));
+
+        Expression innerSub = new Sub(new Number(8), new Number(3));
+        Sub outerSub = new Sub(innerSub, new Number(2));
+        Expression simplifiedComplex = outerSub.simplify();
+        assertTrue(simplifiedComplex instanceof Number);
+        assertEquals(3, simplifiedComplex.eval(new HashMap<>())); // (8-3)-2 = 5-2 = 3
+    }
+}

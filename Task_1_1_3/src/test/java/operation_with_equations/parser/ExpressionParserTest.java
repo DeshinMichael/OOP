@@ -124,4 +124,40 @@ class ExpressionParserTest {
         Map<String, Integer> emptyMap = new HashMap<>();
         assertEquals(1, derivative.eval(emptyMap)); // Производная x+5 по x равна 1
     }
+
+    @Test
+    void testParseAndSimplify() {
+        Expression expr = ExpressionParser.parseAndSimplify("2+3");
+        assertTrue(expr instanceof Number);
+        Map<String, Integer> emptyMap = new HashMap<>();
+        assertEquals(5, expr.eval(emptyMap));
+
+        expr = ExpressionParser.parseAndSimplify("(2+3)*(4-1)");
+        assertTrue(expr instanceof Number);
+        assertEquals(15, expr.eval(emptyMap));
+
+        expr = ExpressionParser.parseAndSimplify("x+5");
+        assertTrue(expr instanceof Add);
+        Map<String, Integer> values = new HashMap<>();
+        values.put("x", 10);
+        assertEquals(15, expr.eval(values));
+
+        expr = ExpressionParser.parseAndSimplify("(2+3)*x");
+        assertTrue(expr instanceof Mul);
+        assertEquals("(5 * x)", expr.toString());
+        values.put("x", 4);
+        assertEquals(20, expr.eval(values));
+
+        expr = ExpressionParser.parseAndSimplify("10/2");
+        assertTrue(expr instanceof Number);
+        assertEquals(5, expr.eval(emptyMap));
+
+        expr = ExpressionParser.parseAndSimplify("x*0");
+        assertTrue(expr instanceof Number);
+        assertEquals(0, expr.eval(emptyMap));
+
+        expr = ExpressionParser.parseAndSimplify("x*1");
+        assertTrue(expr instanceof Variable);
+        assertEquals("x", expr.toString());
+    }
 }
