@@ -20,6 +20,11 @@ public class Number extends Expression {
     }
 
     @Override
+    public Expression simplify() {
+        return this;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (!(obj instanceof Number)) return false;

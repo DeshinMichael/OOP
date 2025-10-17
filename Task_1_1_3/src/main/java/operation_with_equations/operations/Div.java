@@ -2,7 +2,9 @@ package operation_with_equations.operations;
 
 import operation_with_equations.model.BinaryOperation;
 import operation_with_equations.model.Expression;
+import operation_with_equations.model.Number;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Div extends BinaryOperation {
@@ -29,6 +31,31 @@ public class Div extends BinaryOperation {
         }
         return getLeftOperand().eval(values) / divisor;
     }
+
+    @Override
+    public Expression simplify() {
+        Expression left = getLeftOperand().simplify();
+        Expression right = getRightOperand().simplify();
+
+        if (left instanceof Number && right instanceof Number) {
+            Map<String, Integer> emptyMap = new HashMap<>();
+            int divisor = ((Number) right).eval(emptyMap);
+            if (divisor != 0) {
+                return new Number(((Number) left).eval(emptyMap) / divisor);
+            }
+        }
+
+        if (left instanceof Number && ((Number) left).eval(new HashMap<>()) == 0) {
+            return new Number(0);
+        }
+
+        if (right instanceof Number && ((Number) right).eval(new HashMap<>()) == 1) {
+            return left;
+        }
+
+        return new Div(left, right);
+    }
+
 
     @Override
     public boolean equals(Object obj) {

@@ -2,6 +2,9 @@ package operation_with_equations.operations;
 
 import operation_with_equations.model.BinaryOperation;
 import operation_with_equations.model.Expression;
+import operation_with_equations.model.Number;
+
+import java.util.Map;
 
 public class Sub extends BinaryOperation {
 
@@ -18,6 +21,24 @@ public class Sub extends BinaryOperation {
     public int eval(java.util.Map<String, Integer> values) {
         return getLeftOperand().eval(values) - getRightOperand().eval(values);
     }
+
+    @Override
+    public Expression simplify() {
+        Expression left = getLeftOperand().simplify();
+        Expression right = getRightOperand().simplify();
+
+        if (left instanceof Number && right instanceof Number) {
+            Map<String, Integer> emptyMap = new java.util.HashMap<>();
+            return new Number(((Number) left).eval(emptyMap) - ((Number) right).eval(emptyMap));
+        }
+
+        if (left.equals(right)) {
+            return new Number(0);
+        }
+
+        return new Sub(left, right);
+    }
+
 
     @Override
     public boolean equals(Object obj) {

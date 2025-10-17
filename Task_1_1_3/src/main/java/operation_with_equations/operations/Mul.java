@@ -2,6 +2,10 @@ package operation_with_equations.operations;
 
 import operation_with_equations.model.BinaryOperation;
 import operation_with_equations.model.Expression;
+import operation_with_equations.model.Number;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Mul extends BinaryOperation {
 
@@ -20,6 +24,31 @@ public class Mul extends BinaryOperation {
     @Override
     public int eval(java.util.Map<String, Integer> values) {
         return getLeftOperand().eval(values) * getRightOperand().eval(values);
+    }
+
+    @Override
+    public Expression simplify() {
+        Expression left = getLeftOperand().simplify();
+        Expression right = getRightOperand().simplify();
+
+        if (left instanceof Number && right instanceof Number) {
+            Map<String, Integer> emptyMap = new HashMap<>();
+            return new Number(((Number) left).eval(emptyMap) * ((Number) right).eval(emptyMap));
+        }
+
+        if ((left instanceof Number && ((Number) left).eval(new HashMap<>()) == 0) ||
+                (right instanceof Number && ((Number) right).eval(new HashMap<>()) == 0)) {
+            return new Number(0);
+        }
+
+        if (left instanceof Number && ((Number) left).eval(new HashMap<>()) == 1) {
+            return right;
+        }
+        if (right instanceof Number && ((Number) right).eval(new HashMap<>()) == 1) {
+            return left;
+        }
+
+        return new Mul(left, right);
     }
 
     @Override

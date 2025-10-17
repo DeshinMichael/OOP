@@ -25,5 +25,10 @@ public class Main {
         int result = e.eval("x = 10; y = 13");
         System.out.println("Value at x=10: " + result);
 
+        Expression simplifiedExpr1 = ExpressionParser.parseAndSimplify("(1 * x)");
+        System.out.println("Simplified expression: " + simplifiedExpr1);
+
+        Expression simplifiedExpr2 = ExpressionParser.parseAndSimplify("x - x");
+        System.out.println("Simplified expression: " + simplifiedExpr2);
     }
 }

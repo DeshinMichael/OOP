@@ -15,6 +15,11 @@ public class ExpressionParser {
         return parseExpression(input);
     }
 
+    public static Expression parseAndSimplify(String input) {
+        Expression expr = parse(input);
+        return expr.simplify();
+    }
+
     private static Expression parseExpression(String expr) {
         expr = expr.trim();
 

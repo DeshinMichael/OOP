@@ -14,6 +14,8 @@ public abstract class Expression {
 
     public abstract int eval(Map<String, Integer> values);
 
+    public abstract Expression simplify();
+
     @Override
     public abstract boolean equals(Object obj);
 

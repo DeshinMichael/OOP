@@ -2,7 +2,9 @@ package operation_with_equations.operations;
 
 import operation_with_equations.model.BinaryOperation;
 import operation_with_equations.model.Expression;
+import operation_with_equations.model.Number;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Add extends BinaryOperation {
@@ -19,6 +21,19 @@ public class Add extends BinaryOperation {
     @Override
     public int eval(Map<String, Integer> values) {
         return getLeftOperand().eval(values) + getRightOperand().eval(values);
+    }
+
+    @Override
+    public Expression simplify() {
+        Expression left = getLeftOperand().simplify();
+        Expression right = getRightOperand().simplify();
+
+        if (left instanceof Number && right instanceof Number) {
+            Map<String, Integer> emptyMap = new HashMap<>();
+            return new Number(((Number) left).eval(emptyMap) + ((Number) right).eval(emptyMap));
+        }
+
+        return new Add(left, right);
     }
 
     @Override
