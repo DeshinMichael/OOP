@@ -1,5 +1,6 @@
 package operation_with_equations.parser;
 
+import operation_with_equations.exceptions.ParseException;
 import operation_with_equations.model.Expression;
 import operation_with_equations.model.Number;
 import operation_with_equations.model.Variable;
@@ -12,18 +13,18 @@ public class AdvancedExpressionParser {
     private static String input;
     private static int pos;
 
-    public static Expression parse(String expression) {
+    public static Expression parse(String expression) throws ParseException {
         input = expression.trim();
         pos = 0;
         return parseAddSub();
     }
 
-    public static Expression parseAndSimplify(String input) {
+    public static Expression parseAndSimplify(String input) throws ParseException {
         Expression expr = parse(input);
         return expr.simplify();
     }
 
-    private static Expression parseAddSub() {
+    private static Expression parseAddSub() throws ParseException {
         Expression left = parseMulDiv();
 
         while (pos < input.length()) {
@@ -45,7 +46,7 @@ public class AdvancedExpressionParser {
         return left;
     }
 
-    private static Expression parseMulDiv() {
+    private static Expression parseMulDiv() throws ParseException {
         Expression left = parsePrimary();
 
         while (pos < input.length()) {
@@ -67,11 +68,11 @@ public class AdvancedExpressionParser {
         return left;
     }
 
-    private static Expression parsePrimary() {
+    private static Expression parsePrimary() throws ParseException {
         skipWhitespace();
 
         if (pos >= input.length()) {
-            throw new IllegalArgumentException("Unexpected end of an expression");
+            throw new ParseException("Unexpected end of an expression");
         }
 
         char c = input.charAt(pos);
@@ -80,7 +81,7 @@ public class AdvancedExpressionParser {
             pos++;
             Expression result = parseAddSub();
             if (pos >= input.length() || input.charAt(pos) != ')') {
-                throw new IllegalArgumentException("Closing parenthesis was expected");
+                throw new ParseException("Closing parenthesis was expected");
             }
             pos++;
             return result;
@@ -105,7 +106,7 @@ public class AdvancedExpressionParser {
             return new Variable(name);
         }
 
-        throw new IllegalArgumentException("Unexpected symbol: " + c);
+        throw new ParseException("Unexpected symbol: " + c);
     }
 
     private static void skipWhitespace() {

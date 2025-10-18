@@ -1,5 +1,6 @@
 package operation_with_equations.parser;
 
+import operation_with_equations.exceptions.ParseException;
 import operation_with_equations.model.Expression;
 import operation_with_equations.model.Number;
 import operation_with_equations.model.Variable;
@@ -18,14 +19,24 @@ class AdvancedExpressionParserTest {
 
     @Test
     void testParseNumber() {
-        Expression result = AdvancedExpressionParser.parse("42");
+        Expression result = null;
+        try {
+            result = AdvancedExpressionParser.parse("42");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
         assertTrue(result instanceof Number);
         assertEquals(42, result.eval(new HashMap<>()));
     }
 
     @Test
     void testParseVariable() {
-        Expression result = AdvancedExpressionParser.parse("x");
+        Expression result = null;
+        try {
+            result = AdvancedExpressionParser.parse("x");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
         assertTrue(result instanceof Variable);
         assertEquals("x", result.toString());
 
@@ -36,7 +47,12 @@ class AdvancedExpressionParserTest {
 
     @Test
     void testParseAddition() {
-        Expression result = AdvancedExpressionParser.parse("5 + 3");
+        Expression result = null;
+        try {
+            result = AdvancedExpressionParser.parse("5 + 3");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
         assertTrue(result instanceof Add);
         assertEquals("(5 + 3)", result.toString());
         assertEquals(8, result.eval(new HashMap<>()));
@@ -44,7 +60,12 @@ class AdvancedExpressionParserTest {
 
     @Test
     void testParseSubtraction() {
-        Expression result = AdvancedExpressionParser.parse("10 - 4");
+        Expression result = null;
+        try {
+            result = AdvancedExpressionParser.parse("10 - 4");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
         assertTrue(result instanceof Sub);
         assertEquals("(10 - 4)", result.toString());
         assertEquals(6, result.eval(new HashMap<>()));
@@ -52,7 +73,12 @@ class AdvancedExpressionParserTest {
 
     @Test
     void testParseMultiplication() {
-        Expression result = AdvancedExpressionParser.parse("7 * 3");
+        Expression result = null;
+        try {
+            result = AdvancedExpressionParser.parse("7 * 3");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
         assertTrue(result instanceof Mul);
         assertEquals("(7 * 3)", result.toString());
         assertEquals(21, result.eval(new HashMap<>()));
@@ -60,7 +86,12 @@ class AdvancedExpressionParserTest {
 
     @Test
     void testParseDivision() {
-        Expression result = AdvancedExpressionParser.parse("15 / 5");
+        Expression result = null;
+        try {
+            result = AdvancedExpressionParser.parse("15 / 5");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
         assertTrue(result instanceof Div);
         assertEquals("(15/5)", result.toString());
         assertEquals(3, result.eval(new HashMap<>()));
@@ -68,7 +99,12 @@ class AdvancedExpressionParserTest {
 
     @Test
     void testParseParentheses() {
-        Expression result = AdvancedExpressionParser.parse("(3 + 4) * 2");
+        Expression result = null;
+        try {
+            result = AdvancedExpressionParser.parse("(3 + 4) * 2");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
         assertTrue(result instanceof Mul);
         assertEquals("((3 + 4) * 2)", result.toString());
         assertEquals(14, result.eval(new HashMap<>()));
@@ -76,13 +112,23 @@ class AdvancedExpressionParserTest {
 
     @Test
     void testParseNestedParentheses() {
-        Expression result = AdvancedExpressionParser.parse("(2 + (3 * 4)) / 2");
+        Expression result = null;
+        try {
+            result = AdvancedExpressionParser.parse("(2 + (3 * 4)) / 2");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
         assertEquals(7, result.eval(new HashMap<>()));
     }
 
     @Test
     void testParseComplexExpression() {
-        Expression result = AdvancedExpressionParser.parse("x * (y + 5) - 10 / z");
+        Expression result = null;
+        try {
+            result = AdvancedExpressionParser.parse("x * (y + 5) - 10 / z");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
 
         Map<String, Integer> values = new HashMap<>();
         values.put("x", 3);
@@ -94,26 +140,44 @@ class AdvancedExpressionParserTest {
 
     @Test
     void testOperatorPrecedence() {
-        Expression result = AdvancedExpressionParser.parse("2 + 3 * 4");
+        Expression result = null;
+        try {
+            result = AdvancedExpressionParser.parse("2 + 3 * 4");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
         assertEquals(14, result.eval(new HashMap<>())); // 2 + (3 * 4) = 2 + 12 = 14
 
-        result = AdvancedExpressionParser.parse("10 - 6 / 2");
+        try {
+            result = AdvancedExpressionParser.parse("10 - 6 / 2");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
         assertEquals(7, result.eval(new HashMap<>())); // 10 - (6 / 2) = 10 - 3 = 7
     }
 
     @Test
     void testWhitespaceHandling() {
-        Expression result = AdvancedExpressionParser.parse("  5+  3 ");
+        Expression result = null;
+        try {
+            result = AdvancedExpressionParser.parse("  5+  3 ");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
         assertEquals(8, result.eval(new HashMap<>()));
 
-        result = AdvancedExpressionParser.parse("7*3");
+        try {
+            result = AdvancedExpressionParser.parse("7*3");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
         assertEquals(21, result.eval(new HashMap<>()));
     }
 
     @Test
     void testExceptionUnexpectedEnd() {
-        IllegalArgumentException exception = assertThrows(
-            IllegalArgumentException.class,
+        ParseException exception = assertThrows(
+                ParseException.class,
             () -> AdvancedExpressionParser.parse("5 + ")
         );
         assertEquals("Unexpected end of an expression", exception.getMessage());
@@ -121,8 +185,8 @@ class AdvancedExpressionParserTest {
 
     @Test
     void testExceptionMissingClosingParenthesis() {
-        IllegalArgumentException exception = assertThrows(
-            IllegalArgumentException.class,
+        ParseException exception = assertThrows(
+                ParseException.class,
             () -> AdvancedExpressionParser.parse("(5 + 3")
         );
         assertEquals("Closing parenthesis was expected", exception.getMessage());
@@ -130,11 +194,20 @@ class AdvancedExpressionParserTest {
 
     @Test
     void testParseAndSimplify() {
-        Expression result = AdvancedExpressionParser.parseAndSimplify("3 + 4");
+        Expression result = null;
+        try {
+            result = AdvancedExpressionParser.parseAndSimplify("3 + 4");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
         assertTrue(result instanceof Number);
         assertEquals(7, result.eval(new HashMap<>()));
 
-        result = AdvancedExpressionParser.parseAndSimplify("x * (2 + 3)");
+        try {
+            result = AdvancedExpressionParser.parseAndSimplify("x * (2 + 3)");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
         assertTrue(result instanceof Mul);
 
         Map<String, Integer> values = new HashMap<>();
@@ -144,10 +217,19 @@ class AdvancedExpressionParserTest {
 
     @Test
     void testParseMultipleOperations() {
-        Expression result = AdvancedExpressionParser.parse("1 + 2 + 3 + 4");
+        Expression result = null;
+        try {
+            result = AdvancedExpressionParser.parse("1 + 2 + 3 + 4");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
         assertEquals(10, result.eval(new HashMap<>()));
 
-        result = AdvancedExpressionParser.parse("10 - 5 - 2");
+        try {
+            result = AdvancedExpressionParser.parse("10 - 5 - 2");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
         assertEquals(3, result.eval(new HashMap<>()));
     }
 }

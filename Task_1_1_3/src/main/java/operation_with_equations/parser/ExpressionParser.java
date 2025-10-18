@@ -1,5 +1,6 @@
 package operation_with_equations.parser;
 
+import operation_with_equations.exceptions.ParseException;
 import operation_with_equations.model.Expression;
 import operation_with_equations.model.Number;
 import operation_with_equations.model.Variable;
@@ -10,17 +11,17 @@ import operation_with_equations.operations.Sub;
 
 public class ExpressionParser {
 
-    public static Expression parse(String input) {
+    public static Expression parse(String input) throws ParseException {
         input = input.trim();
         return parseExpression(input);
     }
 
-    public static Expression parseAndSimplify(String input) {
+    public static Expression parseAndSimplify(String input) throws ParseException {
         Expression expr = parse(input);
         return expr.simplify();
     }
 
-    private static Expression parseExpression(String expr) {
+    private static Expression parseExpression(String expr) throws ParseException {
         expr = expr.trim();
 
         try {
@@ -73,7 +74,7 @@ public class ExpressionParser {
             return parseExpression(expr.substring(1, expr.length() - 1));
         }
 
-        throw new IllegalArgumentException("It is impossible to make out the expression: " + expr);
+        throw new ParseException("It is impossible to make out the expression: " + expr);
     }
 
     private static boolean isVariable(String str) {
