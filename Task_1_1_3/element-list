@@ -1,4 +1,5 @@
 operation_with_equations
+operation_with_equations.exceptions
 operation_with_equations.model
 operation_with_equations.operations
 operation_with_equations.parser
