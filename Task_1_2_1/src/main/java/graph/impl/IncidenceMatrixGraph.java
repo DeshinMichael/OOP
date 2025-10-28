@@ -1,47 +1,24 @@
 package graph.impl;
 
 import graph.core.AbstractGraph;
+import graph.exceptions.VertexException;
 import graph.model.Edge;
+import graph.model.Vertex;
 
 import java.util.*;
 
-public class IncidenceMatrixGraph<V> extends AbstractGraph<V> {
-    private List<Edge<V>> edges;
-    private boolean[][] incidenceMatrix;
+public class IncidenceMatrixGraph extends AbstractGraph {
+    private final List<Edge> edges;
+    private int[][] incidenceMatrix;
 
     public IncidenceMatrixGraph() {
         super();
         edges = new ArrayList<>();
-        incidenceMatrix = new boolean[10][0];
-    }
-
-    private void ensureCapacity(int vertexCount, int edgeCount) {
-        if (vertexCount > incidenceMatrix.length ||
-                (edgeCount > 0 && (incidenceMatrix.length == 0 || edgeCount > incidenceMatrix[0].length))) {
-
-            int newVertexCapacity = Math.max(incidenceMatrix.length * 2, vertexCount);
-            int newEdgeCapacity = Math.max(
-                    (incidenceMatrix.length > 0 && incidenceMatrix[0].length > 0 ?
-                    incidenceMatrix[0].length * 2 : 1),
-                    edgeCount
-            );
-
-            boolean[][] newMatrix = new boolean[newVertexCapacity][newEdgeCapacity];
-
-            for (int i = 0; i < Math.min(getVertexCount(), newVertexCapacity); i++) {
-                for (int j = 0; j < Math.min(edges.size(), newEdgeCapacity); j++) {
-                    if (i < incidenceMatrix.length && j < incidenceMatrix[0].length) {
-                        newMatrix[i][j] = incidenceMatrix[i][j];
-                    }
-                }
-            }
-
-            incidenceMatrix = newMatrix;
-        }
+        incidenceMatrix = new int[10][0];
     }
 
     @Override
-    public boolean addVertex(V vertex) {
+    public boolean addVertex(Vertex<?> vertex) throws VertexException {
         int currentVertexCount = getVertexCount();
         if (super.addVertex(vertex)) {
             ensureCapacity(currentVertexCount + 1, edges.size());
@@ -51,9 +28,9 @@ public class IncidenceMatrixGraph<V> extends AbstractGraph<V> {
     }
 
     @Override
-    public boolean removeVertex(V vertex) {
+    public boolean removeVertex(Vertex<?> vertex) throws VertexException {
         if (vertex == null) {
-            throw new IllegalArgumentException("Vertex cannot be empty");
+            throw new VertexException("Vertex cannot be empty");
         }
 
         if (!containsVertex(vertex)) {
@@ -62,15 +39,15 @@ public class IncidenceMatrixGraph<V> extends AbstractGraph<V> {
 
         int indexToRemove = vertexToIndex.get(vertex);
 
-        List<Edge<V>> edgesToRemove = new ArrayList<>();
-        for (Edge<V> edge : edges) {
+        List<Edge> edgesToRemove = new ArrayList<>();
+        for (Edge edge : edges) {
             if (edge.getStart().equals(vertex) || edge.getEnd().equals(vertex)) {
                 edgesToRemove.add(edge);
             }
         }
 
-        for (Edge<V> edge : edgesToRemove) {
-            removeEdge(edge.getStart(), edge.getEnd());
+        for (Edge edge : edgesToRemove) {
+            removeEdge((Vertex<?>) edge.getStart(), (Vertex<?>) edge.getEnd());
         }
 
         for (int i = indexToRemove; i < getVertexCount() - 1; i++) {
@@ -90,14 +67,14 @@ public class IncidenceMatrixGraph<V> extends AbstractGraph<V> {
     }
 
     @Override
-    public boolean addEdge(V start, V end) {
+    public boolean addEdge(Vertex<?> start, Vertex<?> end) throws VertexException {
         return addEdge(start, end, 0);
     }
 
     @Override
-    public boolean addEdge(V start, V end, double weight) {
+    public boolean addEdge(Vertex<?> start, Vertex<?> end, double weight) throws VertexException {
         if (start == null || end == null) {
-            throw new IllegalArgumentException("Start and end vertex cannot be null");
+            throw new VertexException("Start and end vertex cannot be null");
         }
 
         if (!containsVertex(start) || !containsVertex(end)) {
@@ -114,18 +91,18 @@ public class IncidenceMatrixGraph<V> extends AbstractGraph<V> {
 
         ensureCapacity(getVertexCount(), edgeIndex + 1);
 
-        edges.add(new Edge<>(start, end, weight));
-        incidenceMatrix[startIndex][edgeIndex] = true;
-        incidenceMatrix[endIndex][edgeIndex] = true;
+        edges.add(new Edge(start, end, weight));
+        incidenceMatrix[startIndex][edgeIndex] = -1;
+        incidenceMatrix[endIndex][edgeIndex] = 1;
         edgeCount++;
 
         return true;
     }
 
     @Override
-    public boolean removeEdge(V start, V end) {
+    public boolean removeEdge(Vertex<?> start, Vertex<?> end) throws VertexException {
         if (start == null || end == null) {
-            throw new IllegalArgumentException("Start and end vertex cannot be null");
+            throw new VertexException("Start and end vertex cannot be null");
         }
 
         if (!containsVertex(start) || !containsVertex(end)) {
@@ -134,7 +111,7 @@ public class IncidenceMatrixGraph<V> extends AbstractGraph<V> {
 
         int edgeIndex = -1;
         for (int i = 0; i < edges.size(); i++) {
-            Edge<V> edge = edges.get(i);
+            Edge edge = edges.get(i);
             if (edge.getStart().equals(start) && edge.getEnd().equals(end)) {
                 edgeIndex = i;
                 break;
@@ -158,12 +135,12 @@ public class IncidenceMatrixGraph<V> extends AbstractGraph<V> {
     }
 
     @Override
-    public Edge<V> getEdge(V start, V end) {
+    public Edge getEdge(Vertex<?> start, Vertex<?> end) throws VertexException {
         if (start == null || end == null) {
-            throw new IllegalArgumentException("Start and end vertex cannot be null");
+            throw new VertexException("Start and end vertex cannot be null");
         }
 
-        for (Edge<V> edge : edges) {
+        for (Edge edge : edges) {
             if (edge.getStart().equals(start) && edge.getEnd().equals(end)) {
                 return edge;
             }
@@ -172,23 +149,21 @@ public class IncidenceMatrixGraph<V> extends AbstractGraph<V> {
     }
 
     @Override
-    public List<V> getNeighbors(V vertex) {
+    public List<Vertex<?>> getNeighbors(Vertex<?> vertex) throws VertexException {
         if (vertex == null) {
-            throw new IllegalArgumentException("Vertex cannot be null");
+            throw new VertexException("Vertex cannot be null");
         }
         if (!containsVertex(vertex)) {
-            throw new NoSuchElementException("Vertex isn't found in graph");
+            throw new VertexException("Vertex isn't found in graph");
         }
 
-        Set<V> neighbors = new HashSet<>();
+        Set<Vertex<?>> neighbors = new HashSet<>();
         int vertexIndex = vertexToIndex.get(vertex);
 
         for (int i = 0; i < edges.size(); i++) {
-            if (incidenceMatrix[vertexIndex][i]) {
-                Edge<V> edge = edges.get(i);
-                if (edge.getStart().equals(vertex)) {
-                    neighbors.add(edge.getEnd());
-                }
+            if (incidenceMatrix[vertexIndex][i] == -1) {
+                Edge edge = edges.get(i);
+                neighbors.add((Vertex<?>) edge.getEnd());
             }
         }
 
@@ -196,12 +171,12 @@ public class IncidenceMatrixGraph<V> extends AbstractGraph<V> {
     }
 
     @Override
-    public boolean containsEdge(V start, V end) {
+    public boolean containsEdge(Vertex<?> start, Vertex<?> end) throws VertexException {
         if (!containsVertex(start) || !containsVertex(end)) {
-            return false;
+            throw new VertexException("Start and end vertex must be in graph");
         }
 
-        for (Edge<V> edge : edges) {
+        for (Edge edge : edges) {
             if (edge.getStart().equals(start) && edge.getEnd().equals(end)) {
                 return true;
             }
@@ -218,11 +193,36 @@ public class IncidenceMatrixGraph<V> extends AbstractGraph<V> {
 
         for (int i = 0; i < getVertexCount(); i++) {
             for (int j = 0; j < edges.size(); j++) {
-                sb.append(incidenceMatrix[i][j] ? "1 " : "0 ");
+                sb.append(String.format("%2d ", incidenceMatrix[i][j]));
             }
             sb.append("\n");
         }
 
         return sb.toString();
+    }
+
+    private void ensureCapacity(int vertexCount, int edgeCount) {
+        if (vertexCount > incidenceMatrix.length ||
+                (edgeCount > 0 && (incidenceMatrix.length == 0 || edgeCount > incidenceMatrix[0].length))) {
+
+            int newVertexCapacity = Math.max(incidenceMatrix.length * 2, vertexCount);
+            int newEdgeCapacity = Math.max(
+                    (incidenceMatrix.length > 0 && incidenceMatrix[0].length > 0 ?
+                            incidenceMatrix[0].length * 2 : 1),
+                    edgeCount
+            );
+
+            int[][] newMatrix = new int[newVertexCapacity][newEdgeCapacity];
+
+            for (int i = 0; i < Math.min(getVertexCount(), newVertexCapacity); i++) {
+                for (int j = 0; j < Math.min(edges.size(), newEdgeCapacity); j++) {
+                    if (i < incidenceMatrix.length && j < incidenceMatrix[0].length) {
+                        newMatrix[i][j] = incidenceMatrix[i][j];
+                    }
+                }
+            }
+
+            incidenceMatrix = newMatrix;
+        }
     }
 }

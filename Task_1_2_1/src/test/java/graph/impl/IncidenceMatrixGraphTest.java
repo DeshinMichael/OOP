@@ -1,141 +1,360 @@
 package graph.impl;
 
+import graph.exceptions.VertexException;
 import graph.model.Edge;
+import graph.model.Vertex;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class IncidenceMatrixGraphTest {
+class IncidenceMatrixGraphTest {
+    private IncidenceMatrixGraph graph;
+    private Vertex<String> vertexA;
+    private Vertex<String> vertexB;
+    private Vertex<String> vertexC;
 
-    @Test
-    void testAddVertex() {
-        IncidenceMatrixGraph<String> graph = new IncidenceMatrixGraph<>();
-        assertTrue(graph.addVertex("A"));
-        assertFalse(graph.addVertex("A"));
+    @BeforeEach
+    void setUp() {
+        graph = new IncidenceMatrixGraph();
+        vertexA = new Vertex<>("A");
+        vertexB = new Vertex<>("B");
+        vertexC = new Vertex<>("C");
     }
 
     @Test
-    void testAddEdge() {
-        IncidenceMatrixGraph<String> graph = new IncidenceMatrixGraph<>();
-        graph.addVertex("A");
-        graph.addVertex("B");
-
-        assertTrue(graph.addEdge("A", "B"));
-        assertFalse(graph.addEdge("A", "B"));
+    void testAddVertex() throws VertexException {
+        assertTrue(graph.addVertex(vertexA));
+        assertEquals(1, graph.getVertexCount());
+        assertTrue(graph.containsVertex(vertexA));
     }
 
     @Test
-    void testRemoveVertex() {
-        IncidenceMatrixGraph<String> graph = new IncidenceMatrixGraph<>();
-        graph.addVertex("A");
-        graph.addVertex("B");
-        graph.addEdge("A", "B");
-
-        assertTrue(graph.removeVertex("A"));
-        assertFalse(graph.containsEdge("A", "B"));
+    void testAddDuplicateVertex() throws VertexException {
+        graph.addVertex(vertexA);
+        assertFalse(graph.addVertex(vertexA));
+        assertEquals(1, graph.getVertexCount());
     }
 
     @Test
-    void testRemoveEdge() {
-        IncidenceMatrixGraph<String> graph = new IncidenceMatrixGraph<>();
-        graph.addVertex("A");
-        graph.addVertex("B");
-        graph.addEdge("A", "B");
-
-        assertTrue(graph.removeEdge("A", "B"));
-        assertFalse(graph.containsEdge("A", "B"));
-    }
-
-    @Test
-    void testGetNeighbors() {
-        IncidenceMatrixGraph<String> graph = new IncidenceMatrixGraph<>();
-        graph.addVertex("A");
-        graph.addVertex("B");
-        graph.addEdge("A", "B");
-
-        List<String> neighbors = graph.getNeighbors("A");
-        assertEquals(1, neighbors.size());
-        assertTrue(neighbors.contains("B"));
-    }
-
-    @Test
-    void testGetEdge() {
-        IncidenceMatrixGraph<String> graph = new IncidenceMatrixGraph<>();
-        graph.addVertex("A");
-        graph.addVertex("B");
-        graph.addEdge("A", "B", 3.5);
-
-        Edge<String> edge = graph.getEdge("A", "B");
-        assertNotNull(edge);
-        assertEquals("A", edge.getStart());
-        assertEquals("B", edge.getEnd());
-        assertEquals(3.5, edge.getWeight());
-
-        assertNull(graph.getEdge("B", "A"));
-        assertNull(graph.getEdge("A", "C"));
-    }
-
-    @Test
-    void testContainsEdge() {
-        IncidenceMatrixGraph<String> graph = new IncidenceMatrixGraph<>();
-        graph.addVertex("A");
-        graph.addVertex("B");
-        graph.addVertex("C");
-        graph.addEdge("A", "B");
-
-        assertTrue(graph.containsEdge("A", "B"));
-        assertFalse(graph.containsEdge("B", "A"));
-        assertFalse(graph.containsEdge("A", "C"));
-        assertFalse(graph.containsEdge("X", "Y"));
-    }
-
-    @Test
-    void testToString() {
-        IncidenceMatrixGraph<String> graph = new IncidenceMatrixGraph<>();
-        graph.addVertex("A");
-        graph.addVertex("B");
-        graph.addEdge("A", "B");
-
-        String representation = graph.toString();
-        assertNotNull(representation);
-        assertTrue(representation.contains("2 vertexes, 1 edges"));
-        assertTrue(representation.contains("1 "));
-    }
-
-    @Test
-    void testEnsureCapacityWithManyVertices() {
-        IncidenceMatrixGraph<Integer> graph = new IncidenceMatrixGraph<>();
-
+    void testAddManyVertices() throws VertexException {
         for (int i = 0; i < 15; i++) {
-            graph.addVertex(i);
+            assertTrue(graph.addVertex(new Vertex<>("V" + i)));
         }
-
         assertEquals(15, graph.getVertexCount());
-
-        for (int i = 0; i < 14; i++) {
-            graph.addEdge(i, i+1);
-        }
-
-        assertEquals(14, graph.getEdgeCount());
     }
 
     @Test
-    void testExceptionHandling() {
-        IncidenceMatrixGraph<String> graph = new IncidenceMatrixGraph<>();
+    void testRemoveVertex() throws VertexException {
+        graph.addVertex(vertexA);
+        graph.addVertex(vertexB);
+        graph.addEdge(vertexA, vertexB);
 
-        assertThrows(IllegalArgumentException.class, () -> graph.addVertex(null));
-        assertThrows(IllegalArgumentException.class, () -> graph.removeVertex(null));
-        assertThrows(IllegalArgumentException.class, () -> graph.addEdge(null, "B"));
-        assertThrows(IllegalArgumentException.class, () -> graph.addEdge("A", null));
-        assertThrows(IllegalArgumentException.class, () -> graph.removeEdge(null, "B"));
-        assertThrows(IllegalArgumentException.class, () -> graph.removeEdge("A", null));
-        assertThrows(IllegalArgumentException.class, () -> graph.getEdge(null, "B"));
-        assertThrows(IllegalArgumentException.class, () -> graph.getEdge("A", null));
-        assertThrows(IllegalArgumentException.class, () -> graph.getNeighbors(null));
+        assertTrue(graph.removeVertex(vertexA));
+        assertEquals(1, graph.getVertexCount());
+        assertEquals(0, graph.getEdgeCount());
+        assertFalse(graph.containsVertex(vertexA));
+    }
 
-        assertThrows(NoSuchElementException.class, () -> graph.getNeighbors("A"));
+    @Test
+    void testRemoveVertexNull() {
+        assertThrows(VertexException.class, () -> graph.removeVertex(null));
+    }
+
+    @Test
+    void testRemoveNonExistentVertex() throws VertexException {
+        assertFalse(graph.removeVertex(vertexA));
+    }
+
+    @Test
+    void testRemoveVertexWithMultipleEdges() throws VertexException {
+        graph.addVertex(vertexA);
+        graph.addVertex(vertexB);
+        graph.addVertex(vertexC);
+        graph.addEdge(vertexA, vertexB);
+        graph.addEdge(vertexC, vertexA);
+        graph.addEdge(vertexA, vertexC);
+
+        assertTrue(graph.removeVertex(vertexA));
+        assertEquals(2, graph.getVertexCount());
+        assertEquals(0, graph.getEdgeCount());
+    }
+
+    @Test
+    void testAddEdge() throws VertexException {
+        graph.addVertex(vertexA);
+        graph.addVertex(vertexB);
+
+        assertTrue(graph.addEdge(vertexA, vertexB));
+        assertEquals(1, graph.getEdgeCount());
+        assertTrue(graph.containsEdge(vertexA, vertexB));
+    }
+
+    @Test
+    void testAddEdgeWithWeight() throws VertexException {
+        graph.addVertex(vertexA);
+        graph.addVertex(vertexB);
+
+        assertTrue(graph.addEdge(vertexA, vertexB, 2.5));
+        assertEquals(1, graph.getEdgeCount());
+
+        Edge edge = graph.getEdge(vertexA, vertexB);
+        assertNotNull(edge);
+        assertEquals(2.5, edge.getWeight());
+    }
+
+    @Test
+    void testAddEdgeNullVertices() throws VertexException {
+        graph.addVertex(vertexA);
+
+        assertThrows(VertexException.class, () -> graph.addEdge(null, vertexA));
+        assertThrows(VertexException.class, () -> graph.addEdge(vertexA, null));
+        assertThrows(VertexException.class, () -> graph.addEdge(null, null));
+    }
+
+    @Test
+    void testAddEdgeNonExistentVertex() throws VertexException {
+        graph.addVertex(vertexA);
+
+        assertFalse(graph.addEdge(vertexA, vertexB));
+        assertFalse(graph.addEdge(vertexB, vertexA));
+    }
+
+    @Test
+    void testAddDuplicateEdge() throws VertexException {
+        graph.addVertex(vertexA);
+        graph.addVertex(vertexB);
+
+        assertTrue(graph.addEdge(vertexA, vertexB));
+        assertFalse(graph.addEdge(vertexA, vertexB));
+        assertEquals(1, graph.getEdgeCount());
+    }
+
+    @Test
+    void testRemoveEdge() throws VertexException {
+        graph.addVertex(vertexA);
+        graph.addVertex(vertexB);
+        graph.addEdge(vertexA, vertexB);
+
+        assertTrue(graph.removeEdge(vertexA, vertexB));
+        assertEquals(0, graph.getEdgeCount());
+        assertFalse(graph.containsEdge(vertexA, vertexB));
+    }
+
+    @Test
+    void testRemoveEdgeNullVertices() throws VertexException {
+        graph.addVertex(vertexA);
+
+        assertThrows(VertexException.class, () -> graph.removeEdge(null, vertexA));
+        assertThrows(VertexException.class, () -> graph.removeEdge(vertexA, null));
+    }
+
+    @Test
+    void testRemoveEdgeNonExistentVertex() throws VertexException {
+        graph.addVertex(vertexA);
+
+        assertFalse(graph.removeEdge(vertexA, vertexB));
+        assertFalse(graph.removeEdge(vertexB, vertexA));
+    }
+
+    @Test
+    void testRemoveNonExistentEdge() throws VertexException {
+        graph.addVertex(vertexA);
+        graph.addVertex(vertexB);
+
+        assertFalse(graph.removeEdge(vertexA, vertexB));
+    }
+
+    @Test
+    void testRemoveEdgeFromMiddle() throws VertexException {
+        graph.addVertex(vertexA);
+        graph.addVertex(vertexB);
+        graph.addVertex(vertexC);
+        graph.addEdge(vertexA, vertexB);
+        graph.addEdge(vertexB, vertexC);
+        graph.addEdge(vertexC, vertexA);
+
+        assertTrue(graph.removeEdge(vertexB, vertexC));
+        assertEquals(2, graph.getEdgeCount());
+        assertTrue(graph.containsEdge(vertexA, vertexB));
+        assertTrue(graph.containsEdge(vertexC, vertexA));
+        assertFalse(graph.containsEdge(vertexB, vertexC));
+    }
+
+    @Test
+    void testGetEdge() throws VertexException {
+        graph.addVertex(vertexA);
+        graph.addVertex(vertexB);
+        graph.addEdge(vertexA, vertexB, 3.0);
+
+        Edge edge = graph.getEdge(vertexA, vertexB);
+        assertNotNull(edge);
+        assertEquals(vertexA, edge.getStart());
+        assertEquals(vertexB, edge.getEnd());
+        assertEquals(3.0, edge.getWeight());
+    }
+
+    @Test
+    void testGetEdgeNullVertices() {
+        assertThrows(VertexException.class, () -> graph.getEdge(null, vertexA));
+    }
+
+    @Test
+    void testGetNonExistentEdge() throws VertexException {
+        graph.addVertex(vertexA);
+        graph.addVertex(vertexB);
+
+        assertNull(graph.getEdge(vertexA, vertexB));
+    }
+
+    @Test
+    void testGetNeighbors() throws VertexException {
+        graph.addVertex(vertexA);
+        graph.addVertex(vertexB);
+        graph.addVertex(vertexC);
+        graph.addEdge(vertexA, vertexB);
+        graph.addEdge(vertexA, vertexC);
+
+        List<Vertex<?>> neighbors = graph.getNeighbors(vertexA);
+        assertEquals(2, neighbors.size());
+        assertTrue(neighbors.contains(vertexB));
+        assertTrue(neighbors.contains(vertexC));
+    }
+
+    @Test
+    void testGetNeighborsNull() {
+        assertThrows(VertexException.class, () -> graph.getNeighbors(null));
+    }
+
+    @Test
+    void testGetNeighborsNonExistentVertex() {
+        assertThrows(VertexException.class, () -> graph.getNeighbors(vertexA));
+    }
+
+    @Test
+    void testGetNeighborsNoNeighbors() throws VertexException {
+        graph.addVertex(vertexA);
+
+        List<Vertex<?>> neighbors = graph.getNeighbors(vertexA);
+        assertTrue(neighbors.isEmpty());
+    }
+
+    @Test
+    void testGetNeighborsWithIncomingEdge() throws VertexException {
+        graph.addVertex(vertexA);
+        graph.addVertex(vertexB);
+        graph.addEdge(vertexB, vertexA);
+
+        List<Vertex<?>> neighbors = graph.getNeighbors(vertexA);
+        assertTrue(neighbors.isEmpty());
+    }
+
+    @Test
+    void testContainsEdge() throws VertexException {
+        graph.addVertex(vertexA);
+        graph.addVertex(vertexB);
+        graph.addEdge(vertexA, vertexB);
+
+        assertTrue(graph.containsEdge(vertexA, vertexB));
+        assertFalse(graph.containsEdge(vertexB, vertexA));
+    }
+
+    @Test
+    void testContainsEdgeNonExistentVertices() throws VertexException {
+        graph.addVertex(vertexA);
+
+        assertThrows(VertexException.class, () -> graph.containsEdge(vertexA, vertexB));
+        assertThrows(VertexException.class, () -> graph.containsEdge(vertexB, vertexA));
+    }
+
+    @Test
+    void testToString() throws VertexException {
+        graph.addVertex(vertexA);
+        graph.addVertex(vertexB);
+        graph.addEdge(vertexA, vertexB);
+
+        String result = graph.toString();
+        assertNotNull(result);
+        assertTrue(result.contains("Incidence matrix"));
+        assertTrue(result.contains("2 vertexes"));
+        assertTrue(result.contains("1 edges"));
+        assertTrue(result.contains("-1"));
+        assertTrue(result.contains("1"));
+    }
+
+    @Test
+    void testToStringEmptyGraph() {
+        String result = graph.toString();
+        assertNotNull(result);
+        assertTrue(result.contains("0 vertexes"));
+        assertTrue(result.contains("0 edges"));
+    }
+
+    @Test
+    void testEnsureCapacityVertices() throws VertexException {
+        for (int i = 0; i < 12; i++) {
+            Vertex<String> vertex = new Vertex<>("V" + i);
+            graph.addVertex(vertex);
+        }
+        assertEquals(12, graph.getVertexCount());
+    }
+
+    @Test
+    void testEnsureCapacityEdges() throws VertexException {
+        for (int i = 0; i < 3; i++) {
+            graph.addVertex(new Vertex<>("V" + i));
+        }
+
+        graph.addEdge(new Vertex<>("V0"), new Vertex<>("V1"));
+        graph.addEdge(new Vertex<>("V1"), new Vertex<>("V2"));
+        graph.addEdge(new Vertex<>("V2"), new Vertex<>("V0"));
+
+        assertEquals(3, graph.getEdgeCount());
+    }
+
+    @Test
+    void testComplexOperations() throws VertexException {
+        graph.addVertex(vertexA);
+        graph.addVertex(vertexB);
+        graph.addVertex(vertexC);
+
+        graph.addEdge(vertexA, vertexB, 1.0);
+        graph.addEdge(vertexB, vertexC, 2.0);
+        graph.addEdge(vertexA, vertexC, 3.0);
+
+        assertEquals(3, graph.getVertexCount());
+        assertEquals(3, graph.getEdgeCount());
+
+        assertTrue(graph.removeVertex(vertexB));
+        assertEquals(2, graph.getVertexCount());
+        assertEquals(1, graph.getEdgeCount());
+        assertTrue(graph.containsEdge(vertexA, vertexC));
+    }
+
+    @Test
+    void testIncidenceMatrixValues() throws VertexException {
+        graph.addVertex(vertexA);
+        graph.addVertex(vertexB);
+        graph.addEdge(vertexA, vertexB);
+
+        String result = graph.toString();
+        assertTrue(result.contains("-1"));
+        assertTrue(result.contains(" 1"));
+    }
+
+    @Test
+    void testRemoveVertexWithSelfLoop() throws VertexException {
+        graph.addVertex(vertexA);
+        graph.addEdge(vertexA, vertexA);
+
+        assertEquals(1, graph.getVertexCount());
+        assertEquals(1, graph.getEdgeCount());
+        assertTrue(graph.containsEdge(vertexA, vertexA));
+
+        assertTrue(graph.removeVertex(vertexA));
+        assertEquals(0, graph.getVertexCount());
+        assertEquals(0, graph.getEdgeCount());
     }
 }

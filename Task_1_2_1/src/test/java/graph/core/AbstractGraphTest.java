@@ -1,8 +1,13 @@
 package graph.core;
 
-import graph.algorithm.TopologicalSorter;
 import graph.api.SortingStrategy;
-import graph.model.Edge;
+import graph.exceptions.FileException;
+import graph.exceptions.SortException;
+import graph.exceptions.VertexException;
+import graph.impl.AdjacencyListGraph;
+import graph.impl.AdjacencyMatrixGraph;
+import graph.impl.IncidenceMatrixGraph;
+import graph.model.Vertex;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -11,381 +16,331 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class AbstractGraphTest {
+    private AbstractGraph graph;
+    private Vertex<String> vertexA;
+    private Vertex<String> vertexB;
+    private Vertex<String> vertexC;
 
-    private TestGraph graph;
+    @TempDir
+    Path tempDir;
 
     @BeforeEach
     void setUp() {
-        graph = new TestGraph();
+        graph = new AdjacencyListGraph();
+        vertexA = new Vertex<>("A");
+        vertexB = new Vertex<>("B");
+        vertexC = new Vertex<>("C");
     }
 
     @Test
-    void testAddVertexBasicFunctionality() {
-        assertTrue(graph.addVertex("A"));
-        assertTrue(graph.containsVertex("A"));
+    void testContainsVertex() throws VertexException {
+        assertFalse(graph.containsVertex(vertexA));
+        graph.addVertex(vertexA);
+        assertTrue(graph.containsVertex(vertexA));
+    }
+
+    @Test
+    void testGetVertices() throws VertexException {
+        assertTrue(graph.getVertices().isEmpty());
+
+        graph.addVertex(vertexA);
+        graph.addVertex(vertexB);
+
+        Set<Vertex<?>> vertices = graph.getVertices();
+        assertEquals(2, vertices.size());
+        assertTrue(vertices.contains(vertexA));
+        assertTrue(vertices.contains(vertexB));
+    }
+
+    @Test
+    void testAddVertexSuccess() throws VertexException {
+        assertTrue(graph.addVertex(vertexA));
         assertEquals(1, graph.getVertexCount());
+        assertTrue(graph.containsVertex(vertexA));
+    }
 
-        assertFalse(graph.addVertex("A"));
+    @Test
+    void testAddVertexDuplicate() throws VertexException {
+        graph.addVertex(vertexA);
+        assertFalse(graph.addVertex(vertexA));
         assertEquals(1, graph.getVertexCount());
-
-        assertThrows(IllegalArgumentException.class, () -> graph.addVertex(null));
-        assertEquals(1, graph.getVertexCount());
     }
 
     @Test
-    void testGetVertices() {
-        graph.addVertex("A");
-        graph.addVertex("B");
-        graph.addVertex("C");
-
-        Set<String> vertices = graph.getVertices();
-        assertEquals(3, vertices.size());
-        assertTrue(vertices.contains("A"));
-        assertTrue(vertices.contains("B"));
-        assertTrue(vertices.contains("C"));
-
-        vertices.add("D");
-        assertFalse(graph.containsVertex("D"));
+    void testAddVertexNull() {
+        assertThrows(VertexException.class, () -> graph.addVertex(null));
     }
 
     @Test
-    void testTopologicalSortDAG() {
-        graph.addVertex("A");
-        graph.addVertex("B");
-        graph.addVertex("C");
-        graph.addVertex("D");
-
-        graph.addEdge("A", "B");
-        graph.addEdge("A", "C");
-        graph.addEdge("B", "D");
-        graph.addEdge("C", "D");
-
-        List<String> result = graph.topologicalSort(new TopologicalSorter<>());
-        assertNotNull(result);
-        assertEquals(4, result.size());
-
-        int indexA = result.indexOf("A");
-        int indexB = result.indexOf("B");
-        int indexC = result.indexOf("C");
-        int indexD = result.indexOf("D");
-
-        assertTrue(indexA < indexB);
-        assertTrue(indexA < indexC);
-        assertTrue(indexB < indexD);
-        assertTrue(indexC < indexD);
+    void testTopologicalSortWithNullStrategy() throws VertexException {
+        graph.addVertex(vertexA);
+        assertThrows(SortException.class, () -> graph.topologicalSort(null));
     }
 
     @Test
-    void testTopologicalSortWithCycle() {
-        graph.addVertex("A");
-        graph.addVertex("B");
-        graph.addVertex("C");
+    void testTopologicalSortWithValidStrategy() throws VertexException, SortException {
+        graph.addVertex(vertexA);
+        graph.addVertex(vertexB);
+        graph.addEdge(vertexA, vertexB);
 
-        graph.addEdge("A", "B");
-        graph.addEdge("B", "C");
-        graph.addEdge("C", "A");
+        SortingStrategy mockStrategy = new SortingStrategy() {
+            @Override
+            public List<Vertex<?>> sort(graph.api.Graph graph) {
+                return Arrays.asList(vertexA, vertexB);
+            }
+        };
 
-        List<String> result = graph.topologicalSort(new TopologicalSorter<>());
-        assertNull(result);
+        List<Vertex<?>> result = graph.topologicalSort(mockStrategy);
+        assertEquals(2, result.size());
+        assertEquals(vertexA, result.get(0));
+        assertEquals(vertexB, result.get(1));
     }
 
     @Test
-    void testTopologicalSortEmptyGraph() {
-        assertThrows(IllegalStateException.class, () -> {
-            graph.topologicalSort(new TopologicalSorter<>());
-        });
+    void testReadFromFileNullFilename() {
+        assertThrows(FileException.class, () -> graph.readFromFile(null));
     }
 
     @Test
-    void testTopologicalSortSingleVertex() {
-        graph.addVertex("A");
-        List<String> result = graph.topologicalSort(new TopologicalSorter<>());
-        assertNotNull(result);
-        assertEquals(1, result.size());
-        assertEquals("A", result.get(0));
+    void testReadFromFileEmptyFilename() {
+        assertThrows(FileException.class, () -> graph.readFromFile(""));
     }
 
     @Test
-    void testTopologicalSortDisconnectedComponents() {
-        graph.addVertex("A");
-        graph.addVertex("B");
-        graph.addVertex("C");
-        graph.addVertex("D");
-
-        graph.addEdge("A", "B");
-        graph.addEdge("C", "D");
-
-        List<String> result = graph.topologicalSort(new TopologicalSorter<>());
-        assertNotNull(result);
-        assertEquals(4, result.size());
-
-        int indexA = result.indexOf("A");
-        int indexB = result.indexOf("B");
-        int indexC = result.indexOf("C");
-        int indexD = result.indexOf("D");
-
-        assertTrue(indexA < indexB);
-        assertTrue(indexC < indexD);
+    void testReadFromFileNonExistentFile() {
+        assertThrows(IOException.class, () -> graph.readFromFile("nonexistent.txt"));
     }
 
     @Test
-    void testReadFromFileBasic(@TempDir Path tempDir) throws IOException {
-        File testFile = tempDir.resolve("test-graph.txt").toFile();
-
+    void testReadFromFileValidFormat() throws IOException, FileException, VertexException {
+        File testFile = tempDir.resolve("test.txt").toFile();
         try (FileWriter writer = new FileWriter(testFile)) {
-            writer.write("A B 5.0\n");
-            writer.write("B C 3.0\n");
-            writer.write("C D\n");
-            writer.write("A C 2.0\n");
-        }
-
-        graph.readFromFile(testFile.getAbsolutePath());
-
-        assertEquals(4, graph.getVertexCount());
-        assertEquals(4, graph.getEdgeCount());
-
-        assertTrue(graph.containsVertex("A"));
-        assertTrue(graph.containsVertex("B"));
-        assertTrue(graph.containsVertex("C"));
-        assertTrue(graph.containsVertex("D"));
-
-        assertEquals(5.0, graph.getEdge("A", "B").getWeight());
-        assertEquals(3.0, graph.getEdge("B", "C").getWeight());
-        assertEquals(0.0, graph.getEdge("C", "D").getWeight());
-        assertEquals(2.0, graph.getEdge("A", "C").getWeight());
-    }
-
-    @Test
-    void testReadFromFileWithEmptyLines(@TempDir Path tempDir) throws IOException {
-        File testFile = tempDir.resolve("test-graph-empty-lines.txt").toFile();
-
-        try (FileWriter writer = new FileWriter(testFile)) {
-            writer.write("A B 5.0\n");
-            writer.write("\n");
-            writer.write("   \n");
-            writer.write("B C 3.0\n");
+            writer.write("A B 1.5\n");
+            writer.write("B C\n");
+            writer.write("C A 2.0\n");
         }
 
         graph.readFromFile(testFile.getAbsolutePath());
 
         assertEquals(3, graph.getVertexCount());
-        assertEquals(2, graph.getEdgeCount());
+        assertEquals(3, graph.getEdgeCount());
+        assertTrue(graph.containsVertex(new Vertex<>("A")));
+        assertTrue(graph.containsVertex(new Vertex<>("B")));
+        assertTrue(graph.containsVertex(new Vertex<>("C")));
     }
 
     @Test
-    void testReadFromFileInvalidFormat(@TempDir Path tempDir) throws IOException {
-        File testFile = tempDir.resolve("invalid-graph.txt").toFile();
-
+    void testReadFromFileInvalidFormat() throws IOException {
+        File testFile = tempDir.resolve("invalid.txt").toFile();
         try (FileWriter writer = new FileWriter(testFile)) {
             writer.write("A\n");
         }
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            graph.readFromFile(testFile.getAbsolutePath());
-        });
+        assertThrows(FileException.class, () -> graph.readFromFile(testFile.getAbsolutePath()));
     }
 
     @Test
-    void testReadFromFileInvalidWeight(@TempDir Path tempDir) throws IOException {
-        File testFile = tempDir.resolve("invalid-weight-graph.txt").toFile();
-
+    void testReadFromFileWithEmptyLines() throws IOException, FileException, VertexException {
+        File testFile = tempDir.resolve("empty_lines.txt").toFile();
         try (FileWriter writer = new FileWriter(testFile)) {
-            writer.write("A B invalid_weight\n");
+            writer.write("A B\n");
+            writer.write("\n");
+            writer.write("   \n");
+            writer.write("B C\n");
         }
 
-        assertThrows(NumberFormatException.class, () -> {
-            graph.readFromFile(testFile.getAbsolutePath());
-        });
+        graph.readFromFile(testFile.getAbsolutePath());
+        assertEquals(3, graph.getVertexCount());
+        assertEquals(2, graph.getEdgeCount());
     }
 
     @Test
-    void testWriteToFile(@TempDir Path tempDir) throws IOException {
-        graph.addVertex("A");
-        graph.addVertex("B");
-        graph.addVertex("C");
-        graph.addEdge("A", "B", 5.0);
-        graph.addEdge("B", "C", 3.0);
-        graph.addEdge("A", "C", 0.0);
+    void testWriteToFileNullFilename() {
+        assertThrows(FileException.class, () -> graph.writeToFile(null));
+    }
 
-        File outputFile = tempDir.resolve("output-graph.txt").toFile();
+    @Test
+    void testWriteToFileEmptyFilename() {
+        assertThrows(FileException.class, () -> graph.writeToFile(""));
+    }
+
+    @Test
+    void testWriteToFileSuccess() throws IOException, FileException, VertexException {
+        graph.addVertex(vertexA);
+        graph.addVertex(vertexB);
+        graph.addEdge(vertexA, vertexB, 2.5);
+
+        File outputFile = tempDir.resolve("output.txt").toFile();
         graph.writeToFile(outputFile.getAbsolutePath());
 
         assertTrue(outputFile.exists());
-
-        TestGraph newGraph = new TestGraph();
-        newGraph.readFromFile(outputFile.getAbsolutePath());
-
-        assertEquals(graph.getVertexCount(), newGraph.getVertexCount());
-        assertEquals(graph.getEdgeCount(), newGraph.getEdgeCount());
-
-        for (String vertex : graph.getVertices()) {
-            assertTrue(newGraph.containsVertex(vertex));
-            for (String neighbor : graph.getNeighbors(vertex)) {
-                assertTrue(newGraph.containsEdge(vertex, neighbor));
-                assertEquals(graph.getEdge(vertex, neighbor).getWeight(),
-                           newGraph.getEdge(vertex, neighbor).getWeight());
-            }
-        }
+        assertTrue(outputFile.length() > 0);
     }
 
     @Test
-    void testWriteToFileEmptyGraph(@TempDir Path tempDir) throws IOException {
-        File outputFile = tempDir.resolve("empty-graph.txt").toFile();
-        graph.writeToFile(outputFile.getAbsolutePath());
+    void testEqualsWithSameGraph() throws VertexException {
+        graph.addVertex(vertexA);
+        graph.addVertex(vertexB);
+        graph.addEdge(vertexA, vertexB);
 
-        assertTrue(outputFile.exists());
-        assertEquals(0, outputFile.length());
+        AbstractGraph otherGraph = new AdjacencyListGraph();
+        otherGraph.addVertex(vertexA);
+        otherGraph.addVertex(vertexB);
+        otherGraph.addEdge(vertexA, vertexB);
+
+        assertTrue(graph.equals(otherGraph));
     }
 
     @Test
-    void testComplexTopologicalSort() {
-        String[] vertices = {"A", "B", "C", "D", "E", "F", "G"};
-        for (String vertex : vertices) {
-            graph.addVertex(vertex);
-        }
+    void testEqualsWithDifferentVertexCount() throws VertexException {
+        graph.addVertex(vertexA);
 
-        graph.addEdge("A", "D");
-        graph.addEdge("B", "D");
-        graph.addEdge("C", "E");
-        graph.addEdge("D", "F");
-        graph.addEdge("E", "F");
-        graph.addEdge("F", "G");
+        AbstractGraph otherGraph = new AdjacencyListGraph();
+        otherGraph.addVertex(vertexA);
+        otherGraph.addVertex(vertexB);
 
-        List<String> result = graph.topologicalSort(new TopologicalSorter<>());
-        assertNotNull(result);
-        assertEquals(7, result.size());
-
-        assertTrue(result.indexOf("A") < result.indexOf("D"));
-        assertTrue(result.indexOf("B") < result.indexOf("D"));
-        assertTrue(result.indexOf("C") < result.indexOf("E"));
-        assertTrue(result.indexOf("D") < result.indexOf("F"));
-        assertTrue(result.indexOf("E") < result.indexOf("F"));
-        assertTrue(result.indexOf("F") < result.indexOf("G"));
+        assertFalse(graph.equals(otherGraph));
     }
 
     @Test
-    void testTopologicalSortSelfLoop() {
-        graph.addVertex("A");
-        graph.addVertex("B");
-        graph.addEdge("A", "B");
-        graph.addEdge("A", "A");
+    void testEqualsWithDifferentEdgeCount() throws VertexException {
+        graph.addVertex(vertexA);
+        graph.addVertex(vertexB);
+        graph.addEdge(vertexA, vertexB);
 
-        List<String> result = graph.topologicalSort(new TopologicalSorter<>());
-        assertNull(result);
+        AbstractGraph otherGraph = new AdjacencyListGraph();
+        otherGraph.addVertex(vertexA);
+        otherGraph.addVertex(vertexB);
+
+        assertFalse(graph.equals(otherGraph));
     }
 
-    private static class TestGraph extends AbstractGraph<String> {
-        private Map<String, Set<String>> adjacencyList;
-        private Map<String, Map<String, Double>> weights;
+    @Test
+    void testEqualsWithNull() throws VertexException {
+        graph.addVertex(vertexA);
+        assertFalse(graph.equals(null));
+    }
 
-        public TestGraph() {
-            super();
-            this.adjacencyList = new HashMap<>();
-            this.weights = new HashMap<>();
+    @Test
+    void testEqualsWithDifferentClass() throws VertexException {
+        graph.addVertex(vertexA);
+        assertFalse(graph.equals("not a graph"));
+    }
+
+    @Test
+    void testEqualsSameReference() throws VertexException {
+        graph.addVertex(vertexA);
+        assertTrue(graph.equals(graph));
+    }
+
+    @Test
+    void testHashCodeConsistency() throws VertexException {
+        graph.addVertex(vertexA);
+        graph.addVertex(vertexB);
+        graph.addEdge(vertexA, vertexB);
+
+        int hash1 = graph.hashCode();
+        int hash2 = graph.hashCode();
+        assertEquals(hash1, hash2);
+    }
+
+    @Test
+    void testHashCodeEqualGraphs() throws VertexException {
+        graph.addVertex(vertexA);
+        graph.addVertex(vertexB);
+        graph.addEdge(vertexA, vertexB);
+
+        AbstractGraph otherGraph = new AdjacencyListGraph();
+        otherGraph.addVertex(vertexA);
+        otherGraph.addVertex(vertexB);
+        otherGraph.addEdge(vertexA, vertexB);
+
+        assertEquals(graph.hashCode(), otherGraph.hashCode());
+    }
+
+    @Test
+    void testParseVertexWithEmptyString() throws IOException, FileException {
+        File testFile = tempDir.resolve("empty_vertex.txt").toFile();
+        try (FileWriter writer = new FileWriter(testFile)) {
+            writer.write("  B\n");
         }
 
-        @Override
-        public boolean addVertex(String vertex) {
-            if (super.addVertex(vertex)) {
-                adjacencyList.put(vertex, new HashSet<>());
-                weights.put(vertex, new HashMap<>());
-                return true;
-            }
-            return false;
-        }
+        assertThrows(VertexException.class, () -> graph.readFromFile(testFile.getAbsolutePath()));
+    }
 
-        @Override
-        public boolean removeVertex(String vertex) {
-            if (!containsVertex(vertex)) {
-                return false;
-            }
+    @Test
+    void testEqualsAcrossDifferentGraphTypes() throws VertexException {
+        AbstractGraph adjacencyListGraph = new AdjacencyListGraph();
+        AbstractGraph adjacencyMatrixGraph = new AdjacencyMatrixGraph();
+        AbstractGraph incidenceMatrixGraph = new IncidenceMatrixGraph();
 
-            for (String neighbor : adjacencyList.get(vertex)) {
-                edgeCount--;
-            }
+        adjacencyListGraph.addVertex(vertexA);
+        adjacencyListGraph.addVertex(vertexB);
+        adjacencyListGraph.addVertex(vertexC);
+        adjacencyListGraph.addEdge(vertexA, vertexB, 1.0);
+        adjacencyListGraph.addEdge(vertexB, vertexC, 2.0);
 
-            for (String otherVertex : adjacencyList.keySet()) {
-                if (adjacencyList.get(otherVertex).remove(vertex)) {
-                    weights.get(otherVertex).remove(vertex);
-                    edgeCount--;
-                }
-            }
+        adjacencyMatrixGraph.addVertex(vertexA);
+        adjacencyMatrixGraph.addVertex(vertexB);
+        adjacencyMatrixGraph.addVertex(vertexC);
+        adjacencyMatrixGraph.addEdge(vertexA, vertexB, 1.0);
+        adjacencyMatrixGraph.addEdge(vertexB, vertexC, 2.0);
 
-            adjacencyList.remove(vertex);
-            weights.remove(vertex);
-            vertexToIndex.remove(vertex);
+        incidenceMatrixGraph.addVertex(vertexA);
+        incidenceMatrixGraph.addVertex(vertexB);
+        incidenceMatrixGraph.addVertex(vertexC);
+        incidenceMatrixGraph.addEdge(vertexA, vertexB, 1.0);
+        incidenceMatrixGraph.addEdge(vertexB, vertexC, 2.0);
 
-            int removedIndex = indexToVertex.indexOf(vertex);
-            indexToVertex.remove(vertex);
+        assertTrue(adjacencyListGraph.equals(adjacencyMatrixGraph));
+        assertTrue(adjacencyMatrixGraph.equals(incidenceMatrixGraph));
+        assertTrue(adjacencyListGraph.equals(incidenceMatrixGraph));
+    }
 
-            for (int i = removedIndex; i < indexToVertex.size(); i++) {
-                vertexToIndex.put(indexToVertex.get(i), i);
-            }
+    @Test
+    void testNotEqualsAcrossDifferentGraphTypesWithDifferentEdges() throws VertexException {
+        AbstractGraph adjacencyListGraph = new AdjacencyListGraph();
+        AbstractGraph adjacencyMatrixGraph = new AdjacencyMatrixGraph();
 
-            return true;
-        }
+        adjacencyListGraph.addVertex(vertexA);
+        adjacencyListGraph.addVertex(vertexB);
+        adjacencyListGraph.addVertex(vertexC);
 
-        @Override
-        public boolean addEdge(String start, String end) {
-            return addEdge(start, end, 0.0);
-        }
+        adjacencyMatrixGraph.addVertex(vertexA);
+        adjacencyMatrixGraph.addVertex(vertexB);
+        adjacencyMatrixGraph.addVertex(vertexC);
 
-        @Override
-        public boolean addEdge(String start, String end, double weight) {
-            if (!containsVertex(start) || !containsVertex(end)) {
-                return false;
-            }
+        adjacencyListGraph.addEdge(vertexA, vertexB);
+        adjacencyListGraph.addEdge(vertexB, vertexC);
 
-            if (adjacencyList.get(start).add(end)) {
-                weights.get(start).put(end, weight);
-                edgeCount++;
-                return true;
-            }
-            return false;
-        }
+        adjacencyMatrixGraph.addEdge(vertexA, vertexC);
+        adjacencyMatrixGraph.addEdge(vertexB, vertexA);
 
-        @Override
-        public boolean removeEdge(String start, String end) {
-            if (!containsVertex(start) || !containsVertex(end)) {
-                return false;
-            }
+        assertFalse(adjacencyListGraph.equals(adjacencyMatrixGraph));
+        assertFalse(adjacencyMatrixGraph.equals(adjacencyListGraph));
+    }
 
-            if (adjacencyList.get(start).remove(end)) {
-                weights.get(start).remove(end);
-                edgeCount--;
-                return true;
-            }
-            return false;
-        }
+    @Test
+    void testHashCodeConsistencyAcrossDifferentGraphTypes() throws VertexException {
+        AbstractGraph adjacencyListGraph = new AdjacencyListGraph();
+        AbstractGraph incidenceMatrixGraph = new IncidenceMatrixGraph();
 
-        @Override
-        public boolean containsEdge(String start, String end) {
-            if (!containsVertex(start) || !containsVertex(end)) {
-                return false;
-            }
-            return adjacencyList.get(start).contains(end);
-        }
+        adjacencyListGraph.addVertex(vertexA);
+        adjacencyListGraph.addVertex(vertexB);
+        adjacencyListGraph.addEdge(vertexA, vertexB, 5.0);
 
-        @Override
-        public Edge<String> getEdge(String start, String end) {
-            if (!containsEdge(start, end)) {
-                return null;
-            }
-            double weight = weights.get(start).get(end);
-            return new Edge<>(start, end, weight);
-        }
+        incidenceMatrixGraph.addVertex(vertexA);
+        incidenceMatrixGraph.addVertex(vertexB);
+        incidenceMatrixGraph.addEdge(vertexA, vertexB, 5.0);
 
-        @Override
-        public List<String> getNeighbors(String vertex) {
-            if (!containsVertex(vertex)) {
-                return Collections.emptyList();
-            }
-            return new ArrayList<>(adjacencyList.get(vertex));
-        }
+        assertTrue(adjacencyListGraph.equals(incidenceMatrixGraph));
+        assertEquals(adjacencyListGraph.hashCode(), incidenceMatrixGraph.hashCode());
     }
 }

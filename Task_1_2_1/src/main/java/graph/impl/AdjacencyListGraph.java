@@ -1,12 +1,14 @@
 package graph.impl;
 
 import graph.core.AbstractGraph;
+import graph.exceptions.VertexException;
 import graph.model.Edge;
+import graph.model.Vertex;
 
 import java.util.*;
 
-public class AdjacencyListGraph<V> extends AbstractGraph<V> {
-    private Map<V, Map<V, Double>> adjacencyMap;
+public class AdjacencyListGraph extends AbstractGraph {
+    private Map<Vertex<?>, Map<Vertex<?>, Double>> adjacencyMap;
 
     public AdjacencyListGraph() {
         super();
@@ -14,7 +16,7 @@ public class AdjacencyListGraph<V> extends AbstractGraph<V> {
     }
 
     @Override
-    public boolean addVertex(V vertex) {
+    public boolean addVertex(Vertex<?> vertex) throws VertexException {
         if (super.addVertex(vertex)) {
             adjacencyMap.put(vertex, new HashMap<>());
             return true;
@@ -23,16 +25,16 @@ public class AdjacencyListGraph<V> extends AbstractGraph<V> {
     }
 
     @Override
-    public boolean removeVertex(V vertex) {
+    public boolean removeVertex(Vertex<?> vertex) throws VertexException {
         if (vertex == null) {
-            throw new IllegalArgumentException("Vertex cannot be empty");
+            throw new VertexException("Vertex cannot be empty");
         }
 
         if (!containsVertex(vertex)) {
             return false;
         }
 
-        for (V v : adjacencyMap.keySet()) {
+        for (Vertex<?> v : adjacencyMap.keySet()) {
             if (adjacencyMap.get(v).containsKey(vertex)) {
                 adjacencyMap.get(v).remove(vertex);
                 edgeCount--;
@@ -54,14 +56,14 @@ public class AdjacencyListGraph<V> extends AbstractGraph<V> {
     }
 
     @Override
-    public boolean addEdge(V start, V end) {
+    public boolean addEdge(Vertex<?> start, Vertex<?> end) throws VertexException {
         return addEdge(start, end, 0);
     }
 
     @Override
-    public boolean addEdge(V start, V end, double weight) {
+    public boolean addEdge(Vertex<?> start, Vertex<?> end, double weight) throws VertexException {
         if (start == null || end == null) {
-            throw new IllegalArgumentException("Start and end vertex cannot be null");
+            throw new VertexException("Start and end vertex cannot be null");
         }
 
         if (!containsVertex(start) || !containsVertex(end)) {
@@ -78,9 +80,9 @@ public class AdjacencyListGraph<V> extends AbstractGraph<V> {
     }
 
     @Override
-    public boolean removeEdge(V start, V end) {
+    public boolean removeEdge(Vertex<?> start, Vertex<?> end) throws VertexException {
         if (start == null || end == null) {
-            throw new IllegalArgumentException("Start and end vertex cannot be null");
+            throw new VertexException("Start and end vertex cannot be null");
         }
 
         if (!containsVertex(start) || !containsVertex(end)) {
@@ -96,34 +98,34 @@ public class AdjacencyListGraph<V> extends AbstractGraph<V> {
     }
 
     @Override
-    public Edge<V> getEdge(V start, V end) {
+    public Edge getEdge(Vertex<?> start, Vertex<?> end) throws VertexException {
         if (start == null || end == null) {
-            throw new IllegalArgumentException("Start and end vertex cannot be null");
+            throw new VertexException("Start and end vertex cannot be null");
         }
 
         if (!containsEdge(start, end)) {
             return null;
         }
 
-        return new Edge<>(start, end, adjacencyMap.get(start).get(end));
+        return new Edge(start, end, adjacencyMap.get(start).get(end));
     }
 
     @Override
-    public List<V> getNeighbors(V vertex) {
+    public List<Vertex<?>> getNeighbors(Vertex<?> vertex) throws VertexException {
         if (vertex == null) {
-            throw new IllegalArgumentException("Vertex cannot be null");
+            throw new VertexException("Vertex cannot be null");
         }
         if (!containsVertex(vertex)) {
-            throw new NoSuchElementException("Vertex isn't found in graph");
+            throw new VertexException("Vertex isn't found in graph");
         }
 
         return new ArrayList<>(adjacencyMap.get(vertex).keySet());
     }
 
     @Override
-    public boolean containsEdge(V start, V end) {
+    public boolean containsEdge(Vertex<?> start, Vertex<?> end) throws VertexException {
         if (!containsVertex(start) || !containsVertex(end)) {
-            return false;
+            throw new VertexException("Start and end vertex must be in graph");
         }
 
         return adjacencyMap.get(start).containsKey(end);
@@ -135,12 +137,12 @@ public class AdjacencyListGraph<V> extends AbstractGraph<V> {
         sb.append("Adjacency list (").append(getVertexCount())
                 .append(" vertexes, ").append(getEdgeCount()).append(" edges):\n");
 
-        for (V vertex : getVertices()) {
+        for (Vertex<?> vertex : getVertices()) {
             sb.append(vertex).append(" -> ");
-            Map<V, Double> neighbors = adjacencyMap.get(vertex);
+            Map<Vertex<?>, Double> neighbors = adjacencyMap.get(vertex);
             if (!neighbors.isEmpty()) {
                 sb.append("[");
-                for (Map.Entry<V, Double> entry : neighbors.entrySet()) {
+                for (Map.Entry<Vertex<?>, Double> entry : neighbors.entrySet()) {
                     sb.append(entry.getKey());
                     if (entry.getValue() != 0) {
                         sb.append("(").append(entry.getValue()).append(")");

@@ -1,35 +1,37 @@
 package graph.model;
 
+import graph.exceptions.VertexException;
+
 import java.util.Objects;
 
-public class Edge<V> {
-    private final V start;
-    private final V end;
+public class Edge {
+    private final Object start;
+    private final Object end;
     private final double weight;
 
-    public Edge(V start, V end) {
+    public Edge(Object start, Object end) throws VertexException {
         if (start == null || end == null) {
-            throw new IllegalArgumentException("Start and end vertex cannot be null");
+            throw new VertexException("Start and end vertex cannot be null");
         }
         this.start = start;
         this.end = end;
         this.weight = 0;
     }
 
-    public Edge(V start, V end, double weight) {
+    public Edge(Object start, Object end, double weight) throws VertexException {
         if (start == null || end == null) {
-            throw new IllegalArgumentException("Start and end vertex cannot be null");
+            throw new VertexException("Start and end vertex cannot be null");
         }
         this.start = start;
         this.end = end;
         this.weight = weight;
     }
 
-    public V getStart() {
+    public Object getStart() {
         return start;
     }
 
-    public V getEnd() {
+    public Object getEnd() {
         return end;
     }
 
@@ -41,7 +43,7 @@ public class Edge<V> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Edge<?> edge = (Edge<?>) o;
+        Edge edge = (Edge) o;
         return Objects.equals(start, edge.start) && Objects.equals(end, edge.end);
     }
 
