@@ -54,6 +54,7 @@ loadScripts(document, 'script');</script>
 <li><a href="graph/algorithm/package-tree.html">graph.algorithm</a>, </li>
 <li><a href="graph/api/package-tree.html">graph.api</a>, </li>
 <li><a href="graph/core/package-tree.html">graph.core</a>, </li>
+<li><a href="graph/exceptions/package-tree.html">graph.exceptions</a>, </li>
 <li><a href="graph/impl/package-tree.html">graph.impl</a>, </li>
 <li><a href="graph/model/package-tree.html">graph.model</a></li>
 </ul>
@@ -63,17 +64,28 @@ loadScripts(document, 'script');</script>
 <ul>
 <li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" class="type-name-link external-link" title="class or interface in java.lang">Object</a>
 <ul>
-<li class="circle">graph.core.<a href="graph/core/AbstractGraph.html" class="type-name-link" title="class in graph.core">AbstractGraph</a>&lt;V&gt; (implements graph.api.<a href="graph/api/Graph.html" title="interface in graph.api">Graph</a>&lt;V&gt;)
+<li class="circle">graph.core.<a href="graph/core/AbstractGraph.html" class="type-name-link" title="class in graph.core">AbstractGraph</a> (implements graph.api.<a href="graph/api/Graph.html" title="interface in graph.api">Graph</a>)
 <ul>
-<li class="circle">graph.impl.<a href="graph/impl/AdjacencyListGraph.html" class="type-name-link" title="class in graph.impl">AdjacencyListGraph</a>&lt;V&gt;</li>
-<li class="circle">graph.impl.<a href="graph/impl/AdjacencyMatrixGraph.html" class="type-name-link" title="class in graph.impl">AdjacencyMatrixGraph</a>&lt;V&gt;</li>
-<li class="circle">graph.impl.<a href="graph/impl/IncidenceMatrixGraph.html" class="type-name-link" title="class in graph.impl">IncidenceMatrixGraph</a>&lt;V&gt;</li>
+<li class="circle">graph.impl.<a href="graph/impl/AdjacencyListGraph.html" class="type-name-link" title="class in graph.impl">AdjacencyListGraph</a></li>
+<li class="circle">graph.impl.<a href="graph/impl/AdjacencyMatrixGraph.html" class="type-name-link" title="class in graph.impl">AdjacencyMatrixGraph</a></li>
+<li class="circle">graph.impl.<a href="graph/impl/IncidenceMatrixGraph.html" class="type-name-link" title="class in graph.impl">IncidenceMatrixGraph</a></li>
 </ul>
 </li>
-<li class="circle">graph.model.<a href="graph/model/Edge.html" class="type-name-link" title="class in graph.model">Edge</a>&lt;V&gt;</li>
-<li class="circle">graph.algorithm.<a href="graph/algorithm/KahnTopologicalSorter.html" class="type-name-link" title="class in graph.algorithm">KahnTopologicalSorter</a>&lt;V&gt; (implements graph.api.<a href="graph/api/SortingStrategy.html" title="interface in graph.api">SortingStrategy</a>&lt;V&gt;)</li>
+<li class="circle">graph.model.<a href="graph/model/Edge.html" class="type-name-link" title="class in graph.model">Edge</a></li>
+<li class="circle">graph.algorithm.<a href="graph/algorithm/KahnTopologicalSorter.html" class="type-name-link" title="class in graph.algorithm">KahnTopologicalSorter</a> (implements graph.api.<a href="graph/api/SortingStrategy.html" title="interface in graph.api">SortingStrategy</a>)</li>
 <li class="circle">graph.<a href="graph/Main.html" class="type-name-link" title="class in graph">Main</a></li>
-<li class="circle">graph.algorithm.<a href="graph/algorithm/TopologicalSorter.html" class="type-name-link" title="class in graph.algorithm">TopologicalSorter</a>&lt;V&gt; (implements graph.api.<a href="graph/api/SortingStrategy.html" title="interface in graph.api">SortingStrategy</a>&lt;V&gt;)</li>
+<li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html" class="type-name-link external-link" title="class or interface in java.lang">Throwable</a> (implements java.io.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a>)
+<ul>
+<li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" class="type-name-link external-link" title="class or interface in java.lang">Exception</a>
+<ul>
+<li class="circle">graph.exceptions.<a href="graph/exceptions/FileException.html" class="type-name-link" title="class in graph.exceptions">FileException</a></li>
+<li class="circle">graph.exceptions.<a href="graph/exceptions/SortException.html" class="type-name-link" title="class in graph.exceptions">SortException</a></li>
+<li class="circle">graph.exceptions.<a href="graph/exceptions/VertexException.html" class="type-name-link" title="class in graph.exceptions">VertexException</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="circle">graph.algorithm.<a href="graph/algorithm/TopologicalSorter.html" class="type-name-link" title="class in graph.algorithm">TopologicalSorter</a> (implements graph.api.<a href="graph/api/SortingStrategy.html" title="interface in graph.api">SortingStrategy</a>)</li>
 <li class="circle">graph.model.<a href="graph/model/Vertex.html" class="type-name-link" title="class in graph.model">Vertex</a>&lt;T&gt;</li>
 </ul>
 </li>
@@ -82,8 +94,8 @@ loadScripts(document, 'script');</script>
 <section class="hierarchy">
 <h2 title="Interface Hierarchy">Interface Hierarchy</h2>
 <ul>
-<li class="circle">graph.api.<a href="graph/api/Graph.html" class="type-name-link" title="interface in graph.api">Graph</a>&lt;V&gt;</li>
-<li class="circle">graph.api.<a href="graph/api/SortingStrategy.html" class="type-name-link" title="interface in graph.api">SortingStrategy</a>&lt;V&gt;</li>
+<li class="circle">graph.api.<a href="graph/api/Graph.html" class="type-name-link" title="interface in graph.api">Graph</a></li>
+<li class="circle">graph.api.<a href="graph/api/SortingStrategy.html" class="type-name-link" title="interface in graph.api">SortingStrategy</a></li>
 </ul>
 </section>
 </main>

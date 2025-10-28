@@ -68,24 +68,24 @@ loadScripts(document, 'script');</script>
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">graph.core</a></div>
-<h1 title="Class AbstractGraph" class="title">Class AbstractGraph&lt;V&gt;</h1>
+<h1 title="Class AbstractGraph" class="title">Class AbstractGraph</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
-<div class="inheritance">graph.core.AbstractGraph&lt;V&gt;</div>
+<div class="inheritance">graph.core.AbstractGraph</div>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="../api/Graph.html" title="interface in graph.api">Graph</a>&lt;V&gt;</code></dd>
+<dd><code><a href="../api/Graph.html" title="interface in graph.api">Graph</a></code></dd>
 </dl>
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
 <dd><code><a href="../impl/AdjacencyListGraph.html" title="class in graph.impl">AdjacencyListGraph</a></code>, <code><a href="../impl/AdjacencyMatrixGraph.html" title="class in graph.impl">AdjacencyMatrixGraph</a></code>, <code><a href="../impl/IncidenceMatrixGraph.html" title="class in graph.impl">IncidenceMatrixGraph</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">AbstractGraph&lt;V&gt;</span>
+<div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">AbstractGraph</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
-implements <a href="../api/Graph.html" title="interface in graph.api">Graph</a>&lt;V&gt;</span></div>
+implements <a href="../api/Graph.html" title="interface in graph.api">Graph</a></span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -101,10 +101,10 @@ implements <a href="../api/Graph.html" title="interface in graph.api">Graph</a>&
 <div class="col-first even-row-color"><code>protected int</code></div>
 <div class="col-second even-row-color"><code><a href="#edgeCount" class="member-name-link">edgeCount</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="AbstractGraph.html" title="type parameter in AbstractGraph">V</a>&gt;</code></div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../model/Vertex.html" title="class in graph.model">Vertex</a>&lt;?&gt;&gt;</code></div>
 <div class="col-second odd-row-color"><code><a href="#indexToVertex" class="member-name-link">indexToVertex</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="AbstractGraph.html" title="type parameter in AbstractGraph">V</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</code></div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../model/Vertex.html" title="class in graph.model">Vertex</a>&lt;?&gt;,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</code></div>
 <div class="col-second even-row-color"><code><a href="#vertexToIndex" class="member-name-link">vertexToIndex</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
@@ -135,10 +135,10 @@ implements <a href="../api/Graph.html" title="interface in graph.api">Graph</a>&
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addVertex(V)" class="member-name-link">addVertex</a><wbr>(<a href="AbstractGraph.html" title="type parameter in AbstractGraph">V</a>&nbsp;vertex)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addVertex(graph.model.Vertex)" class="member-name-link">addVertex</a><wbr>(<a href="../model/Vertex.html" title="class in graph.model">Vertex</a>&lt;?&gt;&nbsp;vertex)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#containsVertex(V)" class="member-name-link">containsVertex</a><wbr>(<a href="AbstractGraph.html" title="type parameter in AbstractGraph">V</a>&nbsp;vertex)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#containsVertex(graph.model.Vertex)" class="member-name-link">containsVertex</a><wbr>(<a href="../model/Vertex.html" title="class in graph.model">Vertex</a>&lt;?&gt;&nbsp;vertex)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#equals(java.lang.Object)" class="member-name-link">equals</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;o)</code></div>
@@ -149,7 +149,7 @@ implements <a href="../api/Graph.html" title="interface in graph.api">Graph</a>&
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getVertexCount()" class="member-name-link">getVertexCount</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="AbstractGraph.html" title="type parameter in AbstractGraph">V</a>&gt;</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../model/Vertex.html" title="class in graph.model">Vertex</a>&lt;?&gt;&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getVertices()" class="member-name-link">getVertices</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
@@ -158,8 +158,8 @@ implements <a href="../api/Graph.html" title="interface in graph.api">Graph</a>&
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readFromFile(java.lang.String)" class="member-name-link">readFromFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;filename)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="AbstractGraph.html" title="type parameter in AbstractGraph">V</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#topologicalSort(graph.api.SortingStrategy)" class="member-name-link">topologicalSort</a><wbr>(<a href="../api/SortingStrategy.html" title="interface in graph.api">SortingStrategy</a>&lt;<a href="AbstractGraph.html" title="type parameter in AbstractGraph">V</a>&gt;&nbsp;strategy)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../model/Vertex.html" title="class in graph.model">Vertex</a>&lt;?&gt;&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#topologicalSort(graph.api.SortingStrategy)" class="member-name-link">topologicalSort</a><wbr>(<a href="../api/SortingStrategy.html" title="interface in graph.api">SortingStrategy</a>&nbsp;strategy)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#writeToFile(java.lang.String)" class="member-name-link">writeToFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;filename)</code></div>
@@ -172,7 +172,7 @@ implements <a href="../api/Graph.html" title="interface in graph.api">Graph</a>&
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-graph.api.Graph">Methods inherited from interface&nbsp;graph.api.<a href="../api/Graph.html" title="interface in graph.api">Graph</a></h3>
-<code><a href="../api/Graph.html#addEdge(V,V)">addEdge</a>, <a href="../api/Graph.html#addEdge(V,V,double)">addEdge</a>, <a href="../api/Graph.html#containsEdge(V,V)">containsEdge</a>, <a href="../api/Graph.html#getEdge(V,V)">getEdge</a>, <a href="../api/Graph.html#getNeighbors(V)">getNeighbors</a>, <a href="../api/Graph.html#removeEdge(V,V)">removeEdge</a>, <a href="../api/Graph.html#removeVertex(V)">removeVertex</a></code></div>
+<code><a href="../api/Graph.html#addEdge(graph.model.Vertex,graph.model.Vertex)">addEdge</a>, <a href="../api/Graph.html#addEdge(graph.model.Vertex,graph.model.Vertex,double)">addEdge</a>, <a href="../api/Graph.html#containsEdge(graph.model.Vertex,graph.model.Vertex)">containsEdge</a>, <a href="../api/Graph.html#getEdge(graph.model.Vertex,graph.model.Vertex)">getEdge</a>, <a href="../api/Graph.html#getNeighbors(graph.model.Vertex)">getNeighbors</a>, <a href="../api/Graph.html#removeEdge(graph.model.Vertex,graph.model.Vertex)">removeEdge</a>, <a href="../api/Graph.html#removeVertex(graph.model.Vertex)">removeVertex</a></code></div>
 </section>
 </li>
 </ul>
@@ -187,13 +187,13 @@ implements <a href="../api/Graph.html" title="interface in graph.api">Graph</a>&
 <li>
 <section class="detail" id="vertexToIndex">
 <h3>vertexToIndex</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="AbstractGraph.html" title="type parameter in AbstractGraph">V</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</span>&nbsp;<span class="element-name">vertexToIndex</span></div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../model/Vertex.html" title="class in graph.model">Vertex</a>&lt;?&gt;,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</span>&nbsp;<span class="element-name">vertexToIndex</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="indexToVertex">
 <h3>indexToVertex</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="AbstractGraph.html" title="type parameter in AbstractGraph">V</a>&gt;</span>&nbsp;<span class="element-name">indexToVertex</span></div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../model/Vertex.html" title="class in graph.model">Vertex</a>&lt;?&gt;&gt;</span>&nbsp;<span class="element-name">indexToVertex</span></div>
 </section>
 </li>
 <li>
@@ -230,7 +230,7 @@ implements <a href="../api/Graph.html" title="interface in graph.api">Graph</a>&
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getVertexCount</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../api/Graph.html#getVertexCount()">getVertexCount</a></code>&nbsp;in interface&nbsp;<code><a href="../api/Graph.html" title="interface in graph.api">Graph</a>&lt;<a href="AbstractGraph.html" title="type parameter in AbstractGraph">V</a>&gt;</code></dd>
+<dd><code><a href="../api/Graph.html#getVertexCount()">getVertexCount</a></code>&nbsp;in interface&nbsp;<code><a href="../api/Graph.html" title="interface in graph.api">Graph</a></code></dd>
 </dl>
 </section>
 </li>
@@ -240,47 +240,55 @@ implements <a href="../api/Graph.html" title="interface in graph.api">Graph</a>&
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getEdgeCount</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../api/Graph.html#getEdgeCount()">getEdgeCount</a></code>&nbsp;in interface&nbsp;<code><a href="../api/Graph.html" title="interface in graph.api">Graph</a>&lt;<a href="AbstractGraph.html" title="type parameter in AbstractGraph">V</a>&gt;</code></dd>
+<dd><code><a href="../api/Graph.html#getEdgeCount()">getEdgeCount</a></code>&nbsp;in interface&nbsp;<code><a href="../api/Graph.html" title="interface in graph.api">Graph</a></code></dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="containsVertex(V)">
-<h3 id="containsVertex(java.lang.Object)">containsVertex</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">containsVertex</span><wbr><span class="parameters">(<a href="AbstractGraph.html" title="type parameter in AbstractGraph">V</a>&nbsp;vertex)</span></div>
+<section class="detail" id="containsVertex(graph.model.Vertex)">
+<h3>containsVertex</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">containsVertex</span><wbr><span class="parameters">(<a href="../model/Vertex.html" title="class in graph.model">Vertex</a>&lt;?&gt;&nbsp;vertex)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../api/Graph.html#containsVertex(V)">containsVertex</a></code>&nbsp;in interface&nbsp;<code><a href="../api/Graph.html" title="interface in graph.api">Graph</a>&lt;<a href="AbstractGraph.html" title="type parameter in AbstractGraph">V</a>&gt;</code></dd>
+<dd><code><a href="../api/Graph.html#containsVertex(graph.model.Vertex)">containsVertex</a></code>&nbsp;in interface&nbsp;<code><a href="../api/Graph.html" title="interface in graph.api">Graph</a></code></dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getVertices()">
 <h3>getVertices</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="AbstractGraph.html" title="type parameter in AbstractGraph">V</a>&gt;</span>&nbsp;<span class="element-name">getVertices</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../model/Vertex.html" title="class in graph.model">Vertex</a>&lt;?&gt;&gt;</span>&nbsp;<span class="element-name">getVertices</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../api/Graph.html#getVertices()">getVertices</a></code>&nbsp;in interface&nbsp;<code><a href="../api/Graph.html" title="interface in graph.api">Graph</a>&lt;<a href="AbstractGraph.html" title="type parameter in AbstractGraph">V</a>&gt;</code></dd>
+<dd><code><a href="../api/Graph.html#getVertices()">getVertices</a></code>&nbsp;in interface&nbsp;<code><a href="../api/Graph.html" title="interface in graph.api">Graph</a></code></dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="addVertex(V)">
-<h3 id="addVertex(java.lang.Object)">addVertex</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">addVertex</span><wbr><span class="parameters">(<a href="AbstractGraph.html" title="type parameter in AbstractGraph">V</a>&nbsp;vertex)</span></div>
+<section class="detail" id="addVertex(graph.model.Vertex)">
+<h3>addVertex</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">addVertex</span><wbr><span class="parameters">(<a href="../model/Vertex.html" title="class in graph.model">Vertex</a>&lt;?&gt;&nbsp;vertex)</span>
+                  throws <span class="exceptions"><a href="../exceptions/VertexException.html" title="class in graph.exceptions">VertexException</a></span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../api/Graph.html#addVertex(V)">addVertex</a></code>&nbsp;in interface&nbsp;<code><a href="../api/Graph.html" title="interface in graph.api">Graph</a>&lt;<a href="AbstractGraph.html" title="type parameter in AbstractGraph">V</a>&gt;</code></dd>
+<dd><code><a href="../api/Graph.html#addVertex(graph.model.Vertex)">addVertex</a></code>&nbsp;in interface&nbsp;<code><a href="../api/Graph.html" title="interface in graph.api">Graph</a></code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="../exceptions/VertexException.html" title="class in graph.exceptions">VertexException</a></code></dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="topologicalSort(graph.api.SortingStrategy)">
 <h3>topologicalSort</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="AbstractGraph.html" title="type parameter in AbstractGraph">V</a>&gt;</span>&nbsp;<span class="element-name">topologicalSort</span><wbr><span class="parameters">(<a href="../api/SortingStrategy.html" title="interface in graph.api">SortingStrategy</a>&lt;<a href="AbstractGraph.html" title="type parameter in AbstractGraph">V</a>&gt;&nbsp;strategy)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../model/Vertex.html" title="class in graph.model">Vertex</a>&lt;?&gt;&gt;</span>&nbsp;<span class="element-name">topologicalSort</span><wbr><span class="parameters">(<a href="../api/SortingStrategy.html" title="interface in graph.api">SortingStrategy</a>&nbsp;strategy)</span>
+                                throws <span class="exceptions"><a href="../exceptions/SortException.html" title="class in graph.exceptions">SortException</a>,
+<a href="../exceptions/VertexException.html" title="class in graph.exceptions">VertexException</a></span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../api/Graph.html#topologicalSort(graph.api.SortingStrategy)">topologicalSort</a></code>&nbsp;in interface&nbsp;<code><a href="../api/Graph.html" title="interface in graph.api">Graph</a>&lt;<a href="AbstractGraph.html" title="type parameter in AbstractGraph">V</a>&gt;</code></dd>
+<dd><code><a href="../api/Graph.html#topologicalSort(graph.api.SortingStrategy)">topologicalSort</a></code>&nbsp;in interface&nbsp;<code><a href="../api/Graph.html" title="interface in graph.api">Graph</a></code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="../exceptions/SortException.html" title="class in graph.exceptions">SortException</a></code></dd>
+<dd><code><a href="../exceptions/VertexException.html" title="class in graph.exceptions">VertexException</a></code></dd>
 </dl>
 </section>
 </li>
@@ -288,12 +296,16 @@ implements <a href="../api/Graph.html" title="interface in graph.api">Graph</a>&
 <section class="detail" id="readFromFile(java.lang.String)">
 <h3>readFromFile</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">readFromFile</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;filename)</span>
-                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a>,
+<a href="../exceptions/FileException.html" title="class in graph.exceptions">FileException</a>,
+<a href="../exceptions/VertexException.html" title="class in graph.exceptions">VertexException</a></span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../api/Graph.html#readFromFile(java.lang.String)">readFromFile</a></code>&nbsp;in interface&nbsp;<code><a href="../api/Graph.html" title="interface in graph.api">Graph</a>&lt;<a href="AbstractGraph.html" title="type parameter in AbstractGraph">V</a>&gt;</code></dd>
+<dd><code><a href="../api/Graph.html#readFromFile(java.lang.String)">readFromFile</a></code>&nbsp;in interface&nbsp;<code><a href="../api/Graph.html" title="interface in graph.api">Graph</a></code></dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dd><code><a href="../exceptions/FileException.html" title="class in graph.exceptions">FileException</a></code></dd>
+<dd><code><a href="../exceptions/VertexException.html" title="class in graph.exceptions">VertexException</a></code></dd>
 </dl>
 </section>
 </li>
@@ -301,12 +313,16 @@ implements <a href="../api/Graph.html" title="interface in graph.api">Graph</a>&
 <section class="detail" id="writeToFile(java.lang.String)">
 <h3>writeToFile</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">writeToFile</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;filename)</span>
-                 throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+                 throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a>,
+<a href="../exceptions/FileException.html" title="class in graph.exceptions">FileException</a>,
+<a href="../exceptions/VertexException.html" title="class in graph.exceptions">VertexException</a></span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../api/Graph.html#writeToFile(java.lang.String)">writeToFile</a></code>&nbsp;in interface&nbsp;<code><a href="../api/Graph.html" title="interface in graph.api">Graph</a>&lt;<a href="AbstractGraph.html" title="type parameter in AbstractGraph">V</a>&gt;</code></dd>
+<dd><code><a href="../api/Graph.html#writeToFile(java.lang.String)">writeToFile</a></code>&nbsp;in interface&nbsp;<code><a href="../api/Graph.html" title="interface in graph.api">Graph</a></code></dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dd><code><a href="../exceptions/FileException.html" title="class in graph.exceptions">FileException</a></code></dd>
+<dd><code><a href="../exceptions/VertexException.html" title="class in graph.exceptions">VertexException</a></code></dd>
 </dl>
 </section>
 </li>

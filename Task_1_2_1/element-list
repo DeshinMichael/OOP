@@ -2,5 +2,6 @@ graph
 graph.algorithm
 graph.api
 graph.core
+graph.exceptions
 graph.impl
 graph.model
