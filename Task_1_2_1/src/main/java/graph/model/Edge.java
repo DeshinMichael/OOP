@@ -5,11 +5,11 @@ import graph.exceptions.VertexException;
 import java.util.Objects;
 
 public class Edge {
-    private final Object start;
-    private final Object end;
+    private final Vertex<?> start;
+    private final Vertex<?> end;
     private final double weight;
 
-    public Edge(Object start, Object end) throws VertexException {
+    public Edge(Vertex<?> start, Vertex<?> end) throws VertexException {
         if (start == null || end == null) {
             throw new VertexException("Start and end vertex cannot be null");
         }
@@ -18,7 +18,7 @@ public class Edge {
         this.weight = 0;
     }
 
-    public Edge(Object start, Object end, double weight) throws VertexException {
+    public Edge(Vertex<?> start, Vertex<?> end, double weight) throws VertexException {
         if (start == null || end == null) {
             throw new VertexException("Start and end vertex cannot be null");
         }
@@ -27,11 +27,11 @@ public class Edge {
         this.weight = weight;
     }
 
-    public Object getStart() {
+    public Vertex<?> getStart() {
         return start;
     }
 
-    public Object getEnd() {
+    public Vertex<?> getEnd() {
         return end;
     }
 
@@ -44,16 +44,13 @@ public class Edge {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Edge edge = (Edge) o;
-        return Objects.equals(start, edge.start) && Objects.equals(end, edge.end);
+        return Double.compare(weight, edge.weight) == 0 &&
+                Objects.equals(start, edge.start) &&
+                Objects.equals(end, edge.end);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(start, end);
-    }
-
-    @Override
-    public String toString() {
-        return start + " -> " + end + (weight != 0 ? " (" + weight + ")" : "");
+        return Objects.hash(start, end, weight);
     }
 }

@@ -8,12 +8,16 @@ class EdgeTest {
 
     @Test
     void testEdgeEquality() throws VertexException {
-        Edge edge1 = new Edge("A", "B", 5.0);
-        Edge edge2 = new Edge("A", "B", 10.0);
-        Edge edge3 = new Edge("A", "C", 5.0);
-        Edge edge4 = new Edge("A", "B", 5.0);
+        Vertex<String> vertex1 = new Vertex<>("A");
+        Vertex<String> vertex2 = new Vertex<>("B");
+        Vertex<String> vertex3 = new Vertex<>("C");
 
-        assertEquals(edge1, edge2);
+        Edge edge1 = new Edge(vertex1, vertex2, 5.0);
+        Edge edge2 = new Edge(vertex1, vertex2, 10.0);
+        Edge edge3 = new Edge(vertex1, vertex3, 5.0);
+        Edge edge4 = new Edge(vertex1, vertex2, 5.0);
+
+        assertNotEquals(edge1, edge2);
         assertEquals(edge1, edge4);
         assertNotEquals(edge1, edge3);
         assertNotEquals(edge1, null);
@@ -23,47 +27,25 @@ class EdgeTest {
 
     @Test
     void testEdgeEqualityWithNulls() {
-        assertThrows(VertexException.class, () -> new Edge(null, "B"));
-        assertThrows(VertexException.class, () -> new Edge("A", null));
+        Vertex<String> vertex1 = new Vertex<>("A");
+        Vertex<String> vertex2 = new Vertex<>("B");
+
+        assertThrows(VertexException.class, () -> new Edge(null, vertex2));
+        assertThrows(VertexException.class, () -> new Edge(vertex1, null));
         assertThrows(VertexException.class, () -> new Edge(null, null));
     }
 
     @Test
     void testHashCode() throws VertexException {
-        Edge edge1 = new Edge("A", "B", 5.0);
-        Edge edge2 = new Edge("A", "B", 10.0);
-        Edge edge3 = new Edge("A", "C", 5.0);
+        Vertex<String> vertex1 = new Vertex<>("A");
+        Vertex<String> vertex2 = new Vertex<>("B");
+        Vertex<String> vertex3 = new Vertex<>("C");
 
-        assertEquals(edge1.hashCode(), edge2.hashCode());
+        Edge edge1 = new Edge(vertex1, vertex2, 5.0);
+        Edge edge2 = new Edge(vertex1, vertex2, 10.0);
+        Edge edge3 = new Edge(vertex1, vertex3, 5.0);
+
+        assertNotEquals(edge1.hashCode(), edge2.hashCode());
         assertNotEquals(edge1.hashCode(), edge3.hashCode());
-    }
-
-    @Test
-    void testHashCodeWithNulls() {
-        assertThrows(VertexException.class, () -> new Edge(null, "B"));
-        assertThrows(VertexException.class, () -> new Edge("A", null));
-        assertThrows(VertexException.class, () -> new Edge(null, null));
-    }
-
-    @Test
-    void testToString() throws VertexException {
-        Edge edgeWithWeight = new Edge("A", "B", 5.0);
-        Edge edgeWithoutWeight = new Edge("A", "B", 0.0);
-        Edge edgeZeroWeight = new Edge("A", "B");
-
-        assertEquals("A -> B (5.0)", edgeWithWeight.toString());
-        assertEquals("A -> B", edgeWithoutWeight.toString());
-        assertEquals("A -> B", edgeZeroWeight.toString());
-    }
-
-    @Test
-    void testToStringWithNulls() {
-        assertThrows(VertexException.class, () -> new Edge(null, null, 2.5));
-    }
-
-    @Test
-    void testToStringWithNegativeWeight() throws VertexException {
-        Edge edge = new Edge("A", "B", -3.0);
-        assertEquals("A -> B (-3.0)", edge.toString());
     }
 }
