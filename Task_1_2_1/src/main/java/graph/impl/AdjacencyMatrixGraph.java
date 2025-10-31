@@ -8,13 +8,14 @@ import graph.model.Vertex;
 import java.util.*;
 
 public class AdjacencyMatrixGraph extends AbstractGraph {
+    private static final int DEFAULT_MATRIX_SIZE = 10;
     private boolean[][] adjacencyMatrix;
     private double[][] weightMatrix;
 
     public AdjacencyMatrixGraph() {
         super();
-        adjacencyMatrix = new boolean[10][10];
-        weightMatrix = new double[10][10];
+        adjacencyMatrix = new boolean[DEFAULT_MATRIX_SIZE][DEFAULT_MATRIX_SIZE];
+        weightMatrix = new double[DEFAULT_MATRIX_SIZE][DEFAULT_MATRIX_SIZE];
     }
 
     @Override

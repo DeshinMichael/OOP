@@ -128,15 +128,28 @@ public abstract class AbstractGraph implements Graph {
 
         Graph that = (Graph) o;
 
-        if (getVertexCount() != that.getVertexCount() || getEdgeCount() != that.getEdgeCount()) {
+        if (getVertexCount() != that.getVertexCount() ||
+                getEdgeCount() != that.getEdgeCount()) {
             return false;
         }
 
         try {
             for (Vertex<?> start : getVertices()) {
                 for (Vertex<?> end : getVertices()) {
-                    if (containsEdge(start, end) != that.containsEdge(start, end)) {
+                    boolean thisHasEdge = containsEdge(start, end);
+                    boolean thatHasEdge = that.containsEdge(start, end);
+
+                    if (thisHasEdge != thatHasEdge) {
                         return false;
+                    }
+
+                    if (thisHasEdge) {
+                        Edge thisEdge = getEdge(start, end);
+                        Edge thatEdge = that.getEdge(start, end);
+                        if (thisEdge == null || thatEdge == null ||
+                            Double.compare(thisEdge.getWeight(), thatEdge.getWeight()) != 0) {
+                            return false;
+                        }
                     }
                 }
             }
@@ -155,7 +168,15 @@ public abstract class AbstractGraph implements Graph {
         try {
             for (Vertex<?> start : getVertices()) {
                 for (Vertex<?> end : getVertices()) {
-                    result = 31 * result + (containsEdge(start, end) ? 1 : 0);
+                    if (containsEdge(start, end)) {
+                        result = 31 * result + 1;
+                        Edge edge = getEdge(start, end);
+                        if (edge != null) {
+                            result = 31 * result + Double.hashCode(edge.getWeight());
+                        }
+                    } else {
+                        result = 31 * result;
+                    }
                 }
             }
         } catch (VertexException e) {}

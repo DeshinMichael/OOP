@@ -8,13 +8,14 @@ import graph.model.Vertex;
 import java.util.*;
 
 public class IncidenceMatrixGraph extends AbstractGraph {
+    private static final int DEFAULT_VERTEX_CAPACITY = 10;
     private final List<Edge> edges;
     private int[][] incidenceMatrix;
 
     public IncidenceMatrixGraph() {
         super();
         edges = new ArrayList<>();
-        incidenceMatrix = new int[10][0];
+        incidenceMatrix = new int[DEFAULT_VERTEX_CAPACITY][0];
     }
 
     @Override

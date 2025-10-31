@@ -51,7 +51,7 @@ public class KahnTopologicalSorter implements SortingStrategy {
         }
 
         if (visited != graph.getVertexCount()) {
-            throw new SortException("Graph has a circle, topological sort isn't impossible");
+            throw new SortException("Graph has a circle, topological sort is impossible");
         }
 
         return result;
