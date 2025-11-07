@@ -51,7 +51,6 @@ class EntryTest {
         assertFalse(entry.equals(null));
         assertFalse(entry.equals("string"));
 
-        // Test with null values
         Entry<String, Integer> anotherNullKey = new Entry<>(null, 100);
         Entry<String, Integer> anotherNullValue = new Entry<>("key1", null);
         Entry<String, Integer> anotherBothNull = new Entry<>(null, null);
@@ -72,12 +71,10 @@ class EntryTest {
         assertEquals(entry.hashCode(), sameEntry.hashCode());
         assertNotEquals(entry.hashCode(), differentEntry.hashCode());
 
-        // Test consistency
         int hash1 = entry.hashCode();
         int hash2 = entry.hashCode();
         assertEquals(hash1, hash2);
 
-        // Test with null values
         assertNotNull(nullKeyEntry.hashCode());
         assertNotNull(nullValueEntry.hashCode());
         assertNotNull(bothNullEntry.hashCode());
@@ -110,7 +107,6 @@ class EntryTest {
         assertEquals(third, second.getNext());
         assertNull(third.getNext());
 
-        // Test modification of chain
         Entry<String, Integer> newSecond = new Entry<>("newSecond", 22);
         first.setNext(newSecond);
 

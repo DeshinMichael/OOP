@@ -101,7 +101,6 @@ class HashTableIteratorTest {
         assertTrue(iterator.hasNext());
         iterator.next();
 
-        // Обновляем существующий элемент
         hashTable.update("key1", 150);
 
         assertThrows(ConcurrentModificationException.class, iterator::next);

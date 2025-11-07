@@ -24,7 +24,6 @@ class HashFunctionTest {
         assertTrue(hash1 >= 0 && hash1 < capacity);
         assertTrue(hash2 >= 0 && hash2 < capacity);
 
-        // Test consistency
         assertEquals(hash1, HashFunction.hash(key1, capacity));
         assertEquals(hash2, HashFunction.hash(key2, capacity));
     }
@@ -60,7 +59,6 @@ class HashFunctionTest {
 
     @Test
     void testHashWithNegativeHashCode() {
-        // Создаем объект с отрицательным hashCode
         Object negativeHashObject = new Object() {
             @Override
             public int hashCode() {
@@ -76,7 +74,6 @@ class HashFunctionTest {
 
     @Test
     void testHashWithLargeHashCode() {
-        // Создаем объект с большим положительным hashCode
         Object largeHashObject = new Object() {
             @Override
             public int hashCode() {
@@ -92,7 +89,6 @@ class HashFunctionTest {
 
     @Test
     void testHashWithMinIntegerHashCode() {
-        // Тест с Integer.MIN_VALUE hashCode
         Object minHashObject = new Object() {
             @Override
             public int hashCode() {
@@ -108,7 +104,6 @@ class HashFunctionTest {
 
     @Test
     void testHashDistribution() {
-        // Тест что разные ключи дают разные хеши (в большинстве случаев)
         int capacity = 100;
         String[] keys = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j"};
 
@@ -117,7 +112,6 @@ class HashFunctionTest {
             hashes[i] = HashFunction.hash(keys[i], capacity);
         }
 
-        // Проверяем что не все хеши одинаковые
         boolean allSame = true;
         for (int i = 1; i < hashes.length; i++) {
             if (hashes[i] != hashes[0]) {
@@ -144,7 +138,6 @@ class HashFunctionTest {
         assertTrue(hash2 >= 0 && hash2 < capacity);
         assertTrue(hash3 >= 0 && hash3 < capacity);
 
-        // Одинаковые объекты должны давать одинаковый хеш
         assertEquals(hash1, hash2);
     }
 
