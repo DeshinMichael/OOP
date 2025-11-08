@@ -14,7 +14,7 @@ public class HashTableIterator<K, V> implements Iterator<Entry<K, V>> {
     private int bucketIndex = 0;
     private Entry<K, V> current = null;
 
-    public HashTableIterator(HashTable<K, V> table, Entry<K, V>[] buckets, int capacity, int modCount) {
+    public HashTableIterator(HashTable<K, V> table, int capacity) {
         this.table = table;
         this.buckets = table.getBuckets();
         this.capacity = capacity;

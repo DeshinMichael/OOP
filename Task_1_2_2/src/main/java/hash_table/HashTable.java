@@ -152,7 +152,7 @@ public class HashTable<K, V> implements Iterable<Entry<K, V>> {
 
     @Override
     public Iterator<Entry<K, V>> iterator() {
-        return new HashTableIterator<>(this, buckets, capacity, modCount);
+        return new HashTableIterator<>(this, capacity);
     }
 
     @Override
