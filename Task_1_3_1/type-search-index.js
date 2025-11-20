@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"substring_search","l":"Main"},{"p":"substring_search.exception","l":"PatternException"},{"p":"substring_search","l":"SubstringSearcher"}];updateSearchResults();
