@@ -1,2 +1,5 @@
 substring_search
+substring_search.algorithm
 substring_search.exception
+substring_search.io
+substring_search.validation

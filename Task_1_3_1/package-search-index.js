@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"substring_search"},{"l":"substring_search.exception"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"substring_search"},{"l":"substring_search.algorithm"},{"l":"substring_search.exception"},{"l":"substring_search.io"},{"l":"substring_search.validation"}];updateSearchResults();
