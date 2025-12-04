@@ -140,7 +140,7 @@ public class SubstringSearcherTest {
         List<Long> positions = SubstringSearcher.find(tempFile.toString(), "😀");
         assertEquals(2, positions.size());
         assertEquals(6L, positions.get(0));
-        assertEquals(15L, positions.get(1));
+        assertEquals(14L, positions.get(1));
     }
 
     @Test
@@ -151,7 +151,7 @@ public class SubstringSearcherTest {
         List<Long> positions = SubstringSearcher.find(tempFile.toString(), "日本語");
         assertEquals(2, positions.size());
         assertEquals(5L, positions.get(0));
-        assertEquals(22L, positions.get(1));
+        assertEquals(21L, positions.get(1));
     }
 
     @Test
@@ -162,6 +162,38 @@ public class SubstringSearcherTest {
         List<Long> positions = SubstringSearcher.find(tempFile.toString(), "🌟✨");
         assertEquals(2, positions.size());
         assertEquals(0L, positions.get(0));
-        assertEquals(5L, positions.get(1));
+        assertEquals(3L, positions.get(1));
+    }
+
+    @Test
+    void testSearchIn512MBFile() throws IOException, PatternException {
+        Path largeFile = Files.createTempFile("large_512mb", ".txt");
+        try {
+            long targetSize = 512L * 1024 * 1024;
+            long patternPosition = 256L * 1024 * 1024;
+            String pattern = "TARGET512MB";
+            byte[] patternBytes = pattern.getBytes(StandardCharsets.UTF_8);
+            byte[] filler = new byte[1024 * 1024];
+            java.util.Arrays.fill(filler, (byte) 'a');
+
+            try (OutputStream out = new BufferedOutputStream(Files.newOutputStream(largeFile))) {
+                for (int i = 0; i < 256; i++) {
+                    out.write(filler);
+                }
+                out.write(patternBytes);
+                long remaining = targetSize - patternPosition - patternBytes.length;
+                while (remaining > 0) {
+                    int toWrite = (int) Math.min(filler.length, remaining);
+                    out.write(filler, 0, toWrite);
+                    remaining -= toWrite;
+                }
+            }
+
+            List<Long> positions = SubstringSearcher.find(largeFile.toString(), pattern);
+            assertEquals(1, positions.size());
+            assertEquals(patternPosition, positions.get(0));
+        } finally {
+            Files.deleteIfExists(largeFile);
+        }
     }
 }

@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.ArrayList;
 
 public class FileBlockReaderTest {
 
@@ -105,11 +106,7 @@ public class FileBlockReaderTest {
 
     @Test
     void testLargeFileProcessing() throws IOException {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 100000; i++) {
-            sb.append("test");
-        }
-        String content = sb.toString();
+        String content = "test".repeat(100000);
         Files.write(tempFile, content.getBytes());
 
         List<Long> positions = FileBlockReader.searchPattern(tempFile.toString(), "test");
