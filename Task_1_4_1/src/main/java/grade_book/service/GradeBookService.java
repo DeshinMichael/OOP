@@ -29,9 +29,18 @@ public class GradeBookService {
         }
 
         List<Grade> lastTwoSessions = getLastTwoExamSessions(gradeBook);
-        return lastTwoSessions.stream()
+
+        boolean hasFailed = lastTwoSessions.stream()
+                .anyMatch(grade -> !grade.isPassed());
+        if (hasFailed) {
+            return false;
+        }
+
+        boolean hasSatisfactoryExam = lastTwoSessions.stream()
                 .filter(grade -> grade.getControlType() == ControlType.EXAM)
-                .noneMatch(Grade::isSatisfactory);
+                .anyMatch(Grade::isSatisfactory);
+
+        return !hasSatisfactoryExam;
     }
 
     public boolean canGetHonorsDiploma(ElectronicGradeBook gradeBook) {
@@ -82,7 +91,8 @@ public class GradeBookService {
 
     private List<Grade> getLastTwoExamSessions(ElectronicGradeBook gradeBook) {
         return gradeBook.getGrades().stream()
-                .filter(grade -> grade.getControlType() == ControlType.EXAM)
+                .filter(grade -> grade.getControlType() == ControlType.EXAM
+                        || grade.getControlType() == ControlType.DIFFERENTIATED_CREDIT)
                 .collect(groupingBy(Grade::getSemester))
                 .entrySet().stream()
                 .sorted(Map.Entry.<Integer, List<Grade>>comparingByKey().reversed())
