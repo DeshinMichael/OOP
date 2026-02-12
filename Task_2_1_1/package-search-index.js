@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"prime_nums"},{"l":"prime_nums.checker"},{"l":"prime_nums.detector"},{"l":"prime_nums.exception"},{"l":"prime_nums.test_util"}];updateSearchResults();
