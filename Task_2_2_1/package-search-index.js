@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"pizzeria"},{"l":"pizzeria.config"},{"l":"pizzeria.core"},{"l":"pizzeria.factory"},{"l":"pizzeria.generator"},{"l":"pizzeria.lifecycle"},{"l":"pizzeria.logging"},{"l":"pizzeria.workers"}];updateSearchResults();
