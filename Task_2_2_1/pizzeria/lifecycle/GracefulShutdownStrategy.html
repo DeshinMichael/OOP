@@ -82,11 +82,6 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">GracefulShutdownStrategy</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="ShutdownStrategy.html" title="interface in pizzeria.lifecycle">ShutdownStrategy</a></span></div>
-<div class="block">Стратегия плавного завершения:
- 1) Останавливаем приём новых заказов
- 2) Ждём пока все пекари доготовят оставшиеся заказы
- 3) Закрываем склад
- 4) Ждём пока все курьеры развезут пиццы</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -120,9 +115,7 @@ implements <a href="ShutdownStrategy.html" title="interface in pizzeria.lifecycl
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Thread.html" title="class or interface in java.lang" class="external-link">Thread</a>&gt;&nbsp;courierThreads,
  <a href="../core/OrderQueue.html" title="class in pizzeria.core">OrderQueue</a>&nbsp;orderQueue,
  <a href="../core/Storage.html" title="class in pizzeria.core">Storage</a>&nbsp;storage)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Выполняет завершение работы пиццерии.</div>
-</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -163,17 +156,9 @@ implements <a href="ShutdownStrategy.html" title="interface in pizzeria.lifecycl
  <a href="../core/OrderQueue.html" title="class in pizzeria.core">OrderQueue</a>&nbsp;orderQueue,
  <a href="../core/Storage.html" title="class in pizzeria.core">Storage</a>&nbsp;storage)</span>
               throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></span></div>
-<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="ShutdownStrategy.html#shutdown(java.lang.Thread,java.util.List,java.util.List,pizzeria.core.OrderQueue,pizzeria.core.Storage)">ShutdownStrategy</a></code></span></div>
-<div class="block">Выполняет завершение работы пиццерии.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="ShutdownStrategy.html#shutdown(java.lang.Thread,java.util.List,java.util.List,pizzeria.core.OrderQueue,pizzeria.core.Storage)">shutdown</a></code>&nbsp;in interface&nbsp;<code><a href="ShutdownStrategy.html" title="interface in pizzeria.lifecycle">ShutdownStrategy</a></code></dd>
-<dt>Parameters:</dt>
-<dd><code>generatorThread</code> - поток генератора заказов</dd>
-<dd><code>bakerThreads</code> - потоки пекарей</dd>
-<dd><code>courierThreads</code> - потоки курьеров</dd>
-<dd><code>orderQueue</code> - очередь заказов</dd>
-<dd><code>storage</code> - склад</dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></code></dd>
 </dl>
