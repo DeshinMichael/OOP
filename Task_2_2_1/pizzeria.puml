@@ -1,0 +1,213 @@
+@startuml
+title Pizzeria — Class Diagram (overview)
+
+' --- style ---
+hide empty members
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam dpi 160
+
+' --- packages ---
+package "pizzeria" {
+  class Main
+}
+
+package "pizzeria.lifecycle" {
+  interface PizzeriaLifecycle {
+    +start() : void
+  }
+
+  class Pizzeria {
+    -config : PizzeriaConfig
+    -orderQueue : OrderQueue
+    -storage : Storage
+    -workerFactory : WorkerFactory
+    -logger : PizzeriaLogger
+    -shutdownStrategy : ShutdownStrategy
+    +start() : void
+  }
+
+  interface ShutdownStrategy {
+    +shutdown(generatorThread: Thread,
+              bakerThreads: List<Thread>,
+              courierThreads: List<Thread>,
+              orderQueue: OrderQueue,
+              storage: Storage) : void
+  }
+
+  class GracefulShutdownStrategy {
+    -logger : PizzeriaLogger
+    +shutdown(...) : void
+  }
+}
+
+package "pizzeria.config" {
+  class PizzeriaConfig {
+    -storageCapacity : int
+    -workingTimeMs : int
+    -orderIntervalMs : int
+    -totalOrders : int
+    -bakers : List<BakerConfig>
+    -couriers : List<CourierConfig>
+  }
+
+  class BakerConfig {
+    -id : int
+    -cookingTimeMs : int
+  }
+
+  class CourierConfig {
+    -id : int
+    -trunkSize : int
+    -deliveryTimeMs : int
+  }
+}
+
+package "pizzeria.core" {
+  class Order {
+    -id : int
+    -state : OrderState
+    -listener : StateListener
+    +setState(state: OrderState) : void
+  }
+
+  enum OrderState {
+    QUEUED
+    BEING_COOKED
+    COOKED
+    IN_STORAGE
+    IN_DELIVERY
+    DELIVERED
+  }
+
+  class OrderQueue {
+    -accepting : boolean
+    +add(order: Order) : void
+    +take() : Order
+    +stopAccepting() : void
+  }
+
+  class Storage {
+    -capacity : int
+    -open : boolean
+    +put(order: Order) : boolean
+    +take(maxCount: int) : List<Order>
+    +close() : void
+  }
+}
+
+package "pizzeria.factory" {
+  class WorkerFactory {
+    -orderQueue : OrderQueue
+    -storage : Storage
+    -logger : PizzeriaLogger
+    +createBakers(configs: List<BakerConfig>) : List<Thread>
+    +createCouriers(configs: List<CourierConfig>) : List<Thread>
+  }
+}
+
+package "pizzeria.generator" {
+  class OrderGenerator {
+    -totalOrders : int
+    -intervalMs : int
+    -orderQueue : OrderQueue
+    -stateListener : StateListener
+    -logger : PizzeriaLogger
+    +run() : void
+  }
+}
+
+package "pizzeria.workers" {
+  class Baker {
+    -id : int
+    -cookingTimeMs : int
+    -orderQueue : OrderQueue
+    -storage : Storage
+    -logger : PizzeriaLogger
+    +run() : void
+  }
+
+  class Courier {
+    -id : int
+    -trunkSize : int
+    -deliveryTimeMs : int
+    -storage : Storage
+    -logger : PizzeriaLogger
+    +run() : void
+  }
+}
+
+package "pizzeria.logging" {
+  interface PizzeriaLogger {
+    +log(message: String) : void
+  }
+
+  class ConsoleLogger {
+    +log(message: String) : void
+  }
+
+  interface StateListener {
+    +onStateChanged(order: Order, newState: OrderState) : void
+  }
+
+  class OrderLogger {
+    -logger : PizzeriaLogger
+    +onStateChanged(order: Order, newState: OrderState) : void
+  }
+}
+
+' --- relations ---
+Main ..> PizzeriaConfig : reads config.json
+Main ..> Pizzeria : creates & starts
+
+Pizzeria ..|> PizzeriaLifecycle
+GracefulShutdownStrategy ..|> ShutdownStrategy
+ConsoleLogger ..|> PizzeriaLogger
+OrderLogger ..|> StateListener
+
+Pizzeria --> PizzeriaConfig
+Pizzeria --> OrderQueue
+Pizzeria --> Storage
+Pizzeria --> WorkerFactory
+Pizzeria --> ShutdownStrategy
+Pizzeria --> PizzeriaLogger
+
+PizzeriaConfig "1" o-- "*" BakerConfig : bakers
+PizzeriaConfig "1" o-- "*" CourierConfig : couriers
+
+WorkerFactory --> OrderQueue
+WorkerFactory --> Storage
+WorkerFactory --> PizzeriaLogger
+WorkerFactory ..> Baker
+WorkerFactory ..> Courier
+
+OrderGenerator ..|> Runnable
+Baker ..|> Runnable
+Courier ..|> Runnable
+
+OrderGenerator --> OrderQueue
+OrderGenerator --> StateListener
+OrderGenerator --> PizzeriaLogger
+OrderGenerator ..> Order
+
+Order --> OrderState
+Order --> StateListener
+
+OrderQueue "1" o-- "*" Order : queued
+Storage "1" o-- "*" Order : pizzas
+
+Baker --> OrderQueue
+Baker --> Storage
+Baker --> PizzeriaLogger
+Baker ..> Order
+Baker ..> OrderState
+
+Courier --> Storage
+Courier --> PizzeriaLogger
+Courier ..> Order
+Courier ..> OrderState
+
+OrderLogger --> PizzeriaLogger
+
+@enduml
