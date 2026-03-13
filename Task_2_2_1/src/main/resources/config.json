@@ -1,0 +1,16 @@
+{
+  "storageCapacity": 10,
+  "workingTimeMs": 15000,
+  "orderIntervalMs": 1000,
+  "totalOrders": 20,
+  "bakers": [
+    {"id": 1, "cookingTimeMs": 2000},
+    {"id": 2, "cookingTimeMs": 3000},
+    {"id": 3, "cookingTimeMs": 1500}
+  ],
+  "couriers": [
+    {"id": 1, "trunkSize": 3, "deliveryTimeMs": 4000},
+    {"id": 2, "trunkSize": 2, "deliveryTimeMs": 3000},
+    {"id": 3, "trunkSize": 5, "deliveryTimeMs": 5000}
+  ]
+}
