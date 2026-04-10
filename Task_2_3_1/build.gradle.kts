@@ -47,7 +47,9 @@ tasks.jacocoTestReport {
         files(classDirectories.files.map {
             fileTree(it) {
                 exclude(
-                    "**/app/**"
+                    "**/app/**",
+                    "**/controller/**",
+                    "**/view/**"
                 )
             }
         })
