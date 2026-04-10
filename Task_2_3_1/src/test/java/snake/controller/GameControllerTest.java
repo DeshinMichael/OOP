@@ -20,19 +20,27 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class GameControllerTest {
 
+    private static boolean isJfxStarted = false;
+
     @BeforeAll
     public static void initJFX() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
         try {
-            Platform.startup(latch::countDown);
+            Platform.startup(() -> {
+                isJfxStarted = true;
+                latch.countDown();
+            });
             latch.await();
-        } catch (IllegalStateException | UnsupportedOperationException e) {
-
+        } catch (IllegalStateException e) {
+            isJfxStarted = true;
+        } catch (UnsupportedOperationException e) {
+            isJfxStarted = false;
         }
     }
 
     @Test
     public void testControllerLogic() throws Exception {
+        org.junit.jupiter.api.Assumptions.assumeTrue(isJfxStarted, "Skipping test in headless environment");
         GameController controller = new GameController();
 
         setField(controller, "bgCanvas", new Canvas());
