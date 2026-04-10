@@ -19,7 +19,7 @@ public class GameRules implements LevelManager {
         for (int i = 0; i < count; i++) {
             Cell pos;
             do {
-                pos = new Cell(random.nextInt(AppConfig.BOARD_WIDTH), random.nextInt(AppConfig.BOARD_HEIGHT));
+                pos = new Cell(random.nextInt(AppConfig.getInstance().getBoardWidth()), random.nextInt(AppConfig.getInstance().getBoardHeight()));
             } while (isOccupied(pos, state));
             state.getObstacles().add(new Obstacle(pos));
         }
@@ -27,8 +27,8 @@ public class GameRules implements LevelManager {
 
     @Override
     public void spawnFoods(GameState state) {
-        while (state.getFoods().size() < AppConfig.FOOD_COUNT) {
-            Cell pos = new Cell(random.nextInt(AppConfig.BOARD_WIDTH), random.nextInt(AppConfig.BOARD_HEIGHT));
+        while (state.getFoods().size() < AppConfig.getInstance().getFoodCount()) {
+            Cell pos = new Cell(random.nextInt(AppConfig.getInstance().getBoardWidth()), random.nextInt(AppConfig.getInstance().getBoardHeight()));
             if (isOccupied(pos, state)) {
                 continue;
             }

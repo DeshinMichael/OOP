@@ -12,7 +12,7 @@ public class GameRulesTest {
         GameRules rules = new GameRules();
 
         rules.spawnFoods(state);
-        assertEquals(AppConfig.FOOD_COUNT, state.getFoods().size());
+        assertEquals(AppConfig.getInstance().getFoodCount(), state.getFoods().size());
     }
 
     @Test

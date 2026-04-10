@@ -1,0 +1,9 @@
+{
+  "appTitle": "Snake",
+  "boardWidth": 100,
+  "boardHeight": 100,
+  "foodCount": 3,
+  "targetLength": 20,
+  "tickMillis": 200,
+  "botCount": 2
+}

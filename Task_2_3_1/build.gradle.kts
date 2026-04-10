@@ -26,6 +26,7 @@ dependencies {
     implementation("org.openjfx:javafx-controls:$javaFxVersion")
     implementation("org.openjfx:javafx-fxml:$javaFxVersion")
     implementation("org.openjfx:javafx-graphics:$javaFxVersion")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
 
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")

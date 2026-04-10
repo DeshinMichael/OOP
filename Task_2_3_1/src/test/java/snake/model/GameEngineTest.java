@@ -49,7 +49,7 @@ public class GameEngineTest {
         Snake player = state.getSnakes().get(0);
 
         player.getBody().clear();
-        player.getBody().add(new Cell(snake.config.AppConfig.BOARD_WIDTH - 1, 0));
+        player.getBody().add(new Cell(snake.config.AppConfig.getInstance().getBoardWidth() - 1, 0));
         player.setDirection(Direction.RIGHT);
 
         engine.getPlayerController().setNextDirection(Direction.RIGHT);

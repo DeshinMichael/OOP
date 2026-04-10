@@ -43,7 +43,7 @@ public final class GameController {
 
     @FXML
     private void initialize() {
-        gameEngine.reset(2);
+        gameEngine.reset(snake.config.AppConfig.getInstance().getBotCount());
         boardCanvas.widthProperty().bind(Bindings.min(boardContainer.widthProperty(), boardContainer.heightProperty()).subtract(40));
         boardCanvas.heightProperty().bind(boardCanvas.widthProperty());
         bgCanvas.widthProperty().bind(boardCanvas.widthProperty());
@@ -93,7 +93,7 @@ public final class GameController {
         gameLoop.stop();
         gameLoop.getKeyFrames().clear();
 
-        double newMillis = Math.max(50, AppConfig.TICK_MILLIS - (level - 1) * 10);
+        double newMillis = Math.max(50, AppConfig.getInstance().getTickMillis() - (level - 1) * 10);
         gameLoop.getKeyFrames().add(new KeyFrame(Duration.millis(newMillis), e -> tick()));
 
         if (wasRunning) {
@@ -116,7 +116,7 @@ public final class GameController {
                 if (gameState.statusProperty().get() == GameStatus.READY) {
                     gameEngine.start();
                 } else if (gameState.statusProperty().get() == GameStatus.WON || gameState.statusProperty().get() == GameStatus.LOST) {
-                    gameEngine.reset(2);
+                    gameEngine.reset(snake.config.AppConfig.getInstance().getBotCount());
                     renderer.requestFullRender();
                     renderer.render(gameState);
                 }

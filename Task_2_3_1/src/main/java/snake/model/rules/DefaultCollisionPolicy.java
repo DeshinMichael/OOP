@@ -23,7 +23,7 @@ public final class DefaultCollisionPolicy implements CollisionPolicy {
             Snake snake = e.getKey();
             Cell head = e.getValue();
 
-            if (head.x() < 0 || head.x() >= AppConfig.BOARD_WIDTH || head.y() < 0 || head.y() >= AppConfig.BOARD_HEIGHT) {
+            if (head.x() < 0 || head.x() >= AppConfig.getInstance().getBoardWidth() || head.y() < 0 || head.y() >= AppConfig.getInstance().getBoardHeight()) {
                 deadSet.add(snake);
                 if (!snake.isBot()) {
                     playerLost = true;

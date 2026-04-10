@@ -12,7 +12,7 @@ final class MoveSafetyUtil {
     }
 
     static boolean isSafe(Cell cell, GameState state, Snake self) {
-        if (cell.x() < 0 || cell.x() >= AppConfig.BOARD_WIDTH || cell.y() < 0 || cell.y() >= AppConfig.BOARD_HEIGHT) {
+        if (cell.x() < 0 || cell.x() >= AppConfig.getInstance().getBoardWidth() || cell.y() < 0 || cell.y() >= AppConfig.getInstance().getBoardHeight()) {
             return false;
         }
 

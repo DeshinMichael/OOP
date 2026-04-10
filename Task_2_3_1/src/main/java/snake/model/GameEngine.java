@@ -55,11 +55,11 @@ public class GameEngine {
         state.getObstacles().clear();
         controllers.clear();
         state.currentLengthProperty().set(1);
-        state.targetLengthProperty().set(AppConfig.TARGET_LENGTH);
+        state.targetLengthProperty().set(AppConfig.getInstance().getTargetLength());
         state.levelProperty().set(1);
         state.statusProperty().set(GameStatus.READY);
 
-        Snake mainSnake = new Snake(new Cell(AppConfig.BOARD_WIDTH / 2, AppConfig.BOARD_HEIGHT / 2), Direction.RIGHT, false);
+        Snake mainSnake = new Snake(new Cell(AppConfig.getInstance().getBoardWidth() / 2, AppConfig.getInstance().getBoardHeight() / 2), Direction.RIGHT, false);
         state.getSnakes().add(mainSnake);
         playerController = new PlayerController(Direction.RIGHT);
         controllers.put(mainSnake, playerController);
@@ -67,7 +67,7 @@ public class GameEngine {
         for (int i = 0; i < botCount; i++) {
             Cell pos;
             do {
-                pos = new Cell(random.nextInt(AppConfig.BOARD_WIDTH), random.nextInt(AppConfig.BOARD_HEIGHT));
+                pos = new Cell(random.nextInt(AppConfig.getInstance().getBoardWidth()), random.nextInt(AppConfig.getInstance().getBoardHeight()));
             } while (isOccupied(pos));
             Snake bot = new Snake(pos, Direction.UP, true);
             state.getSnakes().add(bot);

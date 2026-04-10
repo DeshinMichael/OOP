@@ -15,7 +15,7 @@ public class SnakeApplication extends Application {
         );
         Scene scene = new Scene(loader.load(), 600, 600);
 
-        stage.setTitle(AppConfig.APP_TITLE);
+        stage.setTitle(AppConfig.getInstance().getAppTitle());
         stage.setScene(scene);
         stage.setMinWidth(400);
         stage.setMinHeight(400);

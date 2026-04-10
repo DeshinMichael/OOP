@@ -36,8 +36,8 @@ public final class BoardRenderer {
 
         if (w <= 0 || h <= 0) return;
 
-        double cellW = w / AppConfig.BOARD_WIDTH;
-        double cellH = h / AppConfig.BOARD_HEIGHT;
+        double cellW = w / AppConfig.getInstance().getBoardWidth();
+        double cellH = h / AppConfig.getInstance().getBoardHeight();
 
         GraphicsContext bgGc = bgCanvas.getGraphicsContext2D();
         GraphicsContext fgGc = boardCanvas.getGraphicsContext2D();
@@ -105,11 +105,11 @@ public final class BoardRenderer {
 
         gc.setStroke(Color.web("#374151"));
         gc.setLineWidth(Math.max(0.5, Math.min(1.5, cellW * 0.05)));
-        for (int x = 0; x <= AppConfig.BOARD_WIDTH; x++) {
+        for (int x = 0; x <= AppConfig.getInstance().getBoardWidth(); x++) {
             double px = x * cellW;
             gc.strokeLine(px, 0, px, h);
         }
-        for (int y = 0; y <= AppConfig.BOARD_HEIGHT; y++) {
+        for (int y = 0; y <= AppConfig.getInstance().getBoardHeight(); y++) {
             double py = y * cellH;
             gc.strokeLine(0, py, w, py);
         }
