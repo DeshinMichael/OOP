@@ -21,6 +21,37 @@ public final class GameState {
     public List<Snake> getSnakes() { return snakes; }
     public List<Consumable> getFoods() { return foods; }
     public List<Obstacle> getObstacles() { return obstacles; }
+
+    public List<Cell> getFreeCells(int width, int height) {
+        boolean[][] occupied = new boolean[width][height];
+
+        for (Snake s : getSnakes()) {
+            for (Cell c : s.getBody()) {
+                if (c.x() >= 0 && c.x() < width && c.y() >= 0 && c.y() < height) {
+                    occupied[c.x()][c.y()] = true;
+                }
+            }
+        }
+        for (Consumable f : getFoods()) {
+            if (f.getPosition().x() >= 0 && f.getPosition().x() < width && f.getPosition().y() >= 0 && f.getPosition().y() < height) {
+                occupied[f.getPosition().x()][f.getPosition().y()] = true;
+            }
+        }
+        for (Obstacle o : getObstacles()) {
+            if (o.getPosition().x() >= 0 && o.getPosition().x() < width && o.getPosition().y() >= 0 && o.getPosition().y() < height) {
+                occupied[o.getPosition().x()][o.getPosition().y()] = true;
+            }
+        }
+
+        List<Cell> freeCells = new ArrayList<>();
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if (!occupied[x][y]) freeCells.add(new Cell(x, y));
+            }
+        }
+        return freeCells;
+    }
+
     public IntegerProperty currentLengthProperty() { return currentLength; }
     public IntegerProperty targetLengthProperty() { return targetLength; }
     public IntegerProperty levelProperty() { return level; }

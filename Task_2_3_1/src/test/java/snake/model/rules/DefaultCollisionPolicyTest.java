@@ -65,5 +65,24 @@ public class DefaultCollisionPolicyTest {
         assertTrue(result.deadSnakes().contains(p1));
         assertTrue(result.deadSnakes().contains(p2));
     }
-}
 
+    @Test
+    public void testBotsHeadToHeadCollision() {
+        GameState state = new GameState();
+        Snake b1 = new Snake(new Cell(5, 5), Direction.RIGHT, true);
+        Snake b2 = new Snake(new Cell(7, 5), Direction.LEFT, true);
+        state.getSnakes().add(b1);
+        state.getSnakes().add(b2);
+
+        Map<Snake, Cell> planned = new HashMap<>();
+        planned.put(b1, new Cell(6, 5));
+        planned.put(b2, new Cell(6, 5));
+
+        DefaultCollisionPolicy policy = new DefaultCollisionPolicy();
+        CollisionPolicy.CollisionResult result = policy.resolve(state, planned, new HashMap<>());
+
+        assertFalse(result.playerLost());
+        assertTrue(result.deadSnakes().contains(b1));
+        assertTrue(result.deadSnakes().contains(b2));
+    }
+}

@@ -13,7 +13,6 @@ import snake.model.controller.PlayerController;
 import snake.model.controller.RandomBotController;
 import snake.model.controller.SnakeController;
 import snake.model.entity.Consumable;
-import snake.model.entity.Obstacle;
 import snake.model.entity.Snake;
 import snake.model.rules.CollisionPolicy;
 import snake.model.rules.DefaultCollisionPolicy;
@@ -64,11 +63,11 @@ public class GameEngine {
         playerController = new PlayerController(Direction.RIGHT);
         controllers.put(mainSnake, playerController);
 
+        List<Cell> freeCells = state.getFreeCells(AppConfig.getInstance().getBoardWidth(), AppConfig.getInstance().getBoardHeight());
         for (int i = 0; i < botCount; i++) {
-            Cell pos;
-            do {
-                pos = new Cell(random.nextInt(AppConfig.getInstance().getBoardWidth()), random.nextInt(AppConfig.getInstance().getBoardHeight()));
-            } while (isOccupied(pos));
+            if (freeCells.isEmpty()) break;
+            int idx = random.nextInt(freeCells.size());
+            Cell pos = freeCells.remove(idx);
             Snake bot = new Snake(pos, Direction.UP, true);
             state.getSnakes().add(bot);
             if (random.nextBoolean()) {
@@ -176,19 +175,6 @@ public class GameEngine {
         return null;
     }
 
-    private boolean isOccupied(Cell cell) {
-        for (Snake s : state.getSnakes()) {
-            if (s.getBody().contains(cell)) {
-                return true;
-            }
-        }
-        for (Obstacle o : state.getObstacles()) {
-            if (o.getPosition().equals(cell)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     private Snake getPlayerSnake() {
         for (Snake snake : state.getSnakes()) {

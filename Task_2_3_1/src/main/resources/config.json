@@ -1,7 +1,7 @@
 {
   "appTitle": "Snake",
-  "boardWidth": 100,
-  "boardHeight": 100,
+  "boardWidth": 50,
+  "boardHeight": 50,
   "foodCount": 3,
   "targetLength": 20,
   "tickMillis": 200,
