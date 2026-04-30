@@ -1,9 +1,16 @@
 package auto_verification.runner;
 
+import auto_verification.logger.AppLogger;
+
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 public class ProcessRunner {
+    private final AppLogger logger;
+
+    public ProcessRunner(AppLogger logger) {
+        this.logger = logger;
+    }
 
     // Запуск любой команды студенческого проекта
     public boolean run(File projectDir, String commandLine) {
@@ -11,7 +18,7 @@ public class ProcessRunner {
             return false;
         }
 
-        System.out.println("Executing command: " + commandLine + " in " + projectDir.getName());
+        logger.info("Executing command: " + commandLine + " in " + projectDir.getName());
         try {
             // Разбор строки команды по пробелам
             String[] parts = commandLine.split("\\s+");
@@ -37,20 +44,20 @@ public class ProcessRunner {
 
             if (!finished) {
                 process.destroyForcibly();
-                System.err.println("Timeout reached (killed)");
+                logger.error("Timeout reached (killed)");
                 return false;
             }
 
             boolean success = process.exitValue() == 0;
             if (success) {
-                System.out.println("Success");
+                logger.info("Success");
             } else {
-                System.err.println("Failed (exit code " + process.exitValue() + ")");
+                logger.error("Failed (exit code " + process.exitValue() + ")");
             }
             return success;
             
         } catch (Exception e) {
-            System.err.println("Launch error: " + e.getMessage());
+            logger.error("Launch error: " + e.getMessage());
             return false;
         }
     }

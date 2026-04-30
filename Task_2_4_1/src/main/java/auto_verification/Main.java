@@ -2,6 +2,7 @@ package auto_verification;
 
 import auto_verification.dsl.ConfigParser;
 import auto_verification.git.GitClient;
+import auto_verification.logger.AppLogger;
 import auto_verification.model.ProjectConfig;
 import auto_verification.report.HtmlReportGenerator;
 import auto_verification.runner.Pipeline;
@@ -25,15 +26,16 @@ public class Main {
 
         ProjectConfig config = ConfigParser.parse(mainConfigFile);
 
-        GitClient gitClient = new GitClient();
-        ProcessRunner processRunner = new ProcessRunner();
-        Pipeline pipeline = new Pipeline(gitClient, processRunner);
+        AppLogger logger = new AppLogger();
+        GitClient gitClient = new GitClient(logger);
+        ProcessRunner processRunner = new ProcessRunner(logger);
+        Pipeline pipeline = new Pipeline(gitClient, processRunner, logger);
 
         System.out.println("Running checks...");
         PipelineResult reportData = pipeline.execute(config);
 
         ScoreCalculator calculator = new ScoreCalculator();
-        HtmlReportGenerator reportGenerator = new HtmlReportGenerator(calculator);
+        HtmlReportGenerator reportGenerator = new HtmlReportGenerator(calculator, logger);
         reportGenerator.generateReport(config, reportData, new File("report.html"));
 
         System.out.println("\nChecks completed!");

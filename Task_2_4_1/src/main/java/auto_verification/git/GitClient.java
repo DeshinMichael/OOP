@@ -1,19 +1,33 @@
 package auto_verification.git;
 
+import auto_verification.logger.AppLogger;
+
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.time.LocalDate;
+import java.time.temporal.IsoFields;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class GitClient {
+
+    private final AppLogger logger;
+
+    public GitClient(AppLogger logger) {
+        this.logger = logger;
+    }
 
     // Клонирование репозитория в нужную папку.
     // Если папка уже существует, делает git pull.
     public boolean cloneOrPull(String repoUrl, File targetDir) {
         if (targetDir.exists() && new File(targetDir, ".git").exists()) {
-            System.out.println("Updating repository (git pull): " + targetDir.getName());
+            logger.info("Updating repository (git pull): " + targetDir.getName());
             return runCommand(targetDir, "git", "pull");
         } else {
-            System.out.println("Cloning repository (git clone): " + repoUrl);
+            logger.info("Cloning repository (git clone): " + repoUrl);
             
             // Если папка существует, но это не git-репозиторий (например, осталась от неудачного клона), 
             // git clone выдаст ошибку. Нужно её очистить.
@@ -39,7 +53,7 @@ public class GitClient {
     }
 
     public boolean checkout(File repoDir, String branch) {
-        System.out.println("Switching to branch: " + branch + " in " + repoDir.getName());
+        logger.info("Switching to branch: " + branch + " in " + repoDir.getName());
         return runCommand(repoDir, "git", "checkout", branch);
     }
 
@@ -49,20 +63,8 @@ public class GitClient {
             ProcessBuilder builder = new ProcessBuilder("git", "log", "--format=%ad", "--date=short");
             builder.directory(repoDir);
             Process process = builder.start();
-            
-            java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.InputStreamReader(process.getInputStream()));
-            java.util.Set<String> activeWeeks = new java.util.HashSet<>();
-            String line;
-            
-            while ((line = reader.readLine()) != null) {
-                try {
-                    java.time.LocalDate date = java.time.LocalDate.parse(line.trim());
-                    // Генерируем уникальный ключ года-недели
-                    int week = date.get(java.time.temporal.IsoFields.WEEK_OF_WEEK_BASED_YEAR);
-                    activeWeeks.add(date.getYear() + "-" + week);
-                } catch (Exception ignored) {
-                }
-            }
+
+            Set<String> activeWeeks = getStrings(process);
             process.waitFor();
             
             // Предполагаем, что курс длится около 15 недель.
@@ -71,6 +73,23 @@ public class GitClient {
         } catch (Exception e) {
             return 0.0;
         }
+    }
+
+    private Set<String> getStrings(Process process) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        Set<String> activeWeeks = new HashSet<>();
+        String line;
+
+        while ((line = reader.readLine()) != null) {
+            try {
+                LocalDate date = LocalDate.parse(line.trim());
+                // Генерируем уникальный ключ года-недели
+                int week = date.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
+                activeWeeks.add(date.getYear() + "-" + week);
+            } catch (Exception ignored) {
+            }
+        }
+        return activeWeeks;
     }
 
     // Универсальный метод для вызова консольных команд
@@ -89,13 +108,13 @@ public class GitClient {
 
             if (!finished) {
                 process.destroyForcibly();
-                System.err.println("Command timed out: " + String.join(" ", command));
+                logger.error("Command timed out: " + String.join(" ", command));
                 return false;
             }
 
             return process.exitValue() == 0;
         } catch (IOException | InterruptedException e) {
-            System.err.println("Execution error (" + e.getMessage() + "): " + String.join(" ", command));
+            logger.error("Execution error (" + e.getMessage() + "): " + String.join(" ", command));
             return false;
         }
     }

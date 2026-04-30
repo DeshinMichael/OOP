@@ -63,3 +63,9 @@ out/
 .vscode/
 *_Local.run.xml
 *_DEV.run.xml
+
+### Auto Verification ###
+student_repos/
+report.html
+main_config.groovy
+students.groovy

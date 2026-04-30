@@ -1,6 +1,7 @@
 package auto_verification.runner;
 
 import auto_verification.git.GitClient;
+import auto_verification.logger.AppLogger;
 import auto_verification.model.*;
 
 import java.io.File;
@@ -13,10 +14,12 @@ import java.util.regex.Pattern;
 public class Pipeline {
     private final GitClient git;
     private final ProcessRunner runner;
+    private final AppLogger logger;
 
-    public Pipeline(GitClient git, ProcessRunner runner) {
+    public Pipeline(GitClient git, ProcessRunner runner, AppLogger logger) {
         this.git = git;
         this.runner = runner;
+        this.logger = logger;
     }
 
     public PipelineResult execute(ProjectConfig config) {
@@ -27,19 +30,19 @@ public class Pipeline {
 
         for (Group group : config.getGroups()) {
             for (Student student : group.getStudents()) {
-                System.out.println("\n=========================================");
-                System.out.println("Student: " + student.getName() + " (" + group.getName() + ")");
+                logger.divider();
+                logger.info("Student: " + student.getFullName() + " (" + group.getName() + ")");
                 
                 Map<Task, CheckResult> studentResults = new HashMap<>();
                 allResults.put(student, studentResults);
                 
                 // Целевая папка для репозитория студента
-                File studentRepoDir = new File(workDirFile, student.getName());
+                File studentRepoDir = new File(workDirFile, student.getFullName());
 
                 // 1. Скачивание кода и его обновление
                 boolean gitOk = git.cloneOrPull(student.getRepoUrl(), studentRepoDir);
                 if (!gitOk) {
-                    System.err.println("GIT error. Skipping student.");
+                    logger.error("GIT error. Skipping student.");
                     for (Task t : config.getTasks()) {
                         studentResults.put(t, new CheckResult(false, false, false, false));
                     }
@@ -50,17 +53,17 @@ public class Pipeline {
                 // Расчет активности после успешного pull/clone
                 double activity = git.calculateActivity(studentRepoDir);
                 allActivities.put(student, activity);
-                System.out.println("Git Activity: " + (int)(activity * 100) + "%");
+                logger.info("Git Activity: " + (int)(activity * 100) + "%");
 
                 // 2. Проверяем каждую задачу из конфигурации
                 for (Task task : config.getTasks()) {
-                    System.out.println("--- Task: " + task.getId() + " ---");
+                    logger.info("--- Task: " + task.getId() + " ---");
                     CheckResult result = new CheckResult();
                     studentResults.put(task, result);
 
                     // Пытаемся переключить ветку для данной логики
                     if (!git.checkout(studentRepoDir, task.getBranch())) {
-                        System.err.println("Branch " + task.getBranch() + " not found. 0 points.");
+                        logger.error("Branch " + task.getBranch() + " not found. 0 points.");
                         continue;
                     }
 
@@ -76,7 +79,7 @@ public class Pipeline {
                     if (task.getBuildCmd() != null) {
                         result.buildOk = runner.run(taskDir, task.getBuildCmd());
                         if (!result.buildOk) {
-                            System.err.println("Build failed, skipping remaining checks.");
+                            logger.error("Build failed, skipping remaining checks.");
                             continue;
                         }
                     } else {
@@ -104,7 +107,7 @@ public class Pipeline {
                             result.testOk = true;
                         }
                     } else {
-                        System.out.println("Docs or Style failed, skipping tests.");
+                        logger.info("Docs or Style failed, skipping tests.");
                         result.testOk = false;
                     }
                 }

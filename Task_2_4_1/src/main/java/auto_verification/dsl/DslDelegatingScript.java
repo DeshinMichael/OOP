@@ -6,6 +6,7 @@ import auto_verification.model.Group;
 import auto_verification.model.ProjectConfig;
 import auto_verification.model.Student;
 import auto_verification.model.Task;
+import auto_verification.logger.AppLogger;
 import lombok.Getter;
 
 import java.io.File;
@@ -16,9 +17,11 @@ public abstract class DslDelegatingScript extends Script {
     @Getter
     private final ProjectConfig config = new ProjectConfig();
 
+    private final AppLogger logger = new AppLogger();
+
     // Поддержка импорта других конфигурационных файлов
     public void importConfig(String path) throws IOException {
-        System.out.println("Import configuration from: " + path);
+        logger.info("Import configuration from: " + path);
         ProjectConfig imported = ConfigParser.parse(new File(path));
         this.config.getTasks().addAll(imported.getTasks());
         this.config.getGroups().addAll(imported.getGroups());

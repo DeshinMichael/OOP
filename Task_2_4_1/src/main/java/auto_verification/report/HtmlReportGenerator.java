@@ -1,5 +1,6 @@
 package auto_verification.report;
 
+import auto_verification.logger.AppLogger;
 import auto_verification.model.CheckResult;
 import auto_verification.model.ProjectConfig;
 import auto_verification.model.Student;
@@ -14,9 +15,11 @@ import java.util.Map;
 
 public class HtmlReportGenerator {
     private final ScoreCalculator calculator;
+    private final AppLogger logger;
 
-    public HtmlReportGenerator(ScoreCalculator calculator) {
+    public HtmlReportGenerator(ScoreCalculator calculator, AppLogger logger) {
         this.calculator = calculator;
+        this.logger = logger;
     }
 
     public void generateReport(ProjectConfig config, PipelineResult data, File outputFile) throws IOException {
@@ -38,7 +41,7 @@ public class HtmlReportGenerator {
 
         html.append("</body></html>");
         Files.writeString(outputFile.toPath(), html.toString());
-        System.out.println("Report successfully generated: " + outputFile.getAbsolutePath());
+        logger.info("Report successfully generated: " + outputFile.getAbsolutePath());
     }
 
     private void generateTaskTables(StringBuilder html, ProjectConfig config, auto_verification.model.Group group, PipelineResult data) {
@@ -55,7 +58,7 @@ public class HtmlReportGenerator {
                 CheckResult res = studentResults != null ? studentResults.get(task) : null;
 
                 html.append("<tr>");
-                html.append("<td>").append(student.getName()).append("</td>");
+                html.append("<td>").append(student.getFullName()).append("</td>");
 
                 if (res != null) {
                     double score = calculator.calculate(task, res, bonus);
@@ -101,7 +104,7 @@ public class HtmlReportGenerator {
 
         for (Student student : group.getStudents()) {
             html.append("<tr>");
-            html.append("<td>").append(student.getName()).append("</td>");
+            html.append("<td>").append(student.getFullName()).append("</td>");
 
             Map<Task, CheckResult> studentResults = data.reportData.get(student);
             double totalScore = 0;
