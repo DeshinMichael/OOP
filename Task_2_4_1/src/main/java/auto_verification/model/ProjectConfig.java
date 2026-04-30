@@ -1,38 +1,27 @@
 package auto_verification.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ProjectConfig {
+
+    @Getter @Setter
     private String workDir = "./workDir"; // Куда будем качать репозитории студентов
+
+    @Getter @Setter
     private int semester = 1; // По умолчанию 1 семестр
     private Map<String, Map<String, Double>> bonuses = new HashMap<>();
+
+    @Getter
     private final List<Task> tasks = new ArrayList<>();
+
+    @Getter
     private final List<Group> groups = new ArrayList<>();
-
-    public String getWorkDir() {
-        return workDir;
-    }
-    public void setWorkDir(String workDir) {
-        this.workDir = workDir;
-    }
-
-    public int getSemester() {
-        return semester;
-    }
-
-    public void setSemester(int semester) {
-        this.semester = semester;
-    }
-
-    public List<Task> getTasks() {
-        return tasks;
-    }
-    public List<Group> getGroups() {
-        return groups;
-    }
 
     public void addBonus(String studentNickname, String taskId, double points) {
         bonuses.putIfAbsent(studentNickname, new HashMap<>());

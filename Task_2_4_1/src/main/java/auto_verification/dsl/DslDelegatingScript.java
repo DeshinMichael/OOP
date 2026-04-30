@@ -6,17 +6,15 @@ import auto_verification.model.Group;
 import auto_verification.model.ProjectConfig;
 import auto_verification.model.Student;
 import auto_verification.model.Task;
+import lombok.Getter;
 
 import java.io.File;
 import java.io.IOException;
 
 public abstract class DslDelegatingScript extends Script {
-    
+
+    @Getter
     private final ProjectConfig config = new ProjectConfig();
-    
-    public ProjectConfig getConfig() {
-        return config;
-    }
 
     // Поддержка импорта других конфигурационных файлов
     public void importConfig(String path) throws IOException {

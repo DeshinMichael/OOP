@@ -1,7 +1,10 @@
 package auto_verification.model;
 
+import lombok.Getter;
+
 import java.util.Objects;
 
+@Getter
 public class Student {
     private final String githubNickname;
     private final String fullName;
@@ -11,18 +14,6 @@ public class Student {
         this.githubNickname = githubNickname;
         this.fullName = fullName;
         this.repoUrl = repoUrl;
-    }
-
-    public String getGithubNickname() {
-        return githubNickname;
-    }
-
-    public String getName() {
-        return fullName;
-    }
-
-    public String getRepoUrl() {
-        return repoUrl;
     }
 
     @Override
