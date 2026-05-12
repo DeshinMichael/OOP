@@ -76,20 +76,21 @@ public class GitClient {
     }
 
     private Set<String> getStrings(Process process) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        Set<String> activeWeeks = new HashSet<>();
-        String line;
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+            Set<String> activeWeeks = new HashSet<>();
+            String line;
 
-        while ((line = reader.readLine()) != null) {
-            try {
-                LocalDate date = LocalDate.parse(line.trim());
-                // Генерируем уникальный ключ года-недели
-                int week = date.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
-                activeWeeks.add(date.getYear() + "-" + week);
-            } catch (Exception ignored) {
+            while ((line = reader.readLine()) != null) {
+                try {
+                    LocalDate date = LocalDate.parse(line.trim());
+                    // Генерируем уникальный ключ года-недели
+                    int week = date.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
+                    activeWeeks.add(date.getYear() + "-" + week);
+                } catch (Exception ignored) {
+                }
             }
+            return activeWeeks;
         }
-        return activeWeeks;
     }
 
     // Универсальный метод для вызова консольных команд

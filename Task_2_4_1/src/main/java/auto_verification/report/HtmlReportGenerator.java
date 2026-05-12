@@ -1,11 +1,7 @@
 package auto_verification.report;
 
 import auto_verification.logger.AppLogger;
-import auto_verification.model.CheckResult;
-import auto_verification.model.ProjectConfig;
-import auto_verification.model.Student;
-import auto_verification.model.Task;
-import auto_verification.model.PipelineResult;
+import auto_verification.model.*;
 import auto_verification.scoring.ScoreCalculator;
 
 import java.io.File;
@@ -32,7 +28,7 @@ public class HtmlReportGenerator {
         html.append(".task-title { background-color: #f8f9fa; font-weight: bold; text-align: left; padding: 10px; border: 1px solid black; }");
         html.append("</style></head><body>");
 
-        for (auto_verification.model.Group group : config.getGroups()) {
+        for (Group group : config.getGroups()) {
             html.append("<h3>Группа ").append(group.getName()).append("</h3>");
 
             generateTaskTables(html, config, group, data);
