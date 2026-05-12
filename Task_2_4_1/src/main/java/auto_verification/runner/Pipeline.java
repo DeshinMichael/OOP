@@ -8,6 +8,10 @@ import java.io.File;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,96 +26,115 @@ public class Pipeline {
         this.logger = logger;
     }
 
+    @SuppressWarnings("resource")
     public PipelineResult execute(ProjectConfig config) {
-        Map<Student, Map<Task, CheckResult>> allResults = new HashMap<>();
-        Map<Student, Double> allActivities = new HashMap<>();
+        Map<Student, Map<Task, CheckResult>> allResults = new ConcurrentHashMap<>();
+        Map<Student, Double> allActivities = new ConcurrentHashMap<>();
         
         File workDirFile = new File(config.getWorkDir());
 
+        int threads = Runtime.getRuntime().availableProcessors();
+        ExecutorService executor = Executors.newFixedThreadPool(threads);
+
         for (Group group : config.getGroups()) {
             for (Student student : group.getStudents()) {
-                logger.divider();
-                logger.info("Student: " + student.getFullName() + " (" + group.getName() + ")");
-                
                 Map<Task, CheckResult> studentResults = new HashMap<>();
                 allResults.put(student, studentResults);
                 
-                // Целевая папка для репозитория студента
-                File studentRepoDir = new File(workDirFile, student.getFullName());
+                executor.submit(() -> {
+                    logger.divider();
+                    logger.info("Student: " + student.getFullName() + " (" + group.getName() + ")");
 
-                // 1. Скачивание кода и его обновление
-                boolean gitOk = git.cloneOrPull(student.getRepoUrl(), studentRepoDir);
-                if (!gitOk) {
-                    logger.error("GIT error. Skipping student.");
-                    for (Task t : config.getTasks()) {
-                        studentResults.put(t, new CheckResult(false, false, false, false));
-                    }
-                    allActivities.put(student, 0.0);
-                    continue; 
-                }
+                    // Целевая папка для репозитория студента
+                    File studentRepoDir = new File(workDirFile, student.getFullName());
 
-                // Расчет активности после успешного pull/clone
-                double activity = git.calculateActivity(studentRepoDir);
-                allActivities.put(student, activity);
-                logger.info("Git Activity: " + (int)(activity * 100) + "%");
-
-                // 2. Проверяем каждую задачу из конфигурации
-                for (Task task : config.getTasks()) {
-                    logger.info("--- Task: " + task.getId() + " ---");
-                    CheckResult result = new CheckResult();
-                    studentResults.put(task, result);
-
-                    // Пытаемся переключить ветку для данной логики
-                    if (!git.checkout(studentRepoDir, task.getBranch())) {
-                        logger.error("Branch " + task.getBranch() + " not found. 0 points.");
-                        continue;
+                    // 1. Скачивание кода и его обновление
+                    boolean gitOk = git.cloneOrPull(student.getRepoUrl(), studentRepoDir);
+                    if (!gitOk) {
+                        logger.error("[" + student.getGithubNickname() + "] GIT error. Skipping student.");
+                        for (Task t : config.getTasks()) {
+                            studentResults.put(t, new CheckResult(false, false, false, false));
+                        }
+                        allActivities.put(student, 0.0);
+                        return;
                     }
 
-                    // Папка, в которой должна запускаться задача
-                    File taskDir = new File(studentRepoDir, task.getDir());
-                    if (!taskDir.exists() || !taskDir.isDirectory()) {
-                        // Если папки нет, попробуем запускать в корне как раньше,
-                        // но сообщим об этом.
-                        taskDir = studentRepoDir;
-                    }
+                    // Расчет активности после успешного pull/clone
+                    double activity = git.calculateActivity(studentRepoDir);
+                    allActivities.put(student, activity);
+                    logger.info("[" + student.getGithubNickname() + "] Git Activity: " + (int)(activity * 100) + "%");
 
-                    // Если Build (компиляция) падает — остальные этапы не запускаются.
-                    if (task.getBuildCmd() != null) {
-                        result.buildOk = runner.run(taskDir, task.getBuildCmd());
-                        if (!result.buildOk) {
-                            logger.error("Build failed, skipping remaining checks.");
+                    // 2. Проверяем каждую задачу из конфигурации
+                    for (Task task : config.getTasks()) {
+                        logger.info("[" + student.getGithubNickname() + "] --- Task: " + task.getId() + " ---");
+                        CheckResult result = new CheckResult();
+                        studentResults.put(task, result);
+
+                        // Пытаемся переключить ветку для данной логики
+                        if (!git.checkout(studentRepoDir, task.getBranch())) {
+                            logger.error("[" + student.getGithubNickname() + "] Branch " + task.getBranch() + " not found. 0 points.");
                             continue;
                         }
-                    } else {
-                        result.buildOk = true;
-                    }
 
-                    if (task.getDocsCmd() != null) {
-                        result.docsOk = runner.run(taskDir, task.getDocsCmd());
-                    } else {
-                        result.docsOk = true;
-                    }
-
-                    if (task.getStyleCmd() != null) {
-                        result.styleOk = runner.run(taskDir, task.getStyleCmd());
-                    } else {
-                        result.styleOk = true;
-                    }
-
-                    // Тесты запускаются только если документация и стиль прошли (либо их нет)
-                    if (result.docsOk && result.styleOk) {
-                        if (task.getTestCmd() != null) {
-                            result.testOk = runner.run(taskDir, task.getTestCmd());
-                            parseTestResults(taskDir, result);
-                        } else {
-                            result.testOk = true;
+                        // Папка, в которой должна запускаться задача
+                        File taskDir = new File(studentRepoDir, task.getDir());
+                        if (!taskDir.exists() || !taskDir.isDirectory()) {
+                            // Если папки нет, попробуем запускать в корне как раньше,
+                            // но сообщим об этом.
+                            taskDir = studentRepoDir;
                         }
-                    } else {
-                        logger.info("Docs or Style failed, skipping tests.");
-                        result.testOk = false;
+
+                        // Если Build (компиляция) падает — остальные этапы не запускаются.
+                        if (task.getBuildCmd() != null) {
+                            result.buildOk = runner.run(taskDir, task.getBuildCmd());
+                            if (!result.buildOk) {
+                                logger.error("[" + student.getGithubNickname() + "] Build failed, skipping remaining checks.");
+                                continue;
+                            }
+                        } else {
+                            result.buildOk = true;
+                        }
+
+                        if (task.getDocsCmd() != null) {
+                            result.docsOk = runner.run(taskDir, task.getDocsCmd());
+                        } else {
+                            result.docsOk = true;
+                        }
+
+                        if (task.getStyleCmd() != null) {
+                            result.styleOk = runner.run(taskDir, task.getStyleCmd());
+                        } else {
+                            result.styleOk = true;
+                        }
+
+                        // Тесты запускаются только если документация и стиль прошли (либо их нет)
+                        if (result.docsOk && result.styleOk) {
+                            if (task.getTestCmd() != null) {
+                                result.testOk = runner.run(taskDir, task.getTestCmd());
+                                parseTestResults(taskDir, result);
+                            } else {
+                                result.testOk = true;
+                            }
+                        } else {
+                            logger.info("[" + student.getGithubNickname() + "] Docs or Style failed, skipping tests.");
+                            result.testOk = false;
+                        }
                     }
-                }
+                });
             }
+        }
+
+        executor.shutdown();
+        try {
+            // Ждём завершения всех проверок (например, максимум 1 час)
+            boolean finished = executor.awaitTermination(1, TimeUnit.HOURS);
+            if (!finished) {
+                logger.error("Timeout reached! Some students checks were not finished.");
+                executor.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            logger.error("Pipeline was interrupted: " + e.getMessage());
+            Thread.currentThread().interrupt();
         }
 
         return new PipelineResult(allResults, allActivities);
