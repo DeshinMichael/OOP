@@ -56,18 +56,18 @@ class ReportBuilderTest {
         assertNotNull(model);
         assertEquals(1, model.getGroups().size());
         
-        ReportModel.GroupReport gr = model.getGroups().getFirst();
+        ReportModel.GroupReport gr = model.getGroups().get(0);
         assertEquals("Group1", gr.getName());
         assertEquals(1, gr.getTasks().size());
-        assertEquals("T_1", gr.getTasks().getFirst().getId());
+        assertEquals("T_1", gr.getTasks().get(0).getId());
         
         assertEquals(1, gr.getStudents().size());
-        ReportModel.StudentReport sr = gr.getStudents().getFirst();
+        ReportModel.StudentReport sr = gr.getStudents().get(0);
         assertEquals("John Doe", sr.getFullName());
         assertEquals(90, sr.getActivityPercent());
         
         assertEquals(1, sr.getTaskReports().size());
-        ReportModel.TaskReport tr = sr.getTaskReports().getFirst();
+        ReportModel.TaskReport tr = sr.getTaskReports().get(0);
         assertTrue(tr.isHasCheckResult());
         assertEquals("+", tr.getBuildStatus());
     }

@@ -30,8 +30,8 @@ class ConfigParserTest {
         ProjectConfig config = ConfigParser.parse(tempFile);
         assertNotNull(config);
         assertEquals(1, config.getGroups().size());
-        assertEquals("stud1", config.getGroups().getFirst().getStudents().getFirst().getGithubNickname());
+        assertEquals("stud1", config.getGroups().get(0).getStudents().get(0).getGithubNickname());
         assertEquals(1, config.getTasks().size());
-        assertEquals(1, config.getTasks().getFirst().getPoints());
+        assertEquals(1, config.getTasks().get(0).getPoints());
     }
 }
