@@ -6,6 +6,8 @@ import auto_verification.logger.AppLogger;
 import auto_verification.model.PipelineResult;
 import auto_verification.model.ProjectConfig;
 import auto_verification.report.HtmlReportGenerator;
+import auto_verification.report.ReportBuilder;
+import auto_verification.model.report.ReportModel;
 import auto_verification.runner.Pipeline;
 import auto_verification.runner.ProcessRunner;
 import auto_verification.scoring.ScoreCalculator;
@@ -40,8 +42,11 @@ public class VerificationController {
             PipelineResult reportData = pipeline.execute(config);
 
             ScoreCalculator calculator = new ScoreCalculator();
-            HtmlReportGenerator reportGenerator = new HtmlReportGenerator(calculator, logger);
-            reportGenerator.generateReport(config, reportData, new File("report.html"));
+            ReportBuilder reportBuilder = new ReportBuilder(calculator);
+            ReportModel reportModel = reportBuilder.build(config, reportData);
+
+            HtmlReportGenerator reportGenerator = new HtmlReportGenerator(logger);
+            reportGenerator.generateReport(reportModel, new File("report.html"));
 
             logger.info("\nChecks completed!");
         } catch (Exception e) {
