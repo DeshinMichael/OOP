@@ -21,7 +21,8 @@ public class HtmlReportGenerator {
         html.append("body { font-family: monospace; padding: 20px; }");
         html.append("table { border-collapse: collapse; width: 100%; margin-bottom: 30px; font-size: 14px; }");
         html.append("th, td { border: 1px solid black; padding: 6px; text-align: center; }");
-        html.append(".task-title { background-color: #f8f9fa; font-weight: bold; text-align: left; padding: 10px; border: 1px solid black; }");
+        html.append(".task-title { background-color: #f8f9fa; font-weight: bold; ")
+            .append("text-align: left; padding: 10px; border: 1px solid black; }");
         html.append("</style></head><body>");
 
         for (ReportModel.GroupReport group : model.getGroups()) {
