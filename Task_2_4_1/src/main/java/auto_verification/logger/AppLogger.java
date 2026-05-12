@@ -9,8 +9,4 @@ public class AppLogger {
     public void error(String message) {
         System.err.println(message);
     }
-
-    public void divider() {
-        System.out.println("\n=========================================");
-    }
 }
