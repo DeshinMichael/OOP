@@ -42,11 +42,17 @@ public class HtmlReportGenerator {
 
     private void generateTaskTables(StringBuilder html, ProjectConfig config, auto_verification.model.Group group, PipelineResult data) {
         for (Task task : config.getTasks()) {
-            String taskName = task.getTitle() != null && !task.getTitle().isEmpty() ? task.getTitle() : task.getId();
+            String taskName = task.getTitle() != null && !task.getTitle().isEmpty()
+                    ? task.getTitle()
+                    : task.getId();
             
             html.append("<table>");
-            html.append("<tr><th colspan='7' class='task-title'>Лабораторная ").append(task.getId()).append(" (").append(taskName).append(")</th></tr>");
-            html.append("<tr><th>Студент</th><th>Сборка</th><th>Документация</th><th>Style guide</th><th>Тесты</th><th>Доп. балл</th><th>Общий балл</th></tr>");
+            html.append("<tr><th colspan='7' class='task-title'>Лабораторная ")
+                    .append(task.getId())
+                    .append(" (").append(taskName).append(")</th></tr>");
+            html.append("<tr><th>Студент</th><th>Сборка</th><th>Документация</th>")
+                    .append("<th>Style guide</th><th>Тесты</th>")
+                    .append("<th>Доп. балл</th><th>Общий балл</th></tr>");
 
             for (Student student : group.getStudents()) {
                 double bonus = config.getBonus(student.getGithubNickname(), task.getId());
@@ -72,7 +78,9 @@ public class HtmlReportGenerator {
                             html.append("<td>Успешно</td>");
                         } else {
                             int passed = res.testsTotal - res.testsFailed - res.testsSkipped;
-                            html.append("<td>").append(passed).append("/").append(res.testsFailed).append("/").append(res.testsSkipped).append("</td>");
+                            html.append("<td>").append(passed).append("/")
+                                    .append(res.testsFailed).append("/")
+                                    .append(res.testsSkipped).append("</td>");
                         }
                     }
                     

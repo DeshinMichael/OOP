@@ -29,8 +29,9 @@ public class GitClient {
         } else {
             logger.info("Cloning repository (git clone): " + repoUrl);
             
-            // Если папка существует, но это не git-репозиторий (например, осталась от неудачного клона), 
-            // git clone выдаст ошибку. Нужно её очистить.
+            // Если папка существует, но это не git-репозиторий
+            // (например, осталась от неудачного клона), git clone выдаст ошибку.
+            // Нужно её очистить.
             if (targetDir.exists()) {
                 deleteDirectory(targetDir);
             }

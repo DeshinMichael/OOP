@@ -158,13 +158,19 @@ public class Pipeline {
                         String content = Files.readString(xml.toPath());
                         // Простой парсинг атрибутов
                         Matcher mTotal = Pattern.compile("tests=\"(\\d+)\"").matcher(content);
-                        if (mTotal.find()) result.testsTotal += Integer.parseInt(mTotal.group(1));
+                        if (mTotal.find()) {
+                            result.testsTotal += Integer.parseInt(mTotal.group(1));
+                        }
 
                         Matcher mFailed = Pattern.compile("failures=\"(\\d+)\"").matcher(content);
-                        if (mFailed.find()) result.testsFailed += Integer.parseInt(mFailed.group(1));
+                        if (mFailed.find()) {
+                            result.testsFailed += Integer.parseInt(mFailed.group(1));
+                        }
 
                         Matcher mSkipped = Pattern.compile("skipped=\"(\\d+)\"").matcher(content);
-                        if (mSkipped.find()) result.testsSkipped += Integer.parseInt(mSkipped.group(1));
+                        if (mSkipped.find()) {
+                            result.testsSkipped += Integer.parseInt(mSkipped.group(1));
+                        }
                     } catch (Exception ignored) {
                     }
                 }
