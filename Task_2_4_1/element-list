@@ -1,0 +1,10 @@
+auto_verification
+auto_verification.controller
+auto_verification.dsl
+auto_verification.git
+auto_verification.logger
+auto_verification.model
+auto_verification.model.report
+auto_verification.report
+auto_verification.runner
+auto_verification.scoring
