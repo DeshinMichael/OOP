@@ -1,8 +1,10 @@
 package auto_verification.scoring;
+
 import auto_verification.model.CheckResult;
 import auto_verification.model.Task;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class ScoreCalculatorTest {
     @Test
     void testCalculate_BuildFailed() {

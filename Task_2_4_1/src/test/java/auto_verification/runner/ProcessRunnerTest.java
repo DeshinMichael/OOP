@@ -1,9 +1,11 @@
 package auto_verification.runner;
+
 import auto_verification.logger.AppLogger;
 import org.junit.jupiter.api.Test;
 import java.io.File;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 class ProcessRunnerTest {
     @Test
     void testRunSuccess() {

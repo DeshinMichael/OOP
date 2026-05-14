@@ -1,6 +1,8 @@
 package auto_verification.model;
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class ProjectConfigTest {
     @Test
     void testBonuses() {

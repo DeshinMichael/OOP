@@ -1,4 +1,5 @@
 package auto_verification.report;
+
 import auto_verification.model.report.ReportModel;
 import auto_verification.logger.AppLogger;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,7 @@ import java.nio.file.Files;
 import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 class HtmlReportGeneratorTest {
     @Test
     void testGenerate() throws IOException {
