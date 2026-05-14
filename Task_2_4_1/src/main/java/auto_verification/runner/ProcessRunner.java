@@ -13,12 +13,13 @@ public class ProcessRunner {
     }
 
     // Запуск любой команды студенческого проекта
-    public boolean run(File projectDir, String commandLine) {
+    public boolean run(String logPrefix, File projectDir, String commandLine) {
         if (commandLine == null || commandLine.isBlank()) {
             return false;
         }
 
-        logger.info("Executing command: " + commandLine + " in " + projectDir.getName());
+        String prefixStr = logPrefix != null && !logPrefix.isEmpty() ? logPrefix + " " : "";
+        logger.info(prefixStr + "Executing command: " + commandLine + " in " + projectDir.getName());
         try {
             // Разбор строки команды по пробелам
             String[] parts = commandLine.split("\\s+");
@@ -44,20 +45,20 @@ public class ProcessRunner {
 
             if (!finished) {
                 process.destroyForcibly();
-                logger.error("Timeout reached (killed)");
+                logger.error(prefixStr + "Timeout reached (killed)");
                 return false;
             }
 
             boolean success = process.exitValue() == 0;
             if (success) {
-                logger.info("Success");
+                logger.info(prefixStr + "Success");
             } else {
-                logger.error("Failed (exit code " + process.exitValue() + ")");
+                logger.error(prefixStr + "Failed (exit code " + process.exitValue() + ")");
             }
             return success;
             
         } catch (Exception e) {
-            logger.error("Launch error: " + e.getMessage());
+            logger.error(prefixStr + "Launch error: " + e.getMessage());
             return false;
         }
     }

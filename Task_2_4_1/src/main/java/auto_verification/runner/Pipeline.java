@@ -95,11 +95,12 @@ public class Pipeline {
     }
 
     private void processTask(Student student, Task task, File studentRepoDir, CheckResult result) {
-        logger.info("[" + student.getGithubNickname() + "] --- Task: " + task.getId() + " ---");
+        String logPrefix = "[" + student.getGithubNickname() + "]";
+        logger.info(logPrefix + " --- Task: " + task.getId() + " ---");
 
         // Пытаемся переключить ветку для данной логики
         if (!git.checkout(studentRepoDir, task.getBranch())) {
-            logger.error("[" + student.getGithubNickname() + "] Branch " + task.getBranch() + " not found. 0 points.");
+            logger.error(logPrefix + " Branch " + task.getBranch() + " not found. 0 points.");
             return;
         }
 
@@ -113,9 +114,9 @@ public class Pipeline {
 
         // Если Build (компиляция) падает — остальные этапы не запускаются.
         if (task.getBuildCmd() != null) {
-            result.buildOk = runner.run(taskDir, task.getBuildCmd());
+            result.buildOk = runner.run(logPrefix, taskDir, task.getBuildCmd());
             if (!result.buildOk) {
-                logger.error("[" + student.getGithubNickname() + "] Build failed, skipping remaining checks.");
+                logger.error(logPrefix + " Build failed, skipping remaining checks.");
                 return;
             }
         } else {
@@ -123,13 +124,13 @@ public class Pipeline {
         }
 
         if (task.getDocsCmd() != null) {
-            result.docsOk = runner.run(taskDir, task.getDocsCmd());
+            result.docsOk = runner.run(logPrefix, taskDir, task.getDocsCmd());
         } else {
             result.docsOk = true;
         }
 
         if (task.getStyleCmd() != null) {
-            result.styleOk = runner.run(taskDir, task.getStyleCmd());
+            result.styleOk = runner.run(logPrefix, taskDir, task.getStyleCmd());
         } else {
             result.styleOk = true;
         }
@@ -137,13 +138,13 @@ public class Pipeline {
         // Тесты запускаются только если документация и стиль прошли (либо их нет)
         if (result.docsOk && result.styleOk) {
             if (task.getTestCmd() != null) {
-                result.testOk = runner.run(taskDir, task.getTestCmd());
+                result.testOk = runner.run(logPrefix, taskDir, task.getTestCmd());
                 parseTestResults(taskDir, result);
             } else {
                 result.testOk = true;
             }
         } else {
-            logger.info("[" + student.getGithubNickname() + "] Docs or Style failed, skipping tests.");
+            logger.info(logPrefix + " Docs or Style failed, skipping tests.");
             result.testOk = false;
         }
     }

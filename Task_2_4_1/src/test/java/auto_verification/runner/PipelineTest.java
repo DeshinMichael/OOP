@@ -45,8 +45,13 @@ class PipelineTest {
 
         ProcessRunner fakeRunner = new ProcessRunner(logger) {
             @Override
-            public boolean run(File projectDir, String commandLine) {
-                return true;
+            public boolean run(String logPrefix, File projectDir, String commandLine) {
+                if (commandLine.contains("build")) return true;
+                if (commandLine.contains("docs")) return true;
+                if (commandLine.contains("style")) return true;
+                if (commandLine.contains("check")) return true;
+                if (commandLine.contains("test")) return true;
+                return false;
             }
         };
 
