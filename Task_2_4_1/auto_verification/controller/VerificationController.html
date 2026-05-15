@@ -88,7 +88,10 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(auto_verification.logger.AppLogger)" class="member-name-link">VerificationController</a><wbr>(<a href="../logger/AppLogger.html" title="class in auto_verification.logger">AppLogger</a>&nbsp;logger)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(auto_verification.logger.AppLogger,auto_verification.git.GitClient,auto_verification.runner.Runner,java.util.List)" class="member-name-link">VerificationController</a><wbr>(<a href="../logger/AppLogger.html" title="class in auto_verification.logger">AppLogger</a>&nbsp;logger,
+ <a href="../git/GitClient.html" title="class in auto_verification.git">GitClient</a>&nbsp;gitClient,
+ <a href="../runner/Runner.html" title="interface in auto_verification.runner">Runner</a>&nbsp;processRunner,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../report/IReportGenerator.html" title="interface in auto_verification.report">IReportGenerator</a>&gt;&nbsp;reportGenerators)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -105,7 +108,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#run(java.lang.String)" class="member-name-link">run</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;configPath)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#run(java.lang.String,java.lang.String)" class="member-name-link">run</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;configPath,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;defaultReportPath)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
@@ -125,9 +129,12 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(auto_verification.logger.AppLogger)">
+<section class="detail" id="&lt;init&gt;(auto_verification.logger.AppLogger,auto_verification.git.GitClient,auto_verification.runner.Runner,java.util.List)">
 <h3>VerificationController</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">VerificationController</span><wbr><span class="parameters">(<a href="../logger/AppLogger.html" title="class in auto_verification.logger">AppLogger</a>&nbsp;logger)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">VerificationController</span><wbr><span class="parameters">(<a href="../logger/AppLogger.html" title="class in auto_verification.logger">AppLogger</a>&nbsp;logger,
+ <a href="../git/GitClient.html" title="class in auto_verification.git">GitClient</a>&nbsp;gitClient,
+ <a href="../runner/Runner.html" title="interface in auto_verification.runner">Runner</a>&nbsp;processRunner,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../report/IReportGenerator.html" title="interface in auto_verification.report">IReportGenerator</a>&gt;&nbsp;reportGenerators)</span></div>
 </section>
 </li>
 </ul>
@@ -139,9 +146,10 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="run(java.lang.String)">
+<section class="detail" id="run(java.lang.String,java.lang.String)">
 <h3>run</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">run</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;configPath)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">run</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;configPath,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;defaultReportPath)</span></div>
 </section>
 </li>
 </ul>
