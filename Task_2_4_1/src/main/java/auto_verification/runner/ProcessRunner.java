@@ -5,7 +5,7 @@ import auto_verification.logger.AppLogger;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
-public class ProcessRunner {
+public class ProcessRunner implements Runner {
     private final AppLogger logger;
 
     public ProcessRunner(AppLogger logger) {
@@ -13,6 +13,7 @@ public class ProcessRunner {
     }
 
     // Запуск любой команды студенческого проекта
+    @Override
     public boolean run(String logPrefix, File projectDir, String commandLine) {
         if (commandLine == null || commandLine.isBlank()) {
             return false;

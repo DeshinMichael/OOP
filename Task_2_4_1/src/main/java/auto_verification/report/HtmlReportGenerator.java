@@ -7,13 +7,14 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-public class HtmlReportGenerator {
+public class HtmlReportGenerator implements IReportGenerator {
     private final AppLogger logger;
 
     public HtmlReportGenerator(AppLogger logger) {
         this.logger = logger;
     }
 
+    @Override
     public void generateReport(ReportModel model, File outputFile) throws IOException {
         StringBuilder html = new StringBuilder();
         html.append("<!DOCTYPE html><html><head><meta charset='UTF-8'>");

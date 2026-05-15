@@ -16,11 +16,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Pipeline {
+    public static final String DEFAULT_TEST_RESULTS_DIR = "build/test-results/test";
+
     private final GitClient git;
-    private final ProcessRunner runner;
+    private final Runner runner;
     private final AppLogger logger;
 
-    public Pipeline(GitClient git, ProcessRunner runner, AppLogger logger) {
+    public Pipeline(GitClient git, Runner runner, AppLogger logger) {
         this.git = git;
         this.runner = runner;
         this.logger = logger;
@@ -150,7 +152,7 @@ public class Pipeline {
     }
 
     private void parseTestResults(File taskDir, CheckResult result) {
-        File testResultsDir = new File(taskDir, "build/test-results/test");
+        File testResultsDir = new File(taskDir, DEFAULT_TEST_RESULTS_DIR);
         if (testResultsDir.exists() && testResultsDir.isDirectory()) {
             File[] xmlFiles = testResultsDir.listFiles((d, name) -> name.endsWith(".xml"));
             if (xmlFiles != null) {
